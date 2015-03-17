@@ -7,6 +7,10 @@ package cn.com.dhcc.fzep.topo.pojo;
  * 
  */
 public class Cable extends Equipment {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6412684602893967037L;
 	private String cableId = null;
 	private String cableName = null;
 	private String cableStartId = null;

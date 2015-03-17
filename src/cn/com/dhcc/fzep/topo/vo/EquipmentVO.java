@@ -1,6 +1,12 @@
 package cn.com.dhcc.fzep.topo.vo;
 
-public class EquipmentVO {
+import java.io.Serializable;
+
+public class EquipmentVO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1323918349691053274L;
 	public static final String EQUIP_IMG_CABLE = "";
 	public static final String EQUIP_IMG_CARRIER = "";
 	public static final String EQUIP_IMG_GPRS = "";

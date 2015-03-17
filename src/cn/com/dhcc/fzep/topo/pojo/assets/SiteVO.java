@@ -14,7 +14,6 @@ public class SiteVO extends Site {
 	private static final long serialVersionUID = 9208661973682853658L;
 	private List<Cable> listCable = null;
 	private List<EquipmentVO> listEquip = null;
-	private String connectionJSON = null;
 	
 	private List<FiberCoreNumber> listFCN = null;
 	
@@ -41,12 +40,6 @@ public class SiteVO extends Site {
 	public void setListEquip(List<EquipmentVO> listEquip) {
 		this.listEquip = listEquip;
 	}
-	public String getConnectionJSON() {
-		return connectionJSON;
-	}
-	public void setConnectionJSON(String connectionJSON) {
-		this.connectionJSON = connectionJSON;
-	}
 
 	public List<FiberCoreNumber> getListFCN() {
 		return listFCN;
@@ -59,8 +52,8 @@ public class SiteVO extends Site {
 	@Override
 	public String toString() {
 		return "SiteVO [listCable=" + listCable + ", listEquip=" + listEquip
-				+ ", connectionJSON=" + connectionJSON + ", listFCN=" + listFCN
-				+ "]";
+				+ ", listFCN=" + listFCN + "]";
 	}
 
+	
 }

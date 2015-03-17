@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service id="remoting-service" 
+    class="flex.messaging.services.RemotingService">
+
+    <adapters>
+        <adapter-definition id="java-object" class="flex.messaging.services.remoting.adapters.JavaAdapter" default="true"/>
+    </adapters>
+
+    <default-channels>
+        <channel ref="my-amf"/>
+    </default-channels>
+	<destination id="AreaSchema">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.AreaSchemaServiceImpl</source>
+        </properties>
+    </destination>
+	<destination id="SiteSchema">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.SiteSchemaServiceImpl</source>
+        </properties>
+    </destination>
+	<destination id="EquipSchema">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.EquipmentSchemaServiceImpl</source>
+        </properties>
+    </destination>
+	<destination id="SchemaManage">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.SchemaManageServiceImpl</source>
+        </properties>
+    </destination>
+	<destination id="ShowSchema">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.ShowSchemaServiceImpl</source>
+        </properties>
+    </destination>
+	<destination id="SiteEquip">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.SiteEquipmentListServiceImpl</source>
+        </properties>
+    </destination>
+	<destination id="Equip">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.EquipmentServiceImpl</source>
+        </properties>
+    </destination>
+	<destination id="SiteSearch">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.SiteSearchServiceImpl</source>
+        </properties>
+    </destination>
+    
+	<destination id="AssetsRelation">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.impl.AssetsRelationServiceImpl</source>
+        </properties>
+    </destination>
+</service>

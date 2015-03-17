@@ -1,0 +1,147 @@
+package zdy.model;
+
+/**
+ * @function 基础--光纤表
+ * @author zhangdengyuan
+ * @createDate 2014-12-02
+ * @lastUpdateDate 2014-12-02
+ * @version 1.0
+ */
+
+public class A_FiberCoreNumberDto extends TemplateBeen {
+	/** 业务主键 */
+	private String fiberCoreNumberId;
+	/** 纤芯名称 */
+	private String fiberCoreNumberName;
+	/** 所属光缆 */
+	private String cableId;
+	/** 所属光缆名称 */
+	private String cableName;
+	/** 是否使用 */
+	private String isUsed;
+	/** 是否跳转 */
+	private String isJump;
+	/** 业务类型 */
+	private String bizType;
+	/** 连接情况 */
+	private String connections;
+	/** 收发情况 */
+	private String transceiver;
+	/**
+	 * @return the fiberCoreNumberId
+	 */
+	public String getFiberCoreNumberId() {
+		return fiberCoreNumberId;
+	}
+	/**
+	 * @param fiberCoreNumberId
+	 *            the fiberCoreNumberId to set
+	 */
+	public void setFiberCoreNumberId(String fiberCoreNumberId) {
+		this.fiberCoreNumberId = fiberCoreNumberId;
+	}
+	/**
+	 * @return the fiberCoreNumberName
+	 */
+	public String getFiberCoreNumberName() {
+		return fiberCoreNumberName;
+	}
+	/**
+	 * @param fiberCoreNumberName
+	 *            the fiberCoreNumberName to set
+	 */
+	public void setFiberCoreNumberName(String fiberCoreNumberName) {
+		this.fiberCoreNumberName = fiberCoreNumberName;
+	}
+	/**
+	 * @return the cableId
+	 */
+	public String getCableId() {
+		return cableId;
+	}
+	/**
+	 * @param cableId
+	 *            the cableId to set
+	 */
+	public void setCableId(String cableId) {
+		this.cableId = cableId;
+	}
+	/**
+	 * @return the cableName
+	 */
+	public String getCableName() {
+		return cableName;
+	}
+	/**
+	 * @param cableName
+	 *            the cableName to set
+	 */
+	public void setCableName(String cableName) {
+		this.cableName = cableName;
+	}
+	/**
+	 * @return the isUsed
+	 */
+	public String getIsUsed() {
+		return isUsed;
+	}
+	/**
+	 * @param isUsed
+	 *            the isUsed to set
+	 */
+	public void setIsUsed(String isUsed) {
+		this.isUsed = isUsed;
+	}
+	/**
+	 * @return the isJump
+	 */
+	public String getIsJump() {
+		return isJump;
+	}
+	/**
+	 * @param isJump
+	 *            the isJump to set
+	 */
+	public void setIsJump(String isJump) {
+		this.isJump = isJump;
+	}
+	/**
+	 * @return the bizType
+	 */
+	public String getBizType() {
+		return bizType;
+	}
+	/**
+	 * @param bizType
+	 *            the bizType to set
+	 */
+	public void setBizType(String bizType) {
+		this.bizType = bizType;
+	}
+	/**
+	 * @return the connections
+	 */
+	public String getConnections() {
+		return connections;
+	}
+	/**
+	 * @param connections
+	 *            the connections to set
+	 */
+	public void setConnections(String connections) {
+		this.connections = connections;
+	}
+	/**
+	 * @return the transceiver
+	 */
+	public String getTransceiver() {
+		return transceiver;
+	}
+	/**
+	 * @param transceiver
+	 *            the transceiver to set
+	 */
+	public void setTransceiver(String transceiver) {
+		this.transceiver = transceiver;
+	}
+}

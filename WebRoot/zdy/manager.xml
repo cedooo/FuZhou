@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<safe>
+
+	<function id="PortalService">
+		<name>PortalService</name>
+		<class>zdy.service.PortalService</class>
+		<delFlg>0</delFlg>
+	</function>
+	
+	<function id="ComboForService">
+		<name>ComboForService</name>
+		<class>zdy.service.ComboForService</class>
+		<delFlg>0</delFlg>
+	</function>
+	
+	<function id="B_AreaServiceImpl">
+		<name>B_AreaServiceImpl</name>
+		<class>zdy.service.impl.B_AreaServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	
+	<function id="B_ConstructionUnitServiceImpl">
+		<name>B_ConstructionUnitServiceImpl</name>
+		<class>zdy.service.impl.B_ConstructionUnitServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	
+	<function id="B_ManufacturersServiceImpl">
+		<name>B_ManufacturersServiceImpl</name>
+		<class>zdy.service.impl.B_ManufacturersServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	
+	<function id="B_FiberServiceImpl">
+		<name>B_FiberServiceImpl</name>
+		<class>zdy.service.impl.B_FiberServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	
+	<function id="B_ProjectServiceImpl">
+		<name>B_ProjectServiceImpl</name>
+		<class>zdy.service.impl.B_ProjectServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	
+	<function id="A_CableServiceImpl">
+		<name>A_CableServiceImpl</name>
+		<class>zdy.service.impl.A_CableServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	<function id="A_FiberCoreNumberServiceImpl">
+		<name>A_FiberCoreNumberServiceImpl</name>
+		<class>zdy.service.impl.A_FiberCoreNumberServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	<function id="A_CarrierServiceImpl">
+		<name>A_CarrierServiceImpl</name>
+		<class>zdy.service.impl.A_CarrierServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	<function id="A_GprsServiceImpl">
+		<name>A_GprsServiceImpl</name>
+		<class>zdy.service.impl.A_GprsServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	<function id="A_OltServiceImpl">
+		<name>A_OltServiceImpl</name>
+		<class>zdy.service.impl.A_OltServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	<function id="A_OnuServiceImpl">
+		<name>A_OnuServiceImpl</name>
+		<class>zdy.service.impl.A_OnuServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	<function id="A_SiteServiceImpl">
+		<name>A_SiteServiceImpl</name>
+		<class>zdy.service.impl.A_SiteServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	<function id="A_ThreeLayerSwitchServiceImpl">
+		<name>A_ThreeLayerSwitchServiceImpl</name>
+		<class>zdy.service.impl.A_ThreeLayerSwitchServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+	<function id="A_TwoLayerSwitchServiceImpl">
+		<name>A_TwoLayerSwitchServiceImpl</name>
+		<class>zdy.service.impl.A_TwoLayerSwitchServiceImpl</class>
+		<delFlg>0</delFlg>
+	</function>
+</safe>
+

@@ -1,0 +1,238 @@
+@CHARSET "UTF-8";
+/********************************************************* 标签元素 *****************************************************/
+a{text-decoration:none;}
+/** table样式 */
+/********************************************************* 浮动 ********************************************************/
+.fl{float:left;}
+.fr{float:right;}
+.cl{clear:left;}
+.cr{clear:right;}
+.cb{clear:both;}
+
+/******************************************************** 对齐方式 ******************************************************/
+.tal{text-align:left;}
+.tac{text-align:center;}
+.tar{text-align:right;}
+.vat{vertical-align:top;}
+.vam{vertical-align:middle;}
+.vab{vertical-align:bottom;}
+
+/******************************************************** 宽度 ********************************************************/
+/** 宽度（固定值） */
+.w0{width:0px;}
+.w16{width:16px;}
+.w32{width:32px;}
+.w64{width:64px;}
+.w92{width:92px;}
+.w100{width:100px;}
+.w119{width:119px;}
+.w128{width:128px;}
+.w136{width:136px;}
+.w181{width:181px;}
+.w192{width:192px;}
+.w200{width:200px;}
+.w210{width:210px;}
+.w214{width:214px;}
+.w240{width:240px;}
+.w256{width:256px;}
+.w272{width:272px;}
+.w300{width:300px;}
+.w320{width:320px;}
+.w384{width:384px;}
+.w400{width:400px;}
+.w512{width:512px;}
+.w640{width:640px;}
+.w640{width:640px;}
+.w960{width:960px;}
+.w1024{width:1024px;}
+/** 宽度（百分比） */
+.w0_p{width:0%;}
+.w5_p{width:5%;}
+.w10_p{width:10%;}
+.w15_p{width:15%;}
+.w20_p{width:20%;}
+.w25_p{width:25%;}
+.w30_p{width:30%;}
+.w40_p{width:40%;}
+.w45_p{width:45%;}
+.w50_p{width:50%;}
+.w55_p{width:55%;}
+.w60_p{width:60%;}
+.w65_p{width:65%;}
+.w70_p{width:70%;}
+.w80_p{width:80%;}
+.w90_p{width:90%;}
+.w100_p{width:100%;}
+
+/******************************************************** 高度 ********************************************************/
+/** 高度（固定值） */
+.h0{height:0px;}
+.h5{height:5px;}
+.h16{height:16px;}
+.h28{height:28px;}
+.h31{height:31px;}
+.h32{height:32px;}
+.h48{height:48px;}
+.h58{height:58px;}
+.h60{height:60px;}
+.h61{height:61px;}
+.h64{height:64px;}
+.h80{height:80px;}
+.h90{height:90px;}
+.h96{height:96px;}
+.h100{height:100px;}
+.h128{height:128px;}
+.h192{height:192px;}
+.h256{height:256px;}
+.h560{height:560px;}
+/** 高度（百分比） */
+.h0_p{height:0%;}
+.h5_p{height:5%;}
+.h10_p{height:10%;}
+.h20_p{height:20%;}
+.h30_p{height:30%;}
+.h40_p{height:40%;}
+.h50_p{height:50%;}
+.h60_p{height:60%;}
+.h70_p{height:70%;}
+.h80_p{height:80%;}
+.h90_p{height:90%;}
+.h95_p{height:95%;}
+.h100_p{height:100%;}
+
+
+/******************************************************** 显示 ********************************************************/
+.dn{display:none;}
+.db{display:block;}
+.di{display:inline;}
+.dib{display:inline-block;}
+
+/******************************************************** 背景 ********************************************************/
+/** 背景色 */
+/** table  */
+.bgc_45444c{background-color:#45444c;}
+.bgc_005767{background-color:#005767;}
+.bgc_004d61{background-color:#004d61;}
+.bgc_018288{background-color:#018288;}
+
+.bgc_028389{background-color:#028389;}
+.bgc_069ac1{background-color:#069ac1;}
+.bgc_cccccc{background-color:#cccccc;}
+.bgc_2f6497{background-color:#2f6497;}
+.bgc_e9f4ff{background-color:#e9f4ff;}
+.bgc_5a8ede{background-color:#5a8ede;}
+.bgc_006b6b{background-color:#006b6b;}
+/** 纯黑 */
+.bgc_000000{background-color:#000000;}
+/** 纯白 */
+.bgc_ffffff{background-color:#ffffff;}
+.bgc_t{background-color:transparent;}
+/** 背景图片 */
+.bgi_logoTitle{background-image:url(../images/logoTitle.png)!important;background-repeat:no-repeat;}
+.bgi_logoPhone{background-image:url(../images/logoPhone.png)!important;background-repeat:no-repeat;}
+.bgi_add{background-image:url(../images/add.gif)!important;background-repeat:no-repeat;}
+
+.bgi_add{background-image:url(../images/add.gif)!important;background-repeat:no-repeat;}
+.bgi_delete{background-image:url(../images/delete.gif)!important;background-repeat:no-repeat;}
+.bgi_update{background-image:url(../images/update.gif)!important;background-repeat:no-repeat;}
+.bgi_search{background-image:url(../images/search.gif)!important;background-repeat:no-repeat;}
+.bgi_effective{background-image:url(../images/effective.gif)!important;background-repeat:no-repeat;}
+.bgi_import{background-image:url(../images/import.gif)!important;background-repeat:no-repeat;}
+.bgi_export{background-image:url(../images/export.gif)!important;background-repeat:no-repeat;}
+.bgi_invalid{background-image:url(../images/invalid.gif)!important;background-repeat:no-repeat;}
+.bgi_grid{background-image:url(../images/grid.png)!important;background-repeat:no-repeat;}
+.bgi_folder{background-image:url(../images/folder.png)!important;background-repeat:no-repeat;}
+
+.bgi_site{background-image:url(../images/site.png)!important;background-repeat:no-repeat;width:16px;height:16px;}
+.bgi_cable{background-image:url(../images/cable.png)!important;background-repeat:no-repeat;}
+.bgi_gprs{background-image:url(../images/gprs.png)!important;background-repeat:no-repeat;}
+.bgi_olt{background-image:url(../images/olt.png)!important;background-repeat:no-repeat;}
+.bgi_onu{background-image:url(../images/onu.png)!important;background-repeat:no-repeat;}
+.bgi_carrier{background-image:url(../images/carrier.png)!important;background-repeat:no-repeat;}
+.bgi_twoLayerSwitch{background-image:url(../images/twoLayerSwitch.png)!important;background-repeat:no-repeat;}
+.bgi_threeLayerSwitch{background-image:url(../images/threeLayerSwitch.png)!important;background-repeat:no-repeat;}
+.bgi_project{background-image:url(../images/project.png)!important;background-repeat:no-repeat;}
+.bgi_constructionUnit{background-image:url(../images/constructionUnit.png)!important;background-repeat:no-repeat;}
+.bgi_area{background-image:url(../images/area.png)!important;background-repeat:no-repeat;}
+.bgi_fiber{background-image:url(../images/fiber.png)!important;background-repeat:no-repeat;}
+/******************************************************** 图层 ********************************************************/
+.fao70_p{filter:alpha(Opacity=70);}
+.mo7_p{-moz-opacity:0.7;}
+.o70_p{opacity:0.7;}
+.zi_16{z-index:-16;}
+.zi16{z-index:16;}
+.zi32{z-index:32;}
+.zi64{z-index:64;}
+
+/******************************************************** 距离 ********************************************************/
+.pa{position:absolute;}
+.pf{position:fixed}
+.pr{position:relative;}
+.t0{top:0px;}
+.t2{top:2px;}
+.t4{top:4px;}
+.t16{top:16px;}
+.t32{top:32px;}
+.t64{top:64px;}
+.t25_p{top:25%;}
+.t45_p{top:45%;}
+.r0{right:0px;}
+.r16{right:16px;}
+.r32{right:32px;}
+.r64{right:64px;}
+.r100{right:100px;}
+.b0{bottom:0px;}
+.b16{bottom:16px;}
+.b32{bottom:32px;}
+.b64{bottom:64px;}
+.l0{left:0px;}
+.l16{left:16px;}
+.l32{left:32px;}
+.l64{left:64px;}
+.l00{left:100px;}
+.l25_p{left:25%;}
+.l45_p{left:45%;}
+/** 边距 */
+.mt_100{margin-top:-100px;}
+.mt1{margin-top:1px;}
+.mt8{margin-top:8px;}
+.mt16{margin-top:16px;}
+.mt64{margin-top:64px;}
+.mr5{margin-right:5px;}
+.mr16{margin-right:16px;}
+.mr32{margin-right:32px;}
+.mr64{margin-right:64px;}
+.ml_32{margin-left:-32px;}
+.ml5{margin-left:5px;}
+.ml10{margin-left:10px;}
+.ml16{margin-left:16px;}
+.ml32{margin-left:32px;}
+.ml64{margin-left:64px;}
+.mb16{margin-buttom:16px;}
+.pt8{padding-top:8px;}
+.pl32{padding-left:32px;}
+/** 行高 */
+.lh16{line-height:16px;}
+.lh30{line-height:30px;}
+.lh32{line-height:32px;}
+.lh64{line-height:64px;}
+/******************************************************** 超出范围 ********************************************************/
+.ox_auto{overflow-x:auto;overflow-y:hidden;}
+.oy_auto{overflow-x:hidden;overflow-y:auto;}
+.oxy_auto{overflow-x:auto;overflow-y:auto;}
+.oxy_hidden{overflow-x:hidden;overflow-y:hidden;}
+
+
+/******************************************************** 字体 ********************************************************/
+.fs10{font-size:10px;}
+.fs12{font-size:12px;}
+.fs16{font-size:16px;}
+.fs32{font-size:32px;}
+.fs40{font-size:40px;}
+.cw{color:white;}
+.c_e3e3e3{color:#e3e3e3;}
+.c_ffffff{color:#ffffff;}
+.c_cef0fa{color:#cef0fa;}
+.fwb{font-weight: bold;}
+/*********************************************************** 边框 ************************************/
+.bn{border:none;}

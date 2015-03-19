@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import cn.com.dhcc.fzep.topo.pojo.Cable;
 import cn.com.dhcc.fzep.topo.pojo.FiberCoreNumber;
 import cn.com.dhcc.fzep.topo.pojo.Site;
 import cn.com.dhcc.fzep.topo.pojo.assets.SiteAssetsRelations;
@@ -29,6 +30,14 @@ public class AssetsRelationServiceImplTest {
 		String siteId = "1";
 		List<FiberCoreNumber> li = srv.listFCN(siteId);
 		System.out.println(li);
+	}
+	@Test
+	public void  testListCable(){
+		String site1Id = "1";
+		String site2Id = "2";
+		List<Cable> listCable = srv.listCable(site1Id, site2Id);
+		System.out.println(listCable.size());
+		System.out.println(listCable);
 	}
 
 }

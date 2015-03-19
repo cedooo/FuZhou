@@ -2,7 +2,8 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-String siteID = request.getParameter("siteID");
+String site1Id = request.getParameter("s1");
+String site2Id = request.getParameter("s2");
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -36,7 +37,7 @@ String siteID = request.getParameter("siteID");
                 <param name="allowScriptAccess" value="sameDomain" />
                 <param name="allowFullScreen" value="true" />
                 <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="topo/fx/AssetsRelations.swf" width="100%" height="100%">
+                <object type="application/x-shockwave-flash" data="topo/fx/AssetsRelations.swf?s1=<%=site1Id %>&s2=<%=site2Id %>" width="100%" height="100%">
                     <param name="quality" value="high" />
                     <param name="bgcolor" value="#ffffff" />
                     <param name="allowScriptAccess" value="sameDomain" />

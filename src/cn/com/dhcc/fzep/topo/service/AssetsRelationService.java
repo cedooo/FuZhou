@@ -2,6 +2,7 @@ package cn.com.dhcc.fzep.topo.service;
 
 import java.util.List;
 
+import cn.com.dhcc.fzep.topo.pojo.Cable;
 import cn.com.dhcc.fzep.topo.pojo.FiberCoreNumber;
 import cn.com.dhcc.fzep.topo.pojo.Site;
 import cn.com.dhcc.fzep.topo.pojo.assets.SiteAssetsRelations;
@@ -30,4 +31,11 @@ public interface AssetsRelationService {
 	 * @return 纤芯集合
 	 */
 	public List<FiberCoreNumber> listFCN(String siteId);
+	/**
+	 * 得到目标站点的光缆集合
+	 * @param site1Id 目标站点ID
+	 * @param site2Id 与目标站点相连站点ID
+	 * @return 目标站点的光缆集合
+	 */
+	public List<Cable> listCable(String site1Id, String site2Id);
 }

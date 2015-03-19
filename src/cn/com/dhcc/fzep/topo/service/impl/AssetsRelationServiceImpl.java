@@ -52,7 +52,7 @@ public class AssetsRelationServiceImpl implements AssetsRelationService {
 			
 			siteAssetsRelations.setSiteOne(siteOneVO);
 			siteAssetsRelations.setSiteTwo(siteTwoVO);
-System.out.println("站点资产关系：" + siteAssetsRelations);
+//System.out.println("站点资产关系：" + siteAssetsRelations);
 			return siteAssetsRelations;
 		}
 		return null;
@@ -76,8 +76,14 @@ System.out.println("站点资产关系：" + siteAssetsRelations);
 	public List<FiberCoreNumber> listFCN(String siteId){
 		FiberCoreNumberDao fcnDao = new FiberCoreNumberDao();
 		List<FiberCoreNumber> listSiteOneFCN = fcnDao.listFiberCNBySiteId(siteId);
-		System.out.println(listSiteOneFCN);
+//System.out.println(listSiteOneFCN);
 		return listSiteOneFCN;
+	}
+	@Override
+	public List<Cable> listCable(String site1Id, String site2Id) {
+		CableDao cableDao = new CableDao();
+		List<Cable> listOneCable = cableDao.relationCableList(site1Id, site2Id);
+		return listOneCable;
 	}
 
 }

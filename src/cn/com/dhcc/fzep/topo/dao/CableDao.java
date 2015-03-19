@@ -366,4 +366,71 @@ public class CableDao {
 		}
 		return null;
 	}
+	
+	public List<Cable> relationCableList(String targetSiteId, String relationSiteId){
+		List<Cable> cableList = new ArrayList<Cable>();
+		DBManager db = new DBManager();
+		/**
+		String typeStr = ( type==0?"":
+			(type==1?"Y":"N") );
+		String typeStrSql = " and isMainRoad='" + typeStr + "' ";
+		*/
+		try {
+			db.openConnection();
+			String sql = "SELECT * FROM a_cable " +
+					" where (cableStartId='" + targetSiteId + "' and cableEndId='" + relationSiteId + "') " +
+							"or (cableEndId='" + targetSiteId + "' and cableStartId='" + relationSiteId + "') " +
+					" LIMIT 0,2 ";
+			ResultSet results = db.executeQuery(sql);
+			while (results.next()) {
+				String cableId = results.getString("cableId");
+				String cableName = results.getString("cableName");
+				String cableStartId = results.getString("cableStartId");
+				String cableEndId = results.getString("cableEndId");
+				String cableType = results.getString("cableType");
+				String cableLength = results.getString("cableLength");
+				//String fibreCoreNumber= results.getString("fibreCoreNumber");
+				String fiberId= results.getString("fiberId");
+				String layingType = results.getString("layingType");
+				String runTime= results.getString("runTime");
+				String constructionUnitId= results.getString("constructionUnitId");
+				//String bizType = results.getString("bizType");
+				String delFlg= results.getString("delFlg");
+				String descp = results.getString("descp");
+				String isMainRoad  = results.getString("isMainRoad");
+				Cable cable = new Cable();
+				cable.setCableId(cableId);
+				cable.setCableName(cableName);
+				cable.setCableEndId(cableEndId);
+				cable.setCableStartId(cableStartId);
+				cable.setCableLength(cableLength);
+				cable.setCableType(cableType);
+				cable.setFiberId(fiberId);
+				cable.setLayingType(layingType);
+				cable.setRunTime(runTime);
+				cable.setConstructionUnitId(constructionUnitId);
+				//cable.setBizType(bizType);
+				cable.setDelFlg(delFlg);
+				cable.setDescp(descp);
+				cable.setIsMainRoad(isMainRoad);
+				cableList.add(cable);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				db.closeConnection();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return cableList;
+	}
 }

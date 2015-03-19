@@ -28,12 +28,13 @@ public class AssetsRelationServiceImpl implements AssetsRelationService {
 			/*
 			 * 得到站点光缆列表
 			 */
+			/*
 			CableDao cableDao = new CableDao();
 			List<Cable> listOneCable = cableDao.listCable(siteOneVO.getSiteId());
 			List<Cable> listTwoCable = cableDao.listCable(siteTwoVO.getSiteId());
 			siteOneVO.setListCable(listOneCable);
 			siteTwoVO.setListCable(listTwoCable);
-
+			*/
 			/*
 			 * 得到站点设备（光缆除外）列表
 			 */
@@ -51,10 +52,32 @@ public class AssetsRelationServiceImpl implements AssetsRelationService {
 			
 			siteAssetsRelations.setSiteOne(siteOneVO);
 			siteAssetsRelations.setSiteTwo(siteTwoVO);
-			System.out.println(siteAssetsRelations);
+System.out.println("站点资产关系：" + siteAssetsRelations);
 			return siteAssetsRelations;
 		}
 		return null;
+	}
+	/**
+	 * 根据站点ID得到站点对象
+	 * @param siteId 站点ID
+	 * @return 站点对象
+	 */
+	public Site siteInfo(String siteId){
+		SiteDao siteDao = new SiteDao();
+		Site siteOne = siteDao.getSiteBySiteId(siteId);
+		return siteOne;
+		
+	}
+	/**
+	 * 得到站点光缆 纤芯集合
+	 * @param siteId 站点ID
+	 * @return 纤芯集合
+	 */
+	public List<FiberCoreNumber> listFCN(String siteId){
+		FiberCoreNumberDao fcnDao = new FiberCoreNumberDao();
+		List<FiberCoreNumber> listSiteOneFCN = fcnDao.listFiberCNBySiteId(siteId);
+		System.out.println(listSiteOneFCN);
+		return listSiteOneFCN;
 	}
 
 }

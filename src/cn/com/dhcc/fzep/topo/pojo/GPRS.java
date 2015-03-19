@@ -1,6 +1,10 @@
 package cn.com.dhcc.fzep.topo.pojo;
 
 public class GPRS extends Equipment {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7200437156356088876L;
 	private String gprsId = null;
 	private String siteId = null;
 	private String projectId = null;

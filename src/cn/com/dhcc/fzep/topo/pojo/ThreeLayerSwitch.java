@@ -4,12 +4,12 @@ package cn.com.dhcc.fzep.topo.pojo;
  * @author cedo
  *
  */
-/**
- * @author cedo
- *
- */
 public class ThreeLayerSwitch extends Equipment {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8506146118904047987L;
 	//private String switchId = null;
 	private String threeLayerSwitchId = null;
 	private String siteId = null;

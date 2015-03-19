@@ -1,6 +1,10 @@
 package cn.com.dhcc.fzep.topo.pojo;
 
 public class ONU extends Equipment {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8884434385444371860L;
 	private String onuId = null;
 	private String siteId = null;
 	private String projectId = null;

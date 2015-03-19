@@ -82,7 +82,8 @@ public class FiberCoreNumberDao {
 			StringBuilder sqlQuery = new StringBuilder(
 					" select fcn.* " + 
 							" from a_fibercorenumber fcn left join  a_cable cable  on cable.cableId = fcn.cableId " +
-							" where fcn.isUsed = '是'  and  fcn.connections is not null and (cable.cableStartId = '" + siteId + "' or cable.cableEndId = '" + siteId + "' ) "
+							" where fcn.isUsed = '是'  and  fcn.connections is not null and (cable.cableStartId = '" + 
+							siteId + "' or cable.cableEndId = '" + siteId + "' ) "
 					);
 			ResultSet results = dbManager
 					.executeQuery(sqlQuery.toString());

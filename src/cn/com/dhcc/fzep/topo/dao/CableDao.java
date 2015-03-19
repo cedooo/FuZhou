@@ -232,7 +232,8 @@ public class CableDao {
 					" left join a_site ssite on cable.cableStartId = ssite.siteId  " + 
 					" left join a_site esite on cable.cableEndId = esite.siteId  " + 
 				 " WHERE cableStartId='" + siteId + "' or cableEndId='" + siteId + "' " +
-					" LIMIT 1000 ";
+					" order by cable.cableId desc " +
+					" LIMIT 0,2 ";
 			ResultSet results = db.executeQuery(sql);
 			while (results.next()) {
 				String cableId = results.getString("cableId");

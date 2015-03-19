@@ -1,6 +1,10 @@
 package cn.com.dhcc.fzep.topo.pojo;
 
 public class OLT extends Equipment {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4809513374569336057L;
 	private String oltId = null;
 	private String siteId = null;
 	private String projectId = null;

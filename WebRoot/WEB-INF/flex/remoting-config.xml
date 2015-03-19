@@ -55,4 +55,12 @@
             <source>cn.com.dhcc.fzep.topo.service.impl.AssetsRelationServiceImpl</source>
         </properties>
     </destination>
+    
+    
+    
+	<destination id="TESTHW">
+        <properties>
+            <source>cn.com.dhcc.fzep.topo.service.test.TestService</source>
+        </properties>
+    </destination>
 </service>

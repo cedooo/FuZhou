@@ -5,6 +5,10 @@ package cn.com.dhcc.fzep.topo.pojo;
  *
  */
 public class TwoLayerSwitch extends Equipment {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1396193599301304488L;
 	private String twoLayerSwitchId = null;
 	private String twoLayerSwitchName = null;
 	private String siteId = null;

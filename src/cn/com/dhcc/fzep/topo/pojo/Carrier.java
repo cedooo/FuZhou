@@ -1,6 +1,10 @@
 package cn.com.dhcc.fzep.topo.pojo;
 
 public class Carrier extends Equipment {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2803912276108149856L;
 	private String carrierId = null;
 	private String siteId = null;
 	private String projectId = null;

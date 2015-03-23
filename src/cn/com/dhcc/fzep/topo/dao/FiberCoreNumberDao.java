@@ -21,7 +21,7 @@ public class FiberCoreNumberDao {
 		try {
 			dbManager.openConnection();
 			StringBuilder sqlQuery = new StringBuilder(
-					" select fcn.* from a_fibercorenumber fcn where isUsed = '是' and  cableId = '" + cableId + "' and  connections is not null "
+					" select fcn.* from a_fibercorenumber fcn where isUsed = '是' and  cableId = '" + cableId + "'  "
 					);
 			ResultSet results = dbManager
 					.executeQuery(sqlQuery.toString());
@@ -31,7 +31,8 @@ public class FiberCoreNumberDao {
 				String isUsed= results.getString("isUsed");
 				String isJump= results.getString("isJump");
 				String bizType= results.getString("bizType");
-				String connections= results.getString("connections");
+				String startConnections= results.getString("startConnections");
+				String endConnections= results.getString("endConnections");
 				String transceiver= results.getString("transceiver");
 				String delFlg= results.getString("delFlg");
 				String descp= results.getString("descp");
@@ -43,7 +44,8 @@ public class FiberCoreNumberDao {
 				fcn.setIsUsed(isUsed);
 				fcn.setIsJump(isJump);
 				fcn.setBizType(bizType);
-				fcn.setConnections(connections);
+				fcn.setStartConnections(startConnections);
+				fcn.setEndConnections(endConnections);
 				fcn.setTransceiver(transceiver);
 				fcn.setDelFlg(delFlg);
 				fcn.setDescp(descp);
@@ -82,7 +84,7 @@ public class FiberCoreNumberDao {
 			StringBuilder sqlQuery = new StringBuilder(
 					" select fcn.* " + 
 							" from a_fibercorenumber fcn left join  a_cable cable  on cable.cableId = fcn.cableId " +
-							" where fcn.isUsed = '是'  and  fcn.connections is not null and (cable.cableStartId = '" + 
+							" where fcn.isUsed = '是'   and (cable.cableStartId = '" + 
 							siteId + "' or cable.cableEndId = '" + siteId + "' ) "
 					);
 			ResultSet results = dbManager
@@ -94,7 +96,9 @@ public class FiberCoreNumberDao {
 				String isJump= results.getString("isJump");
 				String cableId = results.getString("cableId");
 				String bizType= results.getString("bizType");
-				String connections= results.getString("connections");
+				//String connections= results.getString("connections");
+				String startConnections= results.getString("startConnections");
+				String endConnections= results.getString("endConnections");
 				String transceiver= results.getString("transceiver");
 				String delFlg= results.getString("delFlg");
 				String descp= results.getString("descp");
@@ -106,7 +110,8 @@ public class FiberCoreNumberDao {
 				fcn.setIsUsed(isUsed);
 				fcn.setIsJump(isJump);
 				fcn.setBizType(bizType);
-				fcn.setConnections(connections);
+				fcn.setStartConnections(startConnections);
+				fcn.setEndConnections(endConnections);
 				fcn.setTransceiver(transceiver);
 				fcn.setDelFlg(delFlg);
 				fcn.setDescp(descp);

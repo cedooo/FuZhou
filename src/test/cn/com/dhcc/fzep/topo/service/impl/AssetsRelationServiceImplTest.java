@@ -10,6 +10,7 @@ import cn.com.dhcc.fzep.topo.pojo.Site;
 import cn.com.dhcc.fzep.topo.pojo.assets.SiteAssetsRelations;
 import cn.com.dhcc.fzep.topo.service.AssetsRelationService;
 import cn.com.dhcc.fzep.topo.service.impl.AssetsRelationServiceImpl;
+import cn.com.dhcc.fzep.topo.vo.CableVO;
 
 public class AssetsRelationServiceImplTest {
 
@@ -40,4 +41,11 @@ public class AssetsRelationServiceImplTest {
 		System.out.println(listCable);
 	}
 
+	@Test
+	public void testListCableVO(){
+		String targetSiteId = "2";
+		String connectSiteId = "1";
+		List<CableVO> listVO = srv.listCableVO(targetSiteId, connectSiteId);
+		System.out.println(listVO);
+	}
 }

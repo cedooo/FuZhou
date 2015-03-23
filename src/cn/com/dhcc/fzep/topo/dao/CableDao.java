@@ -377,9 +377,9 @@ public class CableDao {
 		*/
 		try {
 			db.openConnection();
-			String sql = "SELECT * FROM a_cable " +
+			String sql = " SELECT * FROM a_cable " +
 					" where (cableStartId='" + targetSiteId + "' and cableEndId='" + relationSiteId + "') " +
-							"or (cableEndId='" + targetSiteId + "' and cableStartId='" + relationSiteId + "') " +
+							" or (cableEndId='" + targetSiteId + "' and cableStartId='" + relationSiteId + "') " +
 					" LIMIT 0,2 ";
 			ResultSet results = db.executeQuery(sql);
 			while (results.next()) {

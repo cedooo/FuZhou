@@ -1,5 +1,6 @@
 package cn.com.dhcc.fzep.topo.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.dhcc.fzep.topo.dao.CableDao;
@@ -12,6 +13,7 @@ import cn.com.dhcc.fzep.topo.pojo.assets.SiteAssetsRelations;
 import cn.com.dhcc.fzep.topo.pojo.assets.SiteVO;
 import cn.com.dhcc.fzep.topo.service.AssetsRelationService;
 import cn.com.dhcc.fzep.topo.service.SiteEquipmentListService;
+import cn.com.dhcc.fzep.topo.vo.CableVO;
 import cn.com.dhcc.fzep.topo.vo.EquipmentVO;
 
 public class AssetsRelationServiceImpl implements AssetsRelationService {
@@ -84,6 +86,28 @@ public class AssetsRelationServiceImpl implements AssetsRelationService {
 		CableDao cableDao = new CableDao();
 		List<Cable> listOneCable = cableDao.relationCableList(site1Id, site2Id);
 		return listOneCable;
+	}
+	@Override
+	public List<CableVO> listCableVO(String targetSiteId, String connectSiteId) {
+		List<Cable> listCable = listCable(targetSiteId, connectSiteId);
+		FiberCoreNumberDao fcnDao = new FiberCoreNumberDao();
+		List<CableVO> listCableVO = new ArrayList<CableVO>();
+		for (Cable cable : listCable) {
+			CableVO cableVO = new CableVO(cable);
+			List<FiberCoreNumber> listFCN =  fcnDao.listFiberCN(cable.getCableId());
+			List<FiberCoreNumber> listFCNVO = new ArrayList<FiberCoreNumber>();
+			for (FiberCoreNumber fiberCoreNumber : listFCN) {
+				if(targetSiteId.equals(cableVO.getCableStartId())){
+					fiberCoreNumber.setEndConnections(null);
+				}else if(targetSiteId.equals(cableVO.getCableEndId())){
+					fiberCoreNumber.setStartConnections(null);
+				}
+				listFCNVO.add(fiberCoreNumber);
+			}
+			cableVO.setListFibeCoreNumber(listFCNVO);
+			listCableVO.add(cableVO);
+		}
+		return listCableVO;
 	}
 
 }

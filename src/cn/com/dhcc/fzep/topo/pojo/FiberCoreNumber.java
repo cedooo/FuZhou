@@ -7,7 +7,9 @@ public class FiberCoreNumber {
 	private String isUsed = null;
 	private String isJump = null;
 	private String bizType = null;
-	private String connections = null;
+	//private String connections = null;
+	private String startConnections = null;
+	private String endConnections = null;
 	private String transceiver = null;
 	private String delFlg = null;
 	private String descp = null;
@@ -47,11 +49,17 @@ public class FiberCoreNumber {
 	public void setBizType(String bizType) {
 		this.bizType = bizType;
 	}
-	public String getConnections() {
-		return connections;
+	public String getStartConnections() {
+		return startConnections;
 	}
-	public void setConnections(String connections) {
-		this.connections = connections;
+	public void setStartConnections(String startConnections) {
+		this.startConnections = startConnections;
+	}
+	public String getEndConnections() {
+		return endConnections;
+	}
+	public void setEndConnections(String endConnections) {
+		this.endConnections = endConnections;
 	}
 	public String getTransceiver() {
 		return transceiver;
@@ -71,14 +79,16 @@ public class FiberCoreNumber {
 	public void setDescp(String descp) {
 		this.descp = descp;
 	}
+	
 	@Override
 	public String toString() {
 		return "FiberCoreNumber [fiberCoreNumberId=" + fiberCoreNumberId
 				+ ", fiberCoreNumberName=" + fiberCoreNumberName + ", cableId="
 				+ cableId + ", isUsed=" + isUsed + ", isJump=" + isJump
-				+ ", bizType=" + bizType + ", connections=" + connections
+				+ ", bizType=" + bizType + ", startConnections="
+				+ startConnections + ", endConnections=" + endConnections
 				+ ", transceiver=" + transceiver + ", delFlg=" + delFlg
 				+ ", descp=" + descp + "]";
 	}
-	
+
 }

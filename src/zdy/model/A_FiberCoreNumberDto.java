@@ -23,8 +23,10 @@ public class A_FiberCoreNumberDto extends TemplateBeen {
 	private String isJump;
 	/** 业务类型 */
 	private String bizType;
-	/** 连接情况 */
-	private String connections;
+	/** 站点起始端连接情况 */
+	private String startConnections;
+	/** 站点目的端连接情况 */
+	private String endConnections;
 	/** 收发情况 */
 	private String transceiver;
 	/**
@@ -118,18 +120,30 @@ public class A_FiberCoreNumberDto extends TemplateBeen {
 	public void setBizType(String bizType) {
 		this.bizType = bizType;
 	}
+
 	/**
-	 * @return the connections
+	 * @return the startConnections
 	 */
-	public String getConnections() {
-		return connections;
+	public String getStartConnections() {
+		return startConnections;
 	}
 	/**
-	 * @param connections
-	 *            the connections to set
+	 * @param startConnections the startConnections to set
 	 */
-	public void setConnections(String connections) {
-		this.connections = connections;
+	public void setStartConnections(String startConnections) {
+		this.startConnections = startConnections;
+	}
+	/**
+	 * @return the endConnections
+	 */
+	public String getEndConnections() {
+		return endConnections;
+	}
+	/**
+	 * @param endConnections the endConnections to set
+	 */
+	public void setEndConnections(String endConnections) {
+		this.endConnections = endConnections;
 	}
 	/**
 	 * @return the transceiver

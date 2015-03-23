@@ -78,7 +78,7 @@ public class A_CableServiceImpl extends Forward {
 		try {
 			 TemplateDao templateDao = new TemplateDaoImpl();
 			 A_Cable a_Cable = (A_Cable)request.getAttribute(Constant.A_CABLE);
-			 /** 查询最近的主键，并加1 */
+			 /** 查询最大的主键，并加1 */
 			int cableId = templateDao.queryForCount(" select max(cableId) from a_cable ");
 			a_Cable.setCableId(String.valueOf(++cableId));
 			 /** 开启事务操作 */
@@ -98,12 +98,13 @@ public class A_CableServiceImpl extends Forward {
 					 A_FiberCoreNumber fiberCoreNumber = new A_FiberCoreNumber();
 					 fiberCoreNumber.setFiberCoreNumberName("纤芯"+i);
 					 fiberCoreNumber.setCableId(a_Cable.getCableId());
-					 fiberCoreNumber.setIsUsed("");
-					 fiberCoreNumber.setIsJump("");
-					 fiberCoreNumber.setBizType("");
-					 fiberCoreNumber.setConnections("{}");
+					 fiberCoreNumber.setIsUsed(null);
+					 fiberCoreNumber.setIsJump(null);
+					 fiberCoreNumber.setBizType(null);
+					 fiberCoreNumber.setStartConnections("{}");
+					 fiberCoreNumber.setEndConnections("{}");
 					 fiberCoreNumber.setDelFlg("启用");
-					 fiberCoreNumber.setDescp("");
+					 fiberCoreNumber.setDescp(null);
 					 templateDao.transcationAdd(fiberCoreNumber,dBManager);
 				 }
 			 }else{
@@ -113,19 +114,40 @@ public class A_CableServiceImpl extends Forward {
 					 A_FiberCoreNumber fiberCoreNumber = new A_FiberCoreNumber();
 					 fiberCoreNumber.setFiberCoreNumberName(jsonObject.getString("fiberCoreNumberName"));
 					 fiberCoreNumber.setCableId(a_Cable.getCableId());
-					 fiberCoreNumber.setIsUsed(jsonObject.getString("isUsed"));
-					 fiberCoreNumber.setIsJump(jsonObject.getString("isJump"));
-					 fiberCoreNumber.setBizType(jsonObject.getString("bizType"));
-					 String connectionStr = jsonObject.getString("connections").replaceAll("\"","\'");
-					 if(connectionStr==null||"[null]".equals(connectionStr)||"[]".equals(connectionStr)){
-						 connectionStr ="{}";
+					 //FIXME 不知道怎么回事，isUsed,isJump和bizType，三个值，当没有输入值的情况下，startConnections和endConnections存入数据库都为空白字符！
+					 if(!"".equals(jsonObject.getString("isUsed"))){
+						 fiberCoreNumber.setIsUsed(jsonObject.getString("isUsed"));
 					 }else{
-						 connectionStr = connectionStr.substring(1, connectionStr.length()-1);
+						 fiberCoreNumber.setIsUsed(null);
 					 }
-					 fiberCoreNumber.setConnections(connectionStr);
+					 if(!"".equals(jsonObject.getString("isJump"))){
+						 fiberCoreNumber.setIsJump(jsonObject.getString("isJump"));
+					 }else{
+						 fiberCoreNumber.setIsJump(null);
+					 }
+					 if(!"".equals(jsonObject.getString("bizType"))){
+						 fiberCoreNumber.setBizType(jsonObject.getString("bizType"));
+					 }else{
+						 fiberCoreNumber.setBizType(null);
+					 }
+					 /** 站点的起始连接情况 */
+					 String startConnectionStr = jsonObject.getString("startConnections").replaceAll("\"","\'");
+					 if(startConnectionStr==null||"[null]".equals(startConnectionStr)||"[]".equals(startConnectionStr)){
+						 startConnectionStr ="{}";
+					 }else{
+						 startConnectionStr = startConnectionStr.substring(1, startConnectionStr.length()-1);
+					 }
+					 fiberCoreNumber.setStartConnections(startConnectionStr);
+					 /** 站点的目的连接情况 */
+					 String endConnectionStr = jsonObject.getString("endConnections").replaceAll("\"","\'");
+					 if(endConnectionStr==null||"[null]".equals(endConnectionStr)||"[]".equals(endConnectionStr)){
+						 endConnectionStr ="{}";
+					 }else{
+						 endConnectionStr = endConnectionStr.substring(1, endConnectionStr.length()-1);
+					 }
+					 fiberCoreNumber.setEndConnections(endConnectionStr);
 					 fiberCoreNumber.setTransceiver(jsonObject.getString("transceiver"));
 					 fiberCoreNumber.setDelFlg("启用");
-					 fiberCoreNumber.setDescp("");
 					 templateDao.transcationAdd(fiberCoreNumber,dBManager);
 				 };
 			 }
@@ -264,12 +286,9 @@ public class A_CableServiceImpl extends Forward {
 					 A_FiberCoreNumber fiberCoreNumber = new A_FiberCoreNumber();
 					 fiberCoreNumber.setFiberCoreNumberName("纤芯"+i);
 					 fiberCoreNumber.setCableId(a_Cable.getCableId());
-					 fiberCoreNumber.setIsUsed("");
-					 fiberCoreNumber.setIsJump("");
-					 fiberCoreNumber.setBizType("");
-					 fiberCoreNumber.setConnections("{}");
+					 fiberCoreNumber.setStartConnections("{}");
+					 fiberCoreNumber.setEndConnections("{}");
 					 fiberCoreNumber.setDelFlg("启用");
-					 fiberCoreNumber.setDescp("");
 					 templateDao.transcationAdd(fiberCoreNumber,dBManager);
 				 }
 			 }else{
@@ -279,19 +298,40 @@ public class A_CableServiceImpl extends Forward {
 					 A_FiberCoreNumber fiberCoreNumber = new A_FiberCoreNumber();
 					 fiberCoreNumber.setFiberCoreNumberName(jsonObject.getString("fiberCoreNumberName"));
 					 fiberCoreNumber.setCableId(a_Cable.getCableId());
-					 fiberCoreNumber.setIsUsed(jsonObject.getString("isUsed"));
-					 fiberCoreNumber.setIsJump(jsonObject.getString("isJump"));
-					 fiberCoreNumber.setBizType(jsonObject.getString("bizType"));
-					 String connectionStr = jsonObject.getString("connections").replaceAll("\"","\'");
-					 if(connectionStr==null||"[null]".equals(connectionStr)||"[]".equals(connectionStr)){
-						 connectionStr ="{}";
+					 //FIXME 不知道怎么回事，isUsed,isJump和bizType，三个值，当没有输入值的情况下，startConnections和endConnections存入数据库都为空白字符！
+					 if(!"".equals(jsonObject.getString("isUsed"))){
+						 fiberCoreNumber.setIsUsed(jsonObject.getString("isUsed"));
 					 }else{
-						 connectionStr = connectionStr.substring(1, connectionStr.length()-1);
+						 fiberCoreNumber.setIsUsed(null);
 					 }
-					 fiberCoreNumber.setConnections(connectionStr);
+					 if(!"".equals(jsonObject.getString("isJump"))){
+						 fiberCoreNumber.setIsJump(jsonObject.getString("isJump"));
+					 }else{
+						 fiberCoreNumber.setIsJump(null);
+					 }
+					 if(!"".equals(jsonObject.getString("bizType"))){
+						 fiberCoreNumber.setBizType(jsonObject.getString("bizType"));
+					 }else{
+						 fiberCoreNumber.setBizType(null);
+					 }
+					 /** 站点起始连接情况 */
+					 String startConnectionStr = jsonObject.getString("startConnections").replaceAll("\"","\'");
+					 if(startConnectionStr==null||"[null]".equals(startConnectionStr)||"[]".equals(startConnectionStr)){
+						 startConnectionStr ="{}";
+					 }else{
+						 startConnectionStr = startConnectionStr.substring(1, startConnectionStr.length()-1);
+					 }
+					 fiberCoreNumber.setStartConnections(startConnectionStr);
+					 /** 站点目标地址连接情况 */
+					 String endConnectionStr = jsonObject.getString("endConnections").replaceAll("\"","\'");
+					 if(endConnectionStr==null||"[null]".equals(endConnectionStr)||"[]".equals(endConnectionStr)){
+						 endConnectionStr ="{}";
+					 }else{
+						 endConnectionStr = endConnectionStr.substring(1, endConnectionStr.length()-1);
+					 }
+					 fiberCoreNumber.setEndConnections(endConnectionStr);
 					 fiberCoreNumber.setTransceiver(jsonObject.getString("transceiver"));
 					 fiberCoreNumber.setDelFlg("启用");
-					 fiberCoreNumber.setDescp("");
 					 templateDao.transcationAdd(fiberCoreNumber,dBManager);
 				 };
 			 }
@@ -566,6 +606,10 @@ public class A_CableServiceImpl extends Forward {
  	             		 dBManager.openTranscation();
  	             		 /** 因为是事务操作，只有提交后才会持久化，此cableNameMap是为了判断是否有相同的记录存在 */
  	             		Map<String,String> cableNameMap = new HashMap<String,String>();
+ 	             		/** 查询最近的主键，并加1（主键自增） */
+ 	             		TemplateDao templateDaoForTranscationAdd = new TemplateDaoImpl();
+      					int cableId = templateDaoForTranscationAdd.queryForCount(" select max(cableId) from a_cable ");
+      					cableNameMap.put("cableId", String.valueOf(++cableId));
 	                     for(int i=1;i<rows;i++){
 	                    	 /** 表格行数据都为空则跳过 */
 	                    	if( "".equals(st.getCell(0,i).getContents())&&"".equals(st.getCell(1,i).getContents())
@@ -658,7 +702,6 @@ public class A_CableServiceImpl extends Forward {
 	                     	cable.setDelFlg(st.getCell(10,i).getContents());
 	                     	cable.setDescp(st.getCell(11,i).getContents());
 	                     	/** 对光缆名称进行设置 */
-	                     	TemplateDao templateDaoForTranscationAdd = new TemplateDaoImpl();
 	                     	String cableName = st.getCell(0,i).getContents()+"-"+st.getCell(1,i).getContents()+"-";
 	                     	ConditionDto conditionDto = new ConditionDto();
 	                     	conditionDto.setConditionFiled("cableName");
@@ -696,7 +739,37 @@ public class A_CableServiceImpl extends Forward {
 	            			}
 	            			cable.setCableName(cableName);
 	            			cableNameMap.put(cableName.substring(0,cableName.lastIndexOf("-")+1), cableName);
-	                     	templateDaoForTranscationAdd.transcationAdd(cable,dBManager);
+	            			/** 获取光缆主键 */
+          					cable.setCableId(String.valueOf(cableNameMap.get("cableId")));
+          					cableNameMap.put("cableId", String.valueOf(
+          														Integer.valueOf(
+          																	cableNameMap.get("cableId")
+          												)+1)
+          									);
+	                     	templateDaoForTranscationAdd.transcationAddIncludeId(cable, dBManager);
+	                     	{
+	                     		/** 判断是否配置纤芯列表的情况 */
+	               			 int fiberCoreNumberCount = 0;
+	               				 ConditionDto _conditionDto = new ConditionDto();
+	               				_conditionDto.setConditionFiled("fiberId");
+	               				_conditionDto.setConditionConditions("like");
+	               				_conditionDto.setConditionValue(cable.getFiberId());
+	               				 Map<String, Object> map = templateDaoForTranscationAdd.query(_conditionDto,Constant.B_FIBER);
+	               				 fiberCoreNumberCount =Integer.valueOf(((List<B_Fiber>)map.get(Constant.BEENLIST)).get(0).getFiberCoreNumber());
+	               				 for(int _i=1;_i<=fiberCoreNumberCount;_i++){
+	               					 A_FiberCoreNumber fiberCoreNumber = new A_FiberCoreNumber();
+	               					 fiberCoreNumber.setFiberCoreNumberName("纤芯"+_i);
+	               					 /** 查询最近的主键，并加1 */
+	               					 fiberCoreNumber.setCableId(cable.getCableId());
+	               					 fiberCoreNumber.setIsUsed(null);
+	               					 fiberCoreNumber.setIsJump(null);
+	               					 fiberCoreNumber.setBizType(null);
+	               					 fiberCoreNumber.setStartConnections("{}");
+	               					 fiberCoreNumber.setEndConnections("{}");
+	               					 fiberCoreNumber.setDelFlg("启用");
+	               					templateDaoForTranscationAdd.transcationAdd(fiberCoreNumber,dBManager);
+	               				 }
+	                     	}
 	                     } 
 	        			dBManager.closeTranscation();
                      }catch(Exception e){

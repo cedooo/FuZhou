@@ -289,6 +289,7 @@ Ext.onReady(function(){
             {header:"备注",         width: 120, sortable:true,dataIndex:'descp'}
         ]),
         sm: sm,
+        stripeRows: true,
         /** 分页工具栏 */
          bbar: new Ext.PagingToolbar({
             pageSize:50,store: gridPanelDataStore,displayInfo: true,

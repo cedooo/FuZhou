@@ -61,6 +61,14 @@ public final class Constant {
 	public static final String A_THREELAYERSWITCHDTO = "A_ThreeLayerSwitchDto";
 	public static final String A_TWOLAYERSWITCHDTO = "A_TwoLayerSwitchDto";
 	/***************************** 我是分割线 ************************************/
+	/** 连接设备类型 */
+	public static final String TYPE_CONNECTION_GPRS = "gprs";
+	public static final String TYPE_CONNECTION_OLT = "olt";
+	public static final String TYPE_CONNECTION_ONU = "onu";
+	public static final String TYPE_CONNECTION_CARRIER = "载波";
+	public static final String TYPE_CONNECTION_TWOLAYERSWITCH = "二层交换机";
+	public static final String TYPE_CONNECTION_THREELAYERSWITCH = "三层交换机";
+	/***************************** 我是分割线 ************************************/
 	/** manager.xml的位置 */
 	public static  String MANAGERPATH = "";
 	/** model的前缀 */

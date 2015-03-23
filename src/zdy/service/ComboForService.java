@@ -300,7 +300,7 @@ public class ComboForService extends Forward {
 					connectionDataStore +="]},";
 				}else{
 					for(A_Gprs gprs:beenList){
-						connectionDataStore +="{'text':'"+gprs.getGprsName()+"','leaf':true,'deviceType':'gprs','deviceId':'"+gprs.getGprsId()+"'},";
+						connectionDataStore +="{'text':'"+gprs.getGprsName()+"','leaf':true,'deviceType':'"+Constant.TYPE_CONNECTION_GPRS+"','deviceId':'"+gprs.getGprsId()+"'},";
 					}
 					connectionDataStore = connectionDataStore.substring(0, connectionDataStore.length()-1);
 					connectionDataStore +="]},";
@@ -316,7 +316,7 @@ public class ComboForService extends Forward {
 					connectionDataStore +="]},";
 				}else{
 					for(A_Olt olt:beenList){
-						connectionDataStore +="{'text':'"+olt.getOltName()+"','leaf':true,'deviceType':'olt','deviceId':'"+olt.getOltId()+"'},";
+						connectionDataStore +="{'text':'"+olt.getOltName()+"','leaf':true,'deviceType':'"+Constant.TYPE_CONNECTION_OLT+"','deviceId':'"+olt.getOltId()+"'},";
 					}
 					connectionDataStore = connectionDataStore.substring(0, connectionDataStore.length()-1);
 					connectionDataStore +="]},";
@@ -332,7 +332,7 @@ public class ComboForService extends Forward {
 					connectionDataStore +="]},";
 				}else{
 					for(A_Onu onu:beenList){
-						connectionDataStore +="{'text':'"+onu.getOnuName()+"','leaf':true,'deviceType':'onu','deviceId':'"+onu.getOnuId()+"'},";
+						connectionDataStore +="{'text':'"+onu.getOnuName()+"','leaf':true,'deviceType':'"+Constant.TYPE_CONNECTION_ONU+"','deviceId':'"+onu.getOnuId()+"'},";
 					}
 					connectionDataStore = connectionDataStore.substring(0, connectionDataStore.length()-1);
 					connectionDataStore +="]},";
@@ -348,7 +348,7 @@ public class ComboForService extends Forward {
 					connectionDataStore +="]},";
 				}else{
 					for(A_Carrier carrier:beenList){
-						connectionDataStore +="{'text':'"+carrier.getCarrierName()+"','leaf':true,'deviceType':'载波','deviceId':'"+carrier.getCarrierId()+"'},";
+						connectionDataStore +="{'text':'"+carrier.getCarrierName()+"','leaf':true,'deviceType':'"+Constant.TYPE_CONNECTION_CARRIER+"','deviceId':'"+carrier.getCarrierId()+"'},";
 					}
 					connectionDataStore = connectionDataStore.substring(0, connectionDataStore.length()-1);
 					connectionDataStore +="]},";
@@ -364,7 +364,7 @@ public class ComboForService extends Forward {
 					connectionDataStore +="]},";
 				}else{
 					for(A_TwoLayerSwitch twoLayerSwitch:beenList){
-						connectionDataStore +="{'text':'"+twoLayerSwitch.getTwoLayerSwitchName()+"','leaf':true,'deviceType':'二层交换机','deviceId':'"+twoLayerSwitch.getTwoLayerSwitchId()+"'},";
+						connectionDataStore +="{'text':'"+twoLayerSwitch.getTwoLayerSwitchName()+"','leaf':true,'deviceType':'"+Constant.TYPE_CONNECTION_TWOLAYERSWITCH+"','deviceId':'"+twoLayerSwitch.getTwoLayerSwitchId()+"'},";
 					}
 					connectionDataStore = connectionDataStore.substring(0, connectionDataStore.length()-1);
 					connectionDataStore +="]},";
@@ -380,7 +380,7 @@ public class ComboForService extends Forward {
 					connectionDataStore +="]}";
 				}else{
 					for(A_ThreeLayerSwitch threeLayerSwitch:beenList){
-						connectionDataStore +="{'text':'"+threeLayerSwitch.getThreeLayerSwitchName()+"','leaf':true,'deviceType':'三层交换机','deviceId':'"+threeLayerSwitch.getThreeLayerSwitchId()+"'},";
+						connectionDataStore +="{'text':'"+threeLayerSwitch.getThreeLayerSwitchName()+"','leaf':true,'deviceType':'"+Constant.TYPE_CONNECTION_THREELAYERSWITCH+"','deviceId':'"+threeLayerSwitch.getThreeLayerSwitchId()+"'},";
 					}
 					connectionDataStore = connectionDataStore.substring(0, connectionDataStore.length()-1);
 					connectionDataStore +="]}";

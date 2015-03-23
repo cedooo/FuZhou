@@ -42,7 +42,8 @@ public final class Method {
 				"com.mysql.jdbc.CommunicationsException")) {
 			return "+'<br/>异常原因：连接数据库失败，请检查数据库连接是否正常。'";
 		} else {
-			return "+'<br/>异常原因：未知错误，请联系系统管理员。'";
+			return "+'<br/>异常原因：未知错误，请联系系统管理员。'" +
+					"+'<br/>"+e.getMessage()+"'";
 		}
 	}
 

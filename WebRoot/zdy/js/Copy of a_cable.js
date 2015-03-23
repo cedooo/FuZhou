@@ -179,7 +179,7 @@ Ext.onReady(function(){
 						            },{
 						            	items:[{
 						            	 		layout:'form',columnWidth:.5,defaultType:'textfield', 
-						            	 		defaults:{labelStyle:"text-align:right;",anchor:'95%'},
+						            	 		defaults:{labelStyle:"text-align:right;",anchor:'90%'},
 								            	items:[{
 										            		id:'addCableStartId',name:'A_Cable.cableStartId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>光缆起点',
 										                	allowBlank:false,blankText:'光缆起点不能为空',
@@ -364,7 +364,7 @@ Ext.onReady(function(){
     	/** 纤芯列表-增加窗口 */
     	var window_addFiberCoreNumber = new Ext.Window({
 	         					title: '纤芯列表',closable:true,closeAction:"hide",
-	            				width:1000,height:500,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_addFiberCoreNumber,
+	            				width:800,height:500,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_addFiberCoreNumber,
 	            				buttonAlign:'center',
 						        buttons: [{text: '关闭',handler:function(){window_addFiberCoreNumber.hide();}}]
 	       					});
@@ -372,7 +372,7 @@ Ext.onReady(function(){
 	    /** 纤芯列表-更新窗口 */
     	var window_updateFiberCoreNumber = new Ext.Window({
 	         					title: '纤芯列表',closable:true,closeAction:"hide",
-	            				width:1000,height:500,iconCls:'bgi_update',plain:true,layout:'fit',items:formPanel_updateFiberCoreNumber,
+	            				width:800,height:500,iconCls:'bgi_update',plain:true,layout:'fit',items:formPanel_updateFiberCoreNumber,
 	            				buttonAlign:'center',
 						        buttons: [{text: '关闭',handler:function(){window_updateFiberCoreNumber.hide();}}]
 	       					});						    
@@ -421,11 +421,11 @@ Ext.onReady(function(){
 															for ( var i=1;i<=_fiberCoreNumber;i++){
 																formPanel_addFiberCoreNumber.add(new Ext.Panel({
 															            	 items:[{
-															            	 		layout:'form',labelWidth:55,columnWidth:.12,defaultType:'textfield', 
+															            	 		layout:'form',labelWidth:55,columnWidth:.15,defaultType:'textfield', 
 															            	 		defaults:{labelStyle:"text-align:right;",anchor:'95%',readOnly:true},
 																	            	items:[{id:'addFiberCoreNumberName'+i,fieldLabel:'纤芯名称',value:'纤芯'+i}]
 																	            },{
-																	            	layout:'form',labelWidth:55,columnWidth:.12,defaultType:'textfield',
+																	            	layout:'form',labelWidth:55,columnWidth:.15,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'addIsUsed'+i,xtype:'combo',fieldLabel:'是否使用',
@@ -433,7 +433,7 @@ Ext.onReady(function(){
 																			                typeAhead:true,triggerAction:'all',forceSelection:true
 																			        }] 
 															            		},{
-																	            	layout:'form',labelWidth:55,columnWidth:.12,defaultType:'textfield',
+																	            	layout:'form',labelWidth:55,columnWidth:.15,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'addIsJump'+i,xtype:'combo',fieldLabel:'是否跳转',
@@ -441,7 +441,7 @@ Ext.onReady(function(){
 																			                typeAhead:true,triggerAction:'all',forceSelection:true
 																			        }] 
 															            		},{
-																	            	layout:'form',labelWidth:55,columnWidth:.12,defaultType:'textfield',
+																	            	layout:'form',labelWidth:55,columnWidth:.15,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'addBizType'+i,xtype:'combo',fieldLabel:'业务类型',
@@ -449,21 +449,14 @@ Ext.onReady(function(){
 																			                typeAhead:true,triggerAction:'all',forceSelection:true
 																			        }] 
 															            		},{
-																	            	layout:'form',labelWidth:55,columnWidth:.2,defaultType:'textfield',
+																	            	layout:'form',labelWidth:55,columnWidth:.25,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
-																	            			id:'addStartConnections'+i,xtype:'treecombo',fieldLabel:'起始端',
+																	            			id:'addConnections'+i,xtype:'treecombo',fieldLabel:'连接情况',
 																	            			zdyForConnection:zdyForConnectionsStore
 																			        }] 
 															            		},{
-																	            	layout:'form',labelWidth:55,columnWidth:.2,defaultType:'textfield',
-																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
-																	            	items:[{
-																	            			id:'addEndConnections'+i,xtype:'treecombo',fieldLabel:'目的端',
-																	            			zdyForConnection:zdyForConnectionsStore
-																			        }] 
-															            		},{
-															            	 		layout:'form',labelWidth:1,columnWidth:.12,defaultType:'textfield', 
+															            	 		layout:'form',labelWidth:1,columnWidth:.15,defaultType:'textfield', 
 															            	 		defaults:{labelStyle:"text-align:right;",anchor:'50%'},
 																	            	items:[{id:'addTransceiver'+i}]
 																	            }]
@@ -512,8 +505,7 @@ Ext.onReady(function(){
 												addJson +="'bizType':'"+Ext.getCmp('addBizType'+_index).getValue()+"',";
 												addJson +="'cableId':'启用',";  
 												addJson +="'delFlg':'启用',"; 
-												addJson +="'startConnections':["+Ext.getCmp('addStartConnections'+_index).getValue()+"],"; 
-												addJson +="'endConnections':["+Ext.getCmp('addEndConnections'+_index).getValue()+"],"; 
+												addJson +="'connections':["+Ext.getCmp('addConnections'+_index).getValue()+"],"; 
 												addJson +="'transceiver':'"+Ext.getCmp('addTransceiver'+_index).getValue()+"'"; 
 												addJson +="},";
 												_index++;
@@ -596,11 +588,11 @@ Ext.onReady(function(){
 															for ( var i=1;i<=_fiberCoreNumber;i++){
 																formPanel_updateFiberCoreNumber.add(new Ext.Panel({
 															            	 items:[{
-															            	 		layout:'form',labelWidth:55,columnWidth:.12,defaultType:'textfield', 
+															            	 		layout:'form',labelWidth:55,columnWidth:.15,defaultType:'textfield', 
 															            	 		defaults:{labelStyle:"text-align:right;",anchor:'95%',readOnly:true},
 																	            	items:[{id:'updateFiberCoreNumberName'+i,fieldLabel:'纤芯名称',value:'纤芯'+i}]
 																	            },{
-																	            	layout:'form',labelWidth:55,columnWidth:.12,defaultType:'textfield',
+																	            	layout:'form',labelWidth:55,columnWidth:.15,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'updateIsUsed'+i,xtype:'combo',fieldLabel:'是否使用',
@@ -608,7 +600,7 @@ Ext.onReady(function(){
 																			                typeAhead:true,triggerAction:'all',forceSelection:true
 																			        }] 
 															            		},{
-																	            	layout:'form',labelWidth:55,columnWidth:.12,defaultType:'textfield',
+																	            	layout:'form',labelWidth:55,columnWidth:.15,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'updateIsJump'+i,xtype:'combo',fieldLabel:'是否跳转',
@@ -616,7 +608,7 @@ Ext.onReady(function(){
 																			                typeAhead:true,triggerAction:'all',forceSelection:true
 																			        }] 
 															            		},{
-																	            	layout:'form',labelWidth:55,columnWidth:.12,defaultType:'textfield',
+																	            	layout:'form',labelWidth:55,columnWidth:.15,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'updateBizType'+i,xtype:'combo',fieldLabel:'业务类型',
@@ -624,21 +616,14 @@ Ext.onReady(function(){
 																			                typeAhead:true,triggerAction:'all',forceSelection:true
 																			        }] 
 															            		},{
-																	            	layout:'form',labelWidth:55,columnWidth:.2,defaultType:'textfield',
+																	            	layout:'form',labelWidth:55,columnWidth:.25,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
-																	            			id:'updateStartConnections'+i,xtype:'treecombo',fieldLabel:'起始端',
+																	            			id:'updateConnections'+i,xtype:'treecombo',fieldLabel:'连接情况',
 																	            			zdyForConnection:zdyForConnectionsStore
 																			        }] 
 															            		},{
-																	            	layout:'form',labelWidth:55,columnWidth:.2,defaultType:'textfield',
-																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
-																	            	items:[{
-																	            			id:'updateEndConnections'+i,xtype:'treecombo',fieldLabel:'目的端',
-																	            			zdyForConnection:zdyForConnectionsStore
-																			        }] 
-															            		},{
-															            	 		layout:'form',labelWidth:1,columnWidth:.12,defaultType:'textfield', 
+															            	 		layout:'form',labelWidth:1,columnWidth:.15,defaultType:'textfield', 
 															            	 		defaults:{labelStyle:"text-align:right;",anchor:'50%'},
 																	            	items:[{id:'updateTransceiver'+i}]
 																	            }]
@@ -665,8 +650,7 @@ Ext.onReady(function(){
 															 	  Ext.getCmp("updateIsUsed"+(j+1)).setValue(__responseJson.beenList[j].isUsed);
 															 	  Ext.getCmp("updateIsJump"+(j+1)).setValue(__responseJson.beenList[j].isJump);
 															 	  Ext.getCmp("updateBizType"+(j+1)).setValue(__responseJson.beenList[j].bizType);
-															 	  Ext.getCmp("updateStartConnections"+(j+1)).setValue(__responseJson.beenList[j].startConnections.deviceName);
-															 	  Ext.getCmp("updateEndConnections"+(j+1)).setValue(__responseJson.beenList[j].endConnections.deviceName);
+															 	  Ext.getCmp("updateConnections"+(j+1)).setValue(__responseJson.beenList[j].connections.deviceName);
 															 	  Ext.getCmp("updateTransceiver"+(j+1)).setValue(__responseJson.beenList[j].transceiver);
 															 	}
 															 },failure: function(response,options){
@@ -714,8 +698,7 @@ Ext.onReady(function(){
 												addJson +="'bizType':'"+Ext.getCmp('updateBizType'+_index).getValue()+"',";
 												addJson +="'cableId':'启用',";  
 												addJson +="'delFlg':'启用',"; 
-												addJson +="'startConnections':["+Ext.getCmp('updateStartConnections'+_index).getValue()+"],"; 
-												addJson +="'endConnections':["+Ext.getCmp('updateEndConnections'+_index).getValue()+"],"; 
+												addJson +="'connections':["+Ext.getCmp('updateConnections'+_index).getValue()+"],"; 
 												addJson +="'transceiver':'"+Ext.getCmp('updateTransceiver'+_index).getValue()+"'"; 
 												addJson +="},";
 												_index++;
@@ -829,7 +812,7 @@ Ext.onReady(function(){
 			　　　		return　record_start　+　1　+　rowIndex;
 			　　	}
 			}),
-            {header:"光缆名称", width: 250, sortable:true,dataIndex:'cableName'},
+            {header:"光缆名称", width: 140, sortable:true,dataIndex:'cableName'},
             {header:"光缆起点", width: 140, sortable:true,dataIndex:'startSiteName'},
             {header:"光缆终点", width: 140, sortable:true,dataIndex:'endSiteName'},
             {header:"是否主干网", width: 140, sortable:true,dataIndex:'isMainRoad'},
@@ -1230,7 +1213,7 @@ Ext.onReady(function(){
   	Ext.getCmp('updateCableEndId').addListener('select',updateCaleNameSelect);
   	/** 查询下拉框事件 */
 	function conditionFiledSelect(){
-		Ext.getCmp('conditionFiledPanel').remove("conditionValue");
+		Ext.getCmp('conditionFiled').remove("conditionValue");
 		if(Ext.getCmp('conditionFiled').getValue()=='cable.delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',

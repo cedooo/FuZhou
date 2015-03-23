@@ -44,7 +44,10 @@ Ext.onReady(function(){
     		baseParams:{start:0,limit:50},
     		root:'beenList',
     		totalProperty:'totalCount',
-    		fields:['fiberCoreNumberId','fiberCoreNumberName','cableId','cableName','isUsed','isJump','bizType','connections.deviceId','connections.deviceType','connections.deviceName','transceiver','delFlg','descp']
+    		fields:['fiberCoreNumberId','fiberCoreNumberName','cableId','cableName','isUsed','isJump','bizType',
+    		'startConnections.deviceId','startConnections.deviceType','startConnections.deviceName',
+    		'endConnections.deviceId','endConnections.deviceType','endConnections.deviceName',
+    		'transceiver','delFlg','descp']
 		});
  /********************************** Form集合 ***********************************************************/
      	 /** form的提示信息位置 */
@@ -60,7 +63,8 @@ Ext.onReady(function(){
 						        		{id:"viewIsUsed",fieldLabel:'是否使用'},
 						        		{id:"viewIsJump",fieldLabel:'是否跳转' }, 
 						        		{id:"viewBizType",fieldLabel:'业务类型'},
-						        		{id:"viewConnections",fieldLabel:'连接情况'},
+						        		{id:"viewStartConnections",fieldLabel:'起始端'},
+						        		{id:"viewEndConnections",fieldLabel:'目的端'},
 						        		{id:"viewTransceiver",fieldLabel:'收发情况'},
 						        		{id:"viewDelFlg",fieldLabel:'<font color="red">(*)</font>是否启用'},
 						        		{id:"viewDescp",xtype:'textarea',fieldLabel:'备注'}
@@ -89,12 +93,15 @@ Ext.onReady(function(){
 						                id:'addIsJump',xtype:'combo',fieldLabel:'是否跳转',
 						                mode:'local',store:isStore,
 						                typeAhead:true,triggerAction:'all',forceSelection:true
-						            }, {
+						            },{
 						            	id:'addBizType',xtype:'combo',fieldLabel:'业务类型',
 						                mode:'local',store:bizTypeStore,
 						                typeAhead:true,triggerAction:'all',forceSelection:true
-						            }, {
-						            	id:'addConnections',xtype:'treecombo',fieldLabel:'连接情况',
+						            },{
+						            	id:'addStartConnections',xtype:'treecombo',fieldLabel:'起始端',
+						            	zdyForConnection:zdyForConnectionStore
+						            },{
+						            	id:'addEndConnections',xtype:'treecombo',fieldLabel:'目的端',
 						            	zdyForConnection:zdyForConnectionStore
 						            },{
 						            	id:'addTransceiver',fieldLabel:'收发情况'
@@ -138,7 +145,10 @@ Ext.onReady(function(){
 						                mode:'local',store:bizTypeStore,
 						                typeAhead:true,triggerAction:'all',forceSelection:true
 						            },{
-						            	id:"updateConnections",xtype:'treecombo',fieldLabel:'连接情况',
+						            	id:"updateStartConnections",xtype:'treecombo',fieldLabel:'起始端',
+						            	zdyForConnection:zdyForConnectionStore
+						            },{
+						            	id:"updateEndConnections",xtype:'treecombo',fieldLabel:'目的端',
 						            	zdyForConnection:zdyForConnectionStore
 						            },{
 						            	id:"updateTransceiver",fieldLabel:'收发情况'
@@ -184,14 +194,14 @@ Ext.onReady(function(){
 		/** 查看窗口 */
     	var window_view = new Ext.Window({
 	         					title: '查看窗口',closable:true,closeAction:"hide",
-	            				width:400,height:350,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_view,
+	            				width:400,height:400,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_view,
 	            				buttonAlign:'center',
 						        buttons: [{text: '关闭',handler:function(){window_view.hide();}}]
 	       					});				        				    
     	/** 新增窗口 */
     	var window_add = new Ext.Window({
 	         					title: '新增窗口',closable:true,closeAction:"hide",
-	            				width:400,height:350,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_add,
+	            				width:400,height:400,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_add,
 	            				buttonAlign:'center',
 						        buttons: 
 						        [{
@@ -207,7 +217,8 @@ Ext.onReady(function(){
 													   		"A_FiberCoreNumber.isUsed":Ext.getCmp('addIsUsed').getValue(),
 													   		"A_FiberCoreNumber.isJump":Ext.getCmp('addIsJump').getValue(),
 													   		"A_FiberCoreNumber.bizType":Ext.getCmp('addBizType').getValue(),
-													   		"A_FiberCoreNumber.connections":Ext.getCmp('addConnections').getValue(),
+													   		"A_FiberCoreNumber.startConnections":Ext.getCmp('addStartConnections').getValue(),
+													   		"A_FiberCoreNumber.endConnections":Ext.getCmp('addEndConnections').getValue(),
 													   		"A_FiberCoreNumber.delFlg":Ext.getCmp('addDelFlg').getValue(),
 													   		"A_FiberCoreNumber.descp":Ext.getCmp('addDescp').getValue()
 													   },
@@ -246,7 +257,8 @@ Ext.onReady(function(){
 													   		"A_FiberCoreNumber.isUsed":Ext.getCmp('updateIsUsed').getValue(),
 													   		"A_FiberCoreNumber.isJump":Ext.getCmp('updateIsJump').getValue(),
 													   		"A_FiberCoreNumber.bizType":Ext.getCmp('updateBizType').getValue(),
-													   		"A_FiberCoreNumber.connections":Ext.getCmp('updateConnections').getValue(),
+													   		"A_FiberCoreNumber.startConnections":Ext.getCmp('updateStartConnections').getValue(),
+													   		"A_FiberCoreNumber.endConnections":Ext.getCmp('updateEndConnections').getValue(),
 													   		"A_FiberCoreNumber.transceiver":Ext.getCmp('updateTransceiver').getValue(),
 													   		"A_FiberCoreNumber.delFlg":Ext.getCmp('updateDelFlg').getValue(),
 													   		"A_FiberCoreNumber.descp":Ext.getCmp('updateDescp').getValue()
@@ -345,12 +357,14 @@ Ext.onReady(function(){
             {header:"是否使用",width: 80, sortable:true,dataIndex:'isUsed'},
             {header:"是否跳转",width: 80, sortable:true,dataIndex:'isJump'},
             {header:"业务类型",width: 80, sortable:true,dataIndex:'bizType'},
-            {header:"连接情况",width: 100, sortable:true,dataIndex:'connections.deviceName'},
+            {header:"起始端",width: 100, sortable:true,dataIndex:'startConnections.deviceName'},
+            {header:"目的端",width: 100, sortable:true,dataIndex:'endConnections.deviceName'},
             {header:"收发情况",width: 100, sortable:true,dataIndex:'transceiver'},
             {header:"是否启用",width: 80, sortable:true,dataIndex:'delFlg'},
             {header:"备注",   width: 100, sortable:true,dataIndex:'descp'}
         ]),
         sm: sm,
+        stripeRows: true,
         /** 分页工具栏 */
          bbar: new Ext.PagingToolbar({
              pageSize:50,store: gridPanelDataStore,displayInfo: true,
@@ -401,7 +415,8 @@ Ext.onReady(function(){
 						Ext.getCmp("updateIsUsed").setValue(jsonData.get("isUsed"));
 						Ext.getCmp("updateIsJump").setValue(jsonData.get("isJump"));
 						Ext.getCmp("updateBizType").setValue(jsonData.get("bizType")); 
-						Ext.getCmp("updateConnections").setValue(jsonData.get("connections.deviceName"));
+						Ext.getCmp("updateStartConnections").setValue(jsonData.get("startConnections.deviceName"));
+						Ext.getCmp("updateEndConnections").setValue(jsonData.get("endConnections.deviceName"));
 						Ext.getCmp("updateTransceiver").setValue(jsonData.get("transceiver"));
 						Ext.getCmp("updateDelFlg").setValue(jsonData.get("delFlg"));
 						Ext.getCmp("updateDescp").setValue(jsonData.get("descp"));
@@ -588,7 +603,8 @@ Ext.onReady(function(){
 			Ext.getCmp("viewIsUsed").setValue(jsonData.get("isUsed"));
 			Ext.getCmp("viewIsJump").setValue(jsonData.get("isJump"));
 			Ext.getCmp("viewBizType").setValue(jsonData.get("bizType"));
-			Ext.getCmp("viewConnections").setValue(jsonData.get("connections.deviceName")); 
+			Ext.getCmp("viewStartConnections").setValue(jsonData.get("startConnections.deviceName")); 
+			Ext.getCmp("viewEndConnections").setValue(jsonData.get("endConnections.deviceName")); 
 			Ext.getCmp("viewTransceiver").setValue(jsonData.get("transceiver"));
 			Ext.getCmp("viewDelFlg").setValue(jsonData.get("delFlg"));
 			Ext.getCmp("viewDescp").setValue(jsonData.get("descp"));
@@ -672,7 +688,7 @@ Ext.onReady(function(){
 		}else if(Ext.getCmp('conditionFiled').getValue()=='fiberCoreNumber.cableId'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:cableNameStore,
+				mode:'local',store:cableNameStore,width:300,
 				displayField:'cableName',valueField:'cableId',
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));

@@ -75,7 +75,7 @@ public class TemplateDaoImpl implements TemplateDao {
 		/** 将 insertValue 集合的数据插入到执行语句中 */
 		executeSql += ") values(";
 		for (String insertValue : insertValueList) {
-			executeSql += "\"" + insertValue + "\",";
+			executeSql += "\'" + insertValue + "\',";
 		}
 		/** 剔除insertVale末端插入到执行语句中的的逗号（,） */
 		executeSql = executeSql.substring(0, executeSql.length() - 1);
@@ -132,7 +132,7 @@ public class TemplateDaoImpl implements TemplateDao {
 		/** 将 insertValue 集合的数据插入到执行语句中 */
 		executeSql += ") values(";
 		for (String insertValue : insertValueList) {
-			executeSql += "\"" + insertValue + "\",";
+			executeSql += "\'" + insertValue + "\',";
 		}
 		/** 剔除insertVale末端插入到执行语句中的的逗号（,） */
 		executeSql = executeSql.substring(0, executeSql.length() - 1);
@@ -242,7 +242,7 @@ public class TemplateDaoImpl implements TemplateDao {
 		/** 将 insertValue 集合的数据插入到执行语句中 */
 		executeSql += ") values(";
 		for (String insertValue : insertValueList) {
-			executeSql += "\"" + insertValue + "\",";
+			executeSql += "\'" + insertValue + "\',";
 		}
 		/** 剔除insertVale末端插入到执行语句中的的逗号（,） */
 		executeSql = executeSql.substring(0, executeSql.length() - 1);
@@ -364,8 +364,8 @@ public class TemplateDaoImpl implements TemplateDao {
 		/** 将 insertKey 集合的数据插入到执行语句中 */
 		String executeSql = " update  " + tableName + " set ";
 		for (String updateKey : updateKeyList) {
-			executeSql += updateKey + " = \"" + updateValueMap.get(updateKey)
-					+ "\",";
+			executeSql += updateKey + " = \'" + updateValueMap.get(updateKey)
+					+ "\',";
 		}
 		/** 剔除insertKey末端插入到执行语句中的的逗号（,） */
 		executeSql = executeSql.substring(0, executeSql.length() - 1);

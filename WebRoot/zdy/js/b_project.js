@@ -12,7 +12,7 @@ Ext.onReady(function(){
     						   ['connactNumber','负责人联系电话'],['delFlg','是否启用'],['descp','备注']];
 	var delFlgStore =[['启用','启用'],['停用','停用']]; 
 	 /** gridPanel表格数据remote初始化 */
-	var gridPanelDataStore = new Ext.data.JsonStore({
+	var gridPanelDataStore = new Ext.data.SimpleStore({
     		url: 'B_ProjectServiceImpl!query.zdy',
     		baseParams:{start:0,limit:50},
     		root:'beenList',

@@ -14,8 +14,23 @@ Ext.onReady(function(){
 	var delFlgStore =[['启用','启用'],['停用','停用']]; 
 	var isStore =[['是','是'],['否','否']]; 
 	var bizTypeStore =[['用电','用电'],['配电','配电']]; 
-	/** combo下拉框-字段remote初始化 */
-	var zdyForConnectionStore=[{text:'gprs','children':[{'text':'仓山一期-GPRS','leaf':true,'deviceType':'gprs','deviceId':'1'},{'text':'仓山二期-GPRS','leaf':true,'deviceType':'gprs','deviceId':'2'},{'text':'台江一期-GPRS','leaf':true,'deviceType':'gprs','deviceId':'3'},{'text':'台江二期-GPRS','leaf':true,'deviceType':'gprs','deviceId':'4'}]},{'text':'olt','children':[{'text':'仓上-olt','leaf':true,'deviceType':'olt','deviceId':'1'},{'text':'晋安-olt','leaf':true,'deviceType':'olt','deviceId':'3'},{'text':'鼓楼-olt','leaf':true,'deviceType':'olt','deviceId':'4'}]},{'text':'onu','children':[{'text':'仓山-onu','leaf':true,'deviceType':'onu','deviceId':'1'},{'text':'晋安-onu','leaf':true,'deviceType':'onu','deviceId':'2'},{'text':'台江-onu','leaf':true,'deviceType':'onu','deviceId':'3'},{'text':'鼓楼-onu','leaf':true,'deviceType':'onu','deviceId':'4'}]},{'text':'载波','children':[{'text':'仓山-载波','leaf':true,'deviceType':'载波','deviceId':'1'},{'text':'台江-载波','leaf':true,'deviceType':'载波','deviceId':'2'},{'text':'晋安-载波','leaf':true,'deviceType':'载波','deviceId':'3'},{'text':'鼓楼-载波','leaf':true,'deviceType':'载波','deviceId':'4'}]},{'text':'二层交换机','children':[{'text':'仓山-二层交换机','leaf':true,'deviceType':'二层交换机','deviceId':'2'},{'text':'台江-二层交换机','leaf':true,'deviceType':'二层交换机','deviceId':'3'},{'text':'晋安-二层交换机','leaf':true,'deviceType':'二层交换机','deviceId':'4'},{'text':'鼓楼-二层交换机','leaf':true,'deviceType':'二层交换机','deviceId':'5'}]},{'text':'三层交换机','children':[{'text':'仓山-三层交换机','leaf':true,'deviceType':'三层交换机','deviceId':'2'},{'text':'台江-三层交换机','leaf':true,'deviceType':'三层交换机','deviceId':'3'},{'text':'晋安-三层交换机','leaf':true,'deviceType':'三层交换机','deviceId':'4'},{'text':'鼓楼-三层交换机','leaf':true,'deviceType':'三层交换机','deviceId':'5'}]}];
+	 /** combo下拉框-字段remote初始化 */
+	 var zdyForConnectionStore;
+	  /** 查询要导出的相应记录（异步加载） */
+	 Ext.Ajax.request({
+				url: 'ComboForService!comboForConnections.zdy',
+				async: false,
+				params: {
+				  "ConditionDto.conditionFiled":"delFlg",
+				  "ConditionDto.conditionConditions":"=",
+				  "ConditionDto.conditionValue":"启用"
+				},
+				success: function(response){
+					var _responseJson = Ext.util.JSON.decode(response.responseText);
+					zdyForConnectionStore  = _responseJson;
+				}
+	});     
+	
 	  /** 查询要导出的相应记录 */
 	var cableNameStore = new Ext.data.JsonStore({
     		url: 'ComboForService!comboForCable.zdy',
@@ -38,6 +53,7 @@ Ext.onReady(function(){
 			  		}
 				}
 	});	
+	
 	 /** gridPanel表格数据remote初始化 */
 	var gridPanelDataStore = new Ext.data.JsonStore({
     		url: 'A_FiberCoreNumberServiceImpl!query.zdy',
@@ -45,8 +61,8 @@ Ext.onReady(function(){
     		root:'beenList',
     		totalProperty:'totalCount',
     		fields:['fiberCoreNumberId','fiberCoreNumberName','cableId','cableName','isUsed','isJump','bizType',
-    		'startConnections.deviceId','startConnections.deviceType','startConnections.deviceName',
-    		'endConnections.deviceId','endConnections.deviceType','endConnections.deviceName',
+    		'startConnections','startConnections.deviceId','startConnections.deviceType','startConnections.deviceName',
+    		'endConnections','endConnections.deviceId','endConnections.deviceType','endConnections.deviceName',
     		'transceiver','delFlg','descp']
 		});
  /********************************** Form集合 ***********************************************************/
@@ -415,8 +431,8 @@ Ext.onReady(function(){
 						Ext.getCmp("updateIsUsed").setValue(jsonData.get("isUsed"));
 						Ext.getCmp("updateIsJump").setValue(jsonData.get("isJump"));
 						Ext.getCmp("updateBizType").setValue(jsonData.get("bizType")); 
-						Ext.getCmp("updateStartConnections").setValue(jsonData.get("startConnections.deviceName"));
-						Ext.getCmp("updateEndConnections").setValue(jsonData.get("endConnections.deviceName"));
+						Ext.getCmp("updateStartConnections").setZdyValue(jsonData.get("startConnections"));
+						Ext.getCmp("updateEndConnections").setZdyValue(jsonData.get("endConnections"));
 						Ext.getCmp("updateTransceiver").setValue(jsonData.get("transceiver"));
 						Ext.getCmp("updateDelFlg").setValue(jsonData.get("delFlg"));
 						Ext.getCmp("updateDescp").setValue(jsonData.get("descp"));

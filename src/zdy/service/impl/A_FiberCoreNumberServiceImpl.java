@@ -160,14 +160,15 @@ public class A_FiberCoreNumberServiceImpl extends Forward {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter printWriter = response.getWriter();
 		A_FiberCoreNumber a_FiberCoreNumber = (A_FiberCoreNumber)request.getAttribute(Constant.A_FIBERCORENUMBER);
-		if("".equals(a_FiberCoreNumber.getIsUsed())){
-			a_FiberCoreNumber.setIsUsed(null);
+		if(a_FiberCoreNumber.getStartConnections().contains("undefined")){
+			a_FiberCoreNumber.setStartConnections("{}");
+		}else{
+			a_FiberCoreNumber.setStartConnections(a_FiberCoreNumber.getStartConnections().replaceAll("\'", "\""));
 		}
-		if("".equals(a_FiberCoreNumber.getIsJump())){
-			a_FiberCoreNumber.setIsJump(null);
-		}
-		if("".equals(a_FiberCoreNumber.getBizType())){
-			a_FiberCoreNumber.setBizType(null);
+		if(a_FiberCoreNumber.getEndConnections().contains("undefined")){
+			a_FiberCoreNumber.setEndConnections("{}");
+		}else{
+			a_FiberCoreNumber.setEndConnections(a_FiberCoreNumber.getEndConnections().replaceAll("\'", "\""));
 		}
 		try {
 			TemplateDao templateDao = new TemplateDaoImpl();

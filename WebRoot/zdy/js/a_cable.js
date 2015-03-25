@@ -510,7 +510,6 @@ Ext.onReady(function(){
 												addJson +="'isUsed':'"+Ext.getCmp('addIsUsed'+_index).getValue()+"',"; 
 												addJson +="'isJump':'"+Ext.getCmp('addIsJump'+_index).getValue()+"',"; 
 												addJson +="'bizType':'"+Ext.getCmp('addBizType'+_index).getValue()+"',";
-												addJson +="'cableId':'启用',";  
 												addJson +="'delFlg':'启用',"; 
 												addJson +="'startConnections':["+Ext.getCmp('addStartConnections'+_index).getValue()+"],"; 
 												addJson +="'endConnections':["+Ext.getCmp('addEndConnections'+_index).getValue()+"],"; 
@@ -571,8 +570,7 @@ Ext.onReady(function(){
 						           	   	 };
 						           	   	/** 判断是否是第一次初始化 */
 						           	   	if(isUpdateFiberCoreNumberInit){
-		           		 					window_updateFiberCoreNumber.show();
-		           		 					return;
+		           		 					formPanel_updateFiberCoreNumber.removeAll();
 		           		 				}
 					           	   	 	 Ext.MessageBox.confirm(tipsInfo, '是否需要配置纤芯列表？配置后纤芯数量将不能更改。', function(btn){
 					           	   		 	var waitBox;
@@ -665,8 +663,8 @@ Ext.onReady(function(){
 															 	  Ext.getCmp("updateIsUsed"+(j+1)).setValue(__responseJson.beenList[j].isUsed);
 															 	  Ext.getCmp("updateIsJump"+(j+1)).setValue(__responseJson.beenList[j].isJump);
 															 	  Ext.getCmp("updateBizType"+(j+1)).setValue(__responseJson.beenList[j].bizType);
-															 	  Ext.getCmp("updateStartConnections"+(j+1)).setValue(__responseJson.beenList[j].startConnections.deviceName);
-															 	  Ext.getCmp("updateEndConnections"+(j+1)).setValue(__responseJson.beenList[j].endConnections.deviceName);
+															 	  Ext.getCmp("updateStartConnections"+(j+1)).setZdyValue(__responseJson.beenList[j].startConnections);
+																  Ext.getCmp("updateEndConnections"+(j+1)).setZdyValue(__responseJson.beenList[j].endConnections);
 															 	  Ext.getCmp("updateTransceiver"+(j+1)).setValue(__responseJson.beenList[j].transceiver);
 															 	}
 															 },failure: function(response,options){
@@ -712,7 +710,6 @@ Ext.onReady(function(){
 												addJson +="'isUsed':'"+Ext.getCmp('updateIsUsed'+_index).getValue()+"',"; 
 												addJson +="'isJump':'"+Ext.getCmp('updateIsJump'+_index).getValue()+"',"; 
 												addJson +="'bizType':'"+Ext.getCmp('updateBizType'+_index).getValue()+"',";
-												addJson +="'cableId':'启用',";  
 												addJson +="'delFlg':'启用',"; 
 												addJson +="'startConnections':["+Ext.getCmp('updateStartConnections'+_index).getValue()+"],"; 
 												addJson +="'endConnections':["+Ext.getCmp('updateEndConnections'+_index).getValue()+"],"; 

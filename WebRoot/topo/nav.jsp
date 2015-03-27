@@ -36,11 +36,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <a href="<%=basePath %>topo/default.jsp" >默认页面</a>
 <a href="<%=basePath %>topo/manager.jsp" >管理页面</a>
 
-<h2>其它</h2>
-		<button onclick="toNewAreaSchema()">区域视图添加</button>
-		<button onclick="toNewSiteSchema()">站点视图添加</button><input id="areaID" type="text"  placeholder="区域ID" />
-		<button onclick="toNewSiteEquipSchema()">添加站点设备视图</button><input id="siteID" type="text" value="3" placeholder="站点ID" />
-		<button onclick="toNewCustomSchema()">添加自定义视图</button>
-		<button onclick="toShowSchema()">视图展示</button><input id="schemaID" type="text" value="7" placeholder="视图ID" />
 </body>
 </html>

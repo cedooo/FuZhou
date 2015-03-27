@@ -98,8 +98,8 @@ public class A_CableServiceImpl extends Forward {
 					 A_FiberCoreNumber fiberCoreNumber = new A_FiberCoreNumber();
 					 fiberCoreNumber.setFiberCoreNumberName("纤芯"+i);
 					 fiberCoreNumber.setCableId(a_Cable.getCableId());
-					 fiberCoreNumber.setStartConnections("{}");
-					 fiberCoreNumber.setEndConnections("{}");
+					 fiberCoreNumber.setStartConnections("{\"siteId\":\""+a_Cable.getCableStartId()+"\"}");
+					 fiberCoreNumber.setEndConnections("{\"siteId\":\""+a_Cable.getCableEndId()+"\"}");
 					 fiberCoreNumber.setDelFlg("启用");
 					 fiberCoreNumber.setDescp("");
 					 templateDao.transcationAdd(fiberCoreNumber,dBManager);
@@ -117,7 +117,7 @@ public class A_CableServiceImpl extends Forward {
 					 /** 站点的起始连接情况 */
 					 String startConnectionStr = jsonObject.getString("startConnections");
 					 if(startConnectionStr==null||"[null]".equals(startConnectionStr)||"[]".equals(startConnectionStr)){
-						 startConnectionStr ="{}";
+						 startConnectionStr ="{\"siteId\":\""+a_Cable.getCableStartId()+"\"}";
 					 }else{
 						 startConnectionStr = startConnectionStr.substring(1, startConnectionStr.length()-1);
 					 }
@@ -125,7 +125,7 @@ public class A_CableServiceImpl extends Forward {
 					 /** 站点的目的连接情况 */
 					 String endConnectionStr = jsonObject.getString("endConnections");
 					 if(endConnectionStr==null||"[null]".equals(endConnectionStr)||"[]".equals(endConnectionStr)){
-						 endConnectionStr ="{}";
+						 endConnectionStr ="{\"siteId\":\""+a_Cable.getCableEndId()+"\"}";
 					 }else{
 						 endConnectionStr = endConnectionStr.substring(1, endConnectionStr.length()-1);
 					 }
@@ -271,8 +271,8 @@ public class A_CableServiceImpl extends Forward {
 					 A_FiberCoreNumber fiberCoreNumber = new A_FiberCoreNumber();
 					 fiberCoreNumber.setFiberCoreNumberName("纤芯"+i);
 					 fiberCoreNumber.setCableId(a_Cable.getCableId());
-					 fiberCoreNumber.setStartConnections("{}");
-					 fiberCoreNumber.setEndConnections("{}");
+					 fiberCoreNumber.setStartConnections("{\"siteId\":\""+a_Cable.getCableStartId()+"\"");
+					 fiberCoreNumber.setEndConnections("{\"siteId\":\""+a_Cable.getCableEndId()+"\"}");
 					 fiberCoreNumber.setDelFlg("启用");
 					 fiberCoreNumber.setDescp("");
 					 templateDao.transcationAdd(fiberCoreNumber,dBManager);
@@ -290,7 +290,7 @@ public class A_CableServiceImpl extends Forward {
 					 /** 站点起始连接情况 */
 					 String startConnectionStr = jsonObject.getString("startConnections");
 					 if(startConnectionStr==null||"[null]".equals(startConnectionStr)||startConnectionStr.contains("undefined")||"[]".equals(startConnectionStr)){
-						 startConnectionStr ="{}";
+						 startConnectionStr ="{\"siteId\":\""+a_Cable.getCableStartId()+"\"}";
 					 }else{
 						 startConnectionStr = startConnectionStr.substring(1, startConnectionStr.length()-1);
 					 }
@@ -298,7 +298,7 @@ public class A_CableServiceImpl extends Forward {
 					 /** 站点目标地址连接情况 */
 					 String endConnectionStr = jsonObject.getString("endConnections");
 					 if(endConnectionStr==null||"[null]".equals(endConnectionStr)||endConnectionStr.contains("undefined")||"[]".equals(endConnectionStr)){
-						 endConnectionStr ="{}";
+						 endConnectionStr ="{\"siteId\":\""+a_Cable.getCableEndId()+"\"}";
 					 }else{
 						 endConnectionStr = endConnectionStr.substring(1, endConnectionStr.length()-1);
 					 }
@@ -738,8 +738,8 @@ public class A_CableServiceImpl extends Forward {
 	               					 fiberCoreNumber.setIsUsed("");
 	               					 fiberCoreNumber.setIsJump("");
 	               					 fiberCoreNumber.setBizType("");
-	               					 fiberCoreNumber.setStartConnections("{}");
-	               					 fiberCoreNumber.setEndConnections("{}");
+	               					 fiberCoreNumber.setStartConnections("{\"siteId\":\""+cable.getCableStartId()+"\"}");
+	               					 fiberCoreNumber.setEndConnections("{\"siteId\":\""+cable.getCableEndId()+"\"}");
 	               					 fiberCoreNumber.setTransceiver("");
 	               					 fiberCoreNumber.setDelFlg("启用");
 	               					fiberCoreNumber.setDescp("");

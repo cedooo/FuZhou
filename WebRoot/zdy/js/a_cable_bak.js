@@ -21,10 +21,20 @@ Ext.onReady(function(){
 	var delFlgStore =[['启用','启用'],['停用','停用']]; 
 	var bizTypeStore =[['用电','用电'],['配电','配电']];
 	 /** combo下拉框-字段remote初始化 */
-	var zdyForConnectionsStoreAddStart;
-	var zdyForConnectionsStoreAddEnd;
-	var zdyForConnectionsStoreUpdateStart;
-	var zdyForConnectionsStoreUpdateEnd;
+	 var zdyForConnectionsStore;
+	  /** 查询要导出的相应记录 */
+	 Ext.Ajax.request({
+				url: 'ComboForService!comboForConnections.zdy',
+				params: {
+				  "ConditionDto.conditionFiled":"delFlg",
+				  "ConditionDto.conditionConditions":"=",
+				  "ConditionDto.conditionValue":"启用"
+				},
+				success: function(response){
+					var _responseJson = Ext.util.JSON.decode(response.responseText);
+					zdyForConnectionsStore  = _responseJson;
+				}
+	});     
 	var siteDataStore = new Ext.data.JsonStore({
     		url: 'ComboForService!comboForSite.zdy',
     		baseParams:{
@@ -386,47 +396,16 @@ Ext.onReady(function(){
 					           	   		 Ext.MessageBox.alert(tipsInfo,'配置前，纤芯数量，起始站点和目的站点不能为空');
 					           	   		 	return;
 					           	   		 };
-					           	   		 
-					           	   		  /** 判断是否是第一次初始化 */
+					           	   		 /** 判断是否是第一次初始化 */
 					           	   		 if(isAddFiberCoreNumberInit){
 	           		 						window_addFiberCoreNumber.show();
 	           		 						return;
 	           		 					 }
-	           		 					 
-					           	   		 /** 查询要导出的相应起始站点设备记录 */
-										 Ext.Ajax.request({
-													url: 'ComboForService!comboForConnections.zdy',
-													params: {
-													  "ConditionDto.conditionFiled":"siteId",
-													  "ConditionDto.conditionConditions":"=",
-													  "ConditionDto.conditionValue":Ext.getCmp('addCableStartId').getValue()
-													},
-													success: function(response){
-														var _responseJson = Ext.util.JSON.decode(response.responseText);
-														zdyForConnectionsStoreAddStart  = _responseJson;
-													}
-										});  
-										  /** 查询要导出的相应终点设备记录 */
-										 Ext.Ajax.request({
-													url: 'ComboForService!comboForConnections.zdy',
-													params: {
-														  "ConditionDto.conditionFiled":"siteId",
-														  "ConditionDto.conditionConditions":"=",
-														  "ConditionDto.conditionValue":Ext.getCmp('addCableEndId').getValue()
-													},
-													success: function(response){
-														var _responseJson = Ext.util.JSON.decode(response.responseText);
-														zdyForConnectionsStoreAddEnd  = _responseJson;
-													}
-										});  
-					           	   		 
-					           	   		 Ext.MessageBox.confirm(tipsInfo, '是否需要配置纤芯列表？配置后纤芯数量、起始站点和目标站点将不能更改。', function(btn){
+					           	   		 Ext.MessageBox.confirm(tipsInfo, '是否需要配置纤芯列表？配置后纤芯数量将不能更改。', function(btn){
 					           	   		 	var waitBox;
 	           		 						if (btn == "yes"){
 	           		 							/** 将纤芯数量设置为只读 */
 	           		 							Ext.getCmp('addFiberId').setReadOnly(true);
-	           		 							Ext.getCmp('addCableStartId').setReadOnly(true);
-	           		 							Ext.getCmp('addCableEndId').setReadOnly(true);
 	           		 							waitBox = Ext.MessageBox.wait('光芯数量列表加载中...',tipsInfo,{text:"第一次加载比较慢，请耐心等待..."});
 												/** 查询要导出的相应记录 */
 												Ext.Ajax.request({
@@ -476,14 +455,14 @@ Ext.onReady(function(){
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'addStartConnections'+i,xtype:'treecombo',fieldLabel:'起始端',
-																	            			zdyForConnection:zdyForConnectionsStoreAddStart,zdyForSite:Ext.getCmp('addCableStartId').getValue()
+																	            			zdyForConnection:zdyForConnectionsStore
 																			        }] 
 															            		},{
 																	            	layout:'form',labelWidth:55,columnWidth:.2,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'addEndConnections'+i,xtype:'treecombo',fieldLabel:'目的端',
-																	            			zdyForConnection:zdyForConnectionsStoreAddEnd,zdyForSite:Ext.getCmp('addCableEndId').getValue()
+																	            			zdyForConnection:zdyForConnectionsStore
 																			        }] 
 															            		},{
 															            	 		layout:'form',labelWidth:1,columnWidth:.12,defaultType:'textfield', 
@@ -565,8 +544,6 @@ Ext.onReady(function(){
 												    isAddFiberCoreNumberInit = false;
 												    formPanel_addFiberCoreNumber.removeAll();
 		           		 							Ext.getCmp('addFiberId').setReadOnly(false);
-		           		 							Ext.getCmp('addCableStartId').setReadOnly(false);
-		           		 							Ext.getCmp('addCableEndId').setReadOnly(false);
 													ajaxSuccess(response,options);
 												},
 												failure: function(response,options){
@@ -589,48 +566,19 @@ Ext.onReady(function(){
 	            				tbar:[{
 					           	   	 	text:'配置纤芯列表',tooltip:'配置纤芯列表',iconCls:'bgi_update',handler:function(){
 						           	   	 /** 纤芯数量不能为空 */
-						           	   	 if(Ext.getCmp('updateFiberId').getValue()==""||Ext.getCmp('updateCableStartId').getValue()==""||
-						           	   		 Ext.getCmp('updateCableEndId').getValue()==""){
-						           	   		 Ext.MessageBox.alert(tipsInfo,'配置前，纤芯数量，起始站点和目的站点不能为空。');
+						           	   	 if(Ext.getCmp('updateFiberId').getValue()==""){
+						           	   		 Ext.MessageBox.alert(tipsInfo,'请先选择纤芯数量');
 						           	   		 return;
 						           	   	 };
 						           	   	/** 判断是否是第一次初始化 */
 						           	   	if(isUpdateFiberCoreNumberInit){
 		           		 					formPanel_updateFiberCoreNumber.removeAll();
 		           		 				}
-		           		 				 /** 查询要导出的相应起始站点设备记录 */
-										 Ext.Ajax.request({
-													url: 'ComboForService!comboForConnections.zdy',
-													params: {
-													  "ConditionDto.conditionFiled":"siteId",
-													  "ConditionDto.conditionConditions":"=",
-													  "ConditionDto.conditionValue":Ext.getCmp('updateCableStartId').getValue()
-													},
-													success: function(response){
-														var _responseJson = Ext.util.JSON.decode(response.responseText);
-														zdyForConnectionsStoreUpdateStart  = _responseJson;
-													}
-										});  
-										  /** 查询要导出的相应终点设备记录 */
-										 Ext.Ajax.request({
-													url: 'ComboForService!comboForConnections.zdy',
-													params: {
-														  "ConditionDto.conditionFiled":"siteId",
-														  "ConditionDto.conditionConditions":"=",
-														  "ConditionDto.conditionValue":Ext.getCmp('updateCableEndId').getValue()
-													},
-													success: function(response){
-														var _responseJson = Ext.util.JSON.decode(response.responseText);
-														zdyForConnectionsStoreUpdateEnd  = _responseJson;
-													}
-										});  
-					           	   	 	 Ext.MessageBox.confirm(tipsInfo, '是否需要配置纤芯列表？配置后纤芯数量、起始站点和目的站点，将不能更改。', function(btn){
+					           	   	 	 Ext.MessageBox.confirm(tipsInfo, '是否需要配置纤芯列表？配置后纤芯数量将不能更改。', function(btn){
 					           	   		 	var waitBox;
 	           		 						if (btn == "yes"){
 	           		 							/** 将纤芯数量设置为只读 */
 	           		 							Ext.getCmp('updateFiberId').setReadOnly(true);
-	           		 							Ext.getCmp('updateCableStartId').setReadOnly(true);
-	           		 							Ext.getCmp('updateCableEndId').setReadOnly(true);
 	           		 							waitBox = Ext.MessageBox.wait('光芯数量列表加载中...',tipsInfo,{text:"第一次加载比较慢，请耐心等待..."});
 												/** 查询要导出的相应记录 */
 												Ext.Ajax.request({
@@ -680,14 +628,14 @@ Ext.onReady(function(){
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'updateStartConnections'+i,xtype:'treecombo',fieldLabel:'起始端',
-																	            			zdyForConnection:zdyForConnectionsStoreUpdateStart,zdyForSite:Ext.getCmp('updateCableStartId').getValue()
+																	            			zdyForConnection:zdyForConnectionsStore
 																			        }] 
 															            		},{
 																	            	layout:'form',labelWidth:55,columnWidth:.2,defaultType:'textfield',
 																	            	defaults:{labelStyle:"text-align:right;",anchor:'95%'}, 
 																	            	items:[{
 																	            			id:'updateEndConnections'+i,xtype:'treecombo',fieldLabel:'目的端',
-																	            			zdyForConnection:zdyForConnectionsStoreUpdateEnd,zdyForSite:Ext.getCmp('updateCableEndId').getValue()
+																	            			zdyForConnection:zdyForConnectionsStore
 																			        }] 
 															            		},{
 															            	 		layout:'form',labelWidth:1,columnWidth:.12,defaultType:'textfield', 
@@ -797,8 +745,6 @@ Ext.onReady(function(){
 												    isUpdateFiberCoreNumberInit = false;
 												    formPanel_updateFiberCoreNumber.removeAll();
 		           		 							Ext.getCmp('updateFiberId').setReadOnly(false);
-		           		 							Ext.getCmp('updateCableStartId').setReadOnly(false);
-		           		 							Ext.getCmp('updateCableEndId').setReadOnly(false);
 													ajaxSuccess(response,options);
 												},
 												failure: function(response,options){
@@ -961,10 +907,6 @@ Ext.onReady(function(){
            		 	}else{
 						Ext.MessageBox.alert(tipsInfo,'请选择要更新的数据项！');
 					} 
-					formPanel_updateFiberCoreNumber.removeAll();
-					Ext.getCmp('updateFiberId').setReadOnly(false);
-	           		Ext.getCmp('updateCableStartId').setReadOnly(false);
-	           		Ext.getCmp('updateCableEndId').setReadOnly(false);
             	 }
         	 },'-',{
         	 	 id:"effective",disabled:true,text:'启用',tooltip:'启用',iconCls:'bgi_effective',

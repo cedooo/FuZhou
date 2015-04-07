@@ -141,7 +141,12 @@ public class CableDao {
 		return null;
 	}
 	
-
+	/**
+	 * 得到两个站点之间的光缆集合
+	 * @param fId 起始站点ID
+	 * @param sId 结束站点ID
+	 * @return 光缆列表集合
+	 */
 	public List<Cable> listCable(String fId, String sId){
 		List<Cable> cableList = new ArrayList<Cable>();
 		DBManager db = new DBManager();
@@ -152,9 +157,9 @@ public class CableDao {
 		*/
 		try {
 			db.openConnection();
-			String sql = "SELECT * FROM a_cable " +
+			String sql = " SELECT * FROM a_cable " +
 					" where (cableStartId='" + fId + "' and cableEndId='" + sId + "') " +
-							"or (cableEndId='" + fId + "' and cableStartId='" + sId + "') " +
+							" or (cableEndId='" + fId + "' and cableStartId='" + sId + "') " +
 					" LIMIT 1000 ";
 			ResultSet results = db.executeQuery(sql);
 			while (results.next()) {

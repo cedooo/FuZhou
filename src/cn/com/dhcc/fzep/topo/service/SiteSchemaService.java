@@ -50,7 +50,6 @@ public interface SiteSchemaService {
 	public Page getPage(SearchSite condition);
 	/**
 	 * 根据站点名称和站点以及关联层数 得到相邻站点的关系图
-	 * @param type 0：所有， 1：主干，2：非主干
 	 * @param siteName 站点名称
 	 * @param degree 关系层数
 	 * @return

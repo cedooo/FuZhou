@@ -10,6 +10,7 @@ import cn.com.dhcc.fzep.topo.pojo.Cable;
 import cn.com.dhcc.fzep.topo.pojo.FiberCoreNumber;
 import cn.com.dhcc.fzep.topo.pojo.Site;
 import cn.com.dhcc.fzep.topo.pojo.assets.SiteAssetsRelations;
+import cn.com.dhcc.fzep.topo.pojo.assets.SiteRelations;
 import cn.com.dhcc.fzep.topo.pojo.assets.SiteVO;
 import cn.com.dhcc.fzep.topo.service.AssetsRelationService;
 import cn.com.dhcc.fzep.topo.service.SiteEquipmentListService;
@@ -108,6 +109,28 @@ public class AssetsRelationServiceImpl implements AssetsRelationService {
 			listCableVO.add(cableVO);
 		}
 		return listCableVO;
+	}
+	@Override
+	public SiteRelations siteRelations(String site1Id, String site2Id) {
+		SiteDao siteDao = new SiteDao();
+		Site siteOne = siteDao.getSiteBySiteId(site1Id);
+		Site siteTwo = siteDao.getSiteBySiteId(site2Id);
+		if(siteOne!=null&siteTwo!=null){
+			
+			SiteRelations siteRelations = new SiteRelations();
+			List<Site> listSite = new ArrayList<Site>();
+			listSite.add(siteOne);
+			listSite.add(siteTwo);
+			siteRelations.setListSite(listSite);
+			
+			CableDao cableDao = new CableDao();
+			List<Cable> listCable = cableDao.listCable(site1Id, site2Id);
+			siteRelations.setListCable(listCable);
+			
+			return siteRelations;
+		}else{
+			return null;
+		}
 	}
 
 }

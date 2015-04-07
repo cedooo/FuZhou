@@ -6,6 +6,7 @@ import cn.com.dhcc.fzep.topo.pojo.Cable;
 import cn.com.dhcc.fzep.topo.pojo.FiberCoreNumber;
 import cn.com.dhcc.fzep.topo.pojo.Site;
 import cn.com.dhcc.fzep.topo.pojo.assets.SiteAssetsRelations;
+import cn.com.dhcc.fzep.topo.pojo.assets.SiteRelations;
 import cn.com.dhcc.fzep.topo.vo.CableVO;
 
 /**
@@ -46,4 +47,11 @@ public interface AssetsRelationService {
 	 * @return 光缆VO集合
 	 */
 	public List<CableVO> listCableVO(String targetSiteId, String connectSiteId);
+	/**
+	 * 两个站点之间的关系
+	 * @param site1Id 站点1ID
+	 * @param site2Id 站点2ID
+	 * @return 站点关系
+	 */
+	public SiteRelations siteRelations(String site1Id, String site2Id);
 }

@@ -475,10 +475,6 @@ public class A_ThreeLayerSwitchServiceImpl extends Forward {
                      			printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属起点为空'"));
                      			return;
 	                    	}
-	                    	if(st.getCell(2,i).getContents()==null||"".equals(st.getCell(2,i).getContents())){
-                     			printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属项目为空'"));
-                     			return;
-	                    	}
 	                    	if(st.getCell(4,i).getContents()==null||"".equals(st.getCell(4,i).getContents())){
                      			printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属厂家为空'"));
                      			return;
@@ -513,16 +509,18 @@ public class A_ThreeLayerSwitchServiceImpl extends Forward {
 	                     	}
 	                     	threeLayerSwitch.setSiteId(siteList.get(0).getSiteId());
 	                     	 /** 获取所属项目 */
-	                     	conditionDtoForCombo.setConditionFiled("projectName");
-	                     	conditionDtoForCombo.setConditionValue(st.getCell(2,i).getContents());
-	                     	conditionDtoForCombo.setOrderFiled("projectName");
-	                     	mapForCombo =templateDaoForCombo.query(conditionDtoForCombo, Constant.B_PROJECT);
-	                     	List<B_Project> projectList =(List<B_Project>)mapForCombo.get(Constant.BEENLIST);
-	                     	if(projectList.size()<1){
-	                     		printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属项目错误'"));
-                     			return;
+	                     	if(!"".equals(st.getCell(2,i).getContents().trim())){
+			                     	conditionDtoForCombo.setConditionFiled("projectName");
+			                     	conditionDtoForCombo.setConditionValue(st.getCell(2,i).getContents());
+			                     	conditionDtoForCombo.setOrderFiled("projectName");
+			                     	mapForCombo =templateDaoForCombo.query(conditionDtoForCombo, Constant.B_PROJECT);
+			                     	List<B_Project> projectList =(List<B_Project>)mapForCombo.get(Constant.BEENLIST);
+			                     	if(projectList.size()<1){
+			                     		printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属项目错误'"));
+		                     			return;
+			                     	}
+			                     	threeLayerSwitch.setProjectId(projectList.get(0).getProjectId());
 	                     	}
-	                     	threeLayerSwitch.setProjectId(projectList.get(0).getProjectId());
 	                     	threeLayerSwitch.setInstallationSite(st.getCell(3,i).getContents());
 	                     	/** 获取所属厂家 */
 	                    	conditionDtoForCombo.setConditionFiled("manufacturersName");
@@ -619,7 +617,7 @@ public class A_ThreeLayerSwitchServiceImpl extends Forward {
 			Label headLabel0 = new Label(0, 0, "设备名称(必填)", requiredFormat);
 			threeLayerSwitchSheet.addCell(headLabel0);
 			threeLayerSwitchSheet.setColumnView(0, 30);
-			Label headLabel1 = new Label(1, 0, "所属站点(必填)", requiredFormat);
+			Label headLabel1 = new Label(1, 0, "所属站点", normalFormat);
 			WritableCellFeatures siteWritableCellFeatures = new WritableCellFeatures();
 			siteWritableCellFeatures.setComment("输入值,请查看sheet-站点集合");
 			headLabel1.setCellFeatures(siteWritableCellFeatures);

@@ -8,13 +8,10 @@ Ext.onReady(function(){
 	/** 表格序号 */
    var record_start = 0;
     /** combo下拉框-字段local初始化 */
-    var conditionFiledStore = [['twoLayerSwitch.twoLayerSwitchName','设备名称'],['twoLayerSwitch.siteId','所属站点'],
-    						   ['twoLayerSwitch.installationSite','安装地址'],['twoLayerSwitch.subNetwork','所属子网 '],['twoLayerSwitch.debugging','调试情况'],
-    						   ['twoLayerSwitch.switchType','设备类型'],['twoLayerSwitch.manufacturersId','所属厂家'],['twoLayerSwitch.typeSpecification','型号规格'],
-    						   ['twoLayerSwitch.vlanId','vlanId'],['twoLayerSwitch.portNumber','端口号'],['twoLayerSwitch.flow','流量'],
-    						   ['twoLayerSwitch.ownedBusiness','所属业务'],['twoLayerSwitch.terminalName','终端名称'],['twoLayerSwitch.vlanDescp','vlan备注'],
-    						   ['twoLayerSwitch.constructionUnitId','施工单位'],['twoLayerSwitch.runTime','投运时间'],['twoLayerSwitch.installationLocation','主载波安装地址'],
-    						   ['twoLayerSwitch.delFlg','是否启用'],['twoLayerSwitch.descp','备注']];
+    var conditionFiledStore = [['carrier.carrierName','载波名称'],['carrier.siteId','所属站点'],['carrier.projectId','所属项目'],
+    						   ['carrier.installationSite','安装地址'],['carrier.debugging','调试情况'],['carrier.ip','IP地址'],['carrier.manufacturersId','所属厂家'],
+    						   ['carrier.typeSpecification','型号规格'],['carrier.constructionUnitId','施工单位'],['carrier.runTime','投运时间'],
+    						   ['carrier.installationLocation','主载波安装地址'],['carrier.delFlg','是否启用'],['carrier.descp','备注']];
 	var delFlgStore =[['启用','启用'],['停用','停用']]; 
 	 /** combo下拉框-字段remote初始化 */
 	var siteDataStore = new Ext.data.JsonStore({
@@ -79,7 +76,7 @@ Ext.onReady(function(){
 						});
 			  		}
 				}
-	});	
+	});
 	var manufacturersDataStore = new Ext.data.JsonStore({
     		url: 'ComboForService!comboForManufacturers.zdy',
     		baseParams:{
@@ -100,30 +97,29 @@ Ext.onReady(function(){
 						});
 			  		}
 				}
-	});	
+	});		
 	 /** gridPanel表格数据remote初始化 */
 	var gridPanelDataStore = new Ext.data.JsonStore({
-    		url: 'A_TwoLayerSwitchServiceImpl!query.zdy',
+    		url: 'A_CarrierServiceImpl!query.zdy',
     		baseParams:{start:0,limit:50},
     		root: 'beenList',
     		totalProperty : 'totalCount',
-    		fields: ['twoLayerSwitchId','twoLayerSwitchName','siteId','siteName','projectId','projectName','installationSite',
-    				 'subNetwork','debugging','switchType','manufacturersId','manufacturersName','typeSpecification','vlanId','portNumber','flow',
-    				 'ownedBusiness','terminalName','vlanDescp','constructionUnitId','constructionUnitName',
-    				 'runTime','delFlg','descp']
+    		fields: ['carrierId','carrierName','siteId','siteName','projectId','projectName','installationSite',
+    				 'debugging','ip','manufacturersId','manufacturersName','typeSpecification','constructionUnitId',
+    				 'constructionUnitName','runTime','installationLocation','delFlg','descp']
 		});
 /********************************************* Form集合 ***********************************************************/
      	 /** form的提示信息位置 */
      	 Ext.form.Field.prototype.msgTarget = 'side';	
      	 /** 查看-FormPanel */
     	var formPanel_view = new Ext.FormPanel({
-						        title: '二层交换机-查看',labelWidth:100,frame:true, 
+						        title: '载波-查看',labelWidth:100,frame:true, 
 						        defaults:{xtype: 'panel',layout: 'column',anchor:'100%'},
 						        items: [{
 							        		items:[{
 							        				layout:'form',columnWidth:1,defaultType:'textfield', 
 							            	 		defaults:{labelStyle:"text-align:right;",anchor:'95%',readOnly:true},
-							        				items:[{id:"viewTwoLayerSwitchName",fieldLabel:'<font color="red">(*)</font>设备名称'}]
+							        				items:[{id:"viewCarrierName",fieldLabel:'<font color="red">(*)</font>载波名称'}]
 							        		}]
 						            	},{
 							            	 items:[{
@@ -131,24 +127,18 @@ Ext.onReady(function(){
 							            	 		defaults:{labelStyle:"text-align:right;",anchor:'90%',readOnly:true},
 									            	items:[{id:"viewSiteName",fieldLabel:'<font color="red">(*)</font>所属站点'},
 									            		   {id:"viewInstallationSite",fieldLabel:'安装地址'},
-									            		   {id:"viewDebugging",fieldLabel:'调试情况'},
-									            		   {id:"viewManufacturersName",fieldLabel:'<font color="red">(*)</font>所属厂家'},
-									            		   {id:"viewVlanId",fieldLabel:'vlanId'},
-									            		   {id:"viewFlow",fieldLabel:'流量'},
-									            		   {id:"viewTerminalName",fieldLabel:'终端名称'},
-									            		   {id:"viewConstructionUnitName",fieldLabel:'<font color="red">(*)</font>施工单位'},
-									            		   {id:"viewDelFlg",fieldLabel:'<font color="red">(*)</font>是否有效'}]
+									            		   {id:"viewIp",fieldLabel:'IP地址'},
+									            		   {id:"viewTypeSpecification",fieldLabel:'型号规格'},
+									            		   {id:"viewRunTime",fieldLabel:'投运时间'}]
 									            	},{
 									            	layout:'form',columnWidth:.5,defaultType:'textfield',
 									            	defaults:{labelStyle:"text-align:right;",anchor:'90%',readOnly:true}, 
-									            	items:[{id:"viewProjectName",fieldLabel:'所属项目 '},
-									            		   {id:"viewSubNetwork",fieldLabel:'所属子网'},
-									            		   {id:"viewSwitchType",fieldLabel:'设备类型'},
-									            		   {id:"viewTypeSpecification",fieldLabel:'型号规格'},
-									            		   {id:"viewPortNumber",fieldLabel:'端口号'},
-									            		   {id:"viewOwnedBusiness",fieldLabel:'所属业务'},
-									            		   {id:"viewVlanDescp",fieldLabel:'vlan备注'},
-									            		   {id:"viewRunTime",fieldLabel:'投运时间'}] 
+									            	items:[{id:"viewProjectName",fieldLabel:'<font color="red">(*)</font>所属项目 '},
+									            		   {id:"viewDebugging",fieldLabel:'调试情况'},
+									            		   {id:"viewManufacturersName",fieldLabel:'<font color="red">(*)</font>所属厂家'},
+									            		   {id:"viewConstructionUnitName",fieldLabel:'<font color="red">(*)</font>施工单位'},
+									            		   {id:"viewInstallationLocation",fieldLabel:'主载波安装地址'},
+									            		   {id:"viewDelFlg",fieldLabel:'<font color="red">(*)</font>是否启用'}] 
 							            	}]
 						              },{
 							        		items:[{
@@ -162,16 +152,16 @@ Ext.onReady(function(){
 						    
     	/** 新增-FormPanel */
     	var formPanel_add = new Ext.FormPanel({
-						        title: '二层交换机-新增',labelWidth:100,frame:true, 
-						        url:'A_TwoLayerSwitchServiceImpl!add.zdy',
+						        title: '载波-新增',labelWidth:100,frame:true, 
+						        url:'A_CarrierServiceImpl!add.zdy',
 						        defaults:{xtype: 'panel',layout: 'column',anchor:'100%'},
 						        items:[{
 						        		items:[{
 						        				layout:'form',columnWidth:1,defaultType:'textfield', 
 						            	 		defaults:{labelStyle:"text-align:right;",anchor:'95%'},
 						        				items:[{	
-						        						name:'A_TwoLayerSwitch.twoLayerSwitchName',fieldLabel:'<font color="red">(*)</font>设备名称',
-    													emptyText:"请输入设备名称",allowBlank:false,blankText:"设备名称不能为空" 
+						        						name:'A_Carrier.carrierName',fieldLabel:'<font color="red">(*)</font>载波名称',
+    													emptyText:"请输入载波名称",allowBlank:false,blankText:"载波名称不能为空" 
     											}]
 						        		}]
 						            },{
@@ -179,71 +169,60 @@ Ext.onReady(function(){
 						            	 		layout:'form',columnWidth:.5,defaultType:'textfield', 
 						            	 		defaults:{labelStyle:"text-align:right;",anchor:'90%'},
 								            	items:[{
-										            		name:'A_TwoLayerSwitch.siteId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属站点',
+										            		name:'A_Carrier.siteId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属站点',
 										                	emptyText:'请选择所属站点',allowBlank:false,blankText:'所属站点不能为空',
-										                	mode:'local',store:siteDataStore,hiddenName:'A_TwoLayerSwitch.siteId',
+										                	mode:'local',store:siteDataStore,hiddenName:'A_Carrier.siteId',
 										               		displayField:'siteName',valueField:'siteId',
 										               	 	typeAhead:true,triggerAction:'all',forceSelection:true
 								            	 	   },{
-						              				 		name:'A_TwoLayerSwitch.installationSite',fieldLabel:'安装地址'
+						              				 		name:'A_Carrier.installationSite',fieldLabel:'安装地址'
 						            				   },{
-									               			name:'A_TwoLayerSwitch.debugging',fieldLabel:'调试情况'
+									               			name:'A_Carrier.ip',fieldLabel:'IP地址'
 									            	   },{
-									               			name:'A_TwoLayerSwitch.manufacturersId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属厂家',
-											                emptyText:'请选择所属厂家',allowBlank:false,blankText:'所属厂家不能为空',
-											                mode:'local',store:manufacturersDataStore,hiddenName:'A_TwoLayerSwitch.manufacturersId',
-											                displayField:'manufacturersName',valueField:'manufacturersId',
-											                typeAhead:true,triggerAction:'all',forceSelection:true
+									               			name:'A_Carrier.typeSpecification',fieldLabel:'型号规格'
 									            	   },{
-									               			name:'A_TwoLayerSwitch.vlanId',fieldLabel:'vlanId'
-									            	   },{
-									               			name:'A_TwoLayerSwitch.flow',fieldLabel:'流量'
-									            	   },{
-									               			name:'A_TwoLayerSwitch.terminalName',fieldLabel:'终端名称'
-									            	   },{
-									               			name:'A_TwoLayerSwitch.constructionUnitId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>施工单位',
-											                emptyText:"请选择施工单位'",allowBlank:false,blankText:"施工单位'不能为空",
-											                mode:'local',store:constructionUnitDataStore,hiddenName:'A_TwoLayerSwitch.constructionUnitId',
-											                displayField:'constructionUnitName',valueField:'constructionUnitId',
-											                typeAhead:true,triggerAction:'all',forceSelection:true
-									            	   },{
-											            	name:'A_TwoLayerSwitch.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
-											                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
-											                mode:'local',store:delFlgStore,value:'启用',
-											                typeAhead:true,triggerAction:'all',forceSelection:true
-								             	}]
+									               			name:'A_Carrier.runTime',xtype:'datefield',fieldLabel:'投运时间',
+									               			maxValue: new Date(),format:'Y-m-d',
+						                					invalidText:"输入的日期格式不正确，请参考格式‘2014-01-01’格式"
+									            	   }]
 								            },{
 								            	layout:'form',columnWidth:.5,defaultType:'textfield',
 								            	defaults:{labelStyle:"text-align:right;",anchor:'90%'}, 
 								            	items:[{
-										            		name:'A_TwoLayerSwitch.projectId',xtype:'combo',fieldLabel:'所属项目',
-										               	 	mode:'local',store:projectDataStore,hiddenName:'A_TwoLayerSwitch.projectId',
+										            		name:'A_Carrier.projectId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属项目',
+										               	 	emptyText:'请选择所属项目',allowBlank:false,blankText:'所属项目不能为空',
+										               	 	mode:'local',store:projectDataStore,hiddenName:'A_Carrier.projectId',
 										                	displayField:'projectName',valueField:'projectId',
 										                	typeAhead:true,triggerAction:'all',forceSelection:true
-								            			},{
-						                					name:'A_TwoLayerSwitch.subNetwork',fieldLabel:'所属子网'
-						           						},{
-						                					name:'A_TwoLayerSwitch.switchType',fieldLabel:'设备类型'
-						           						},{
-						                					name:'A_TwoLayerSwitch.typeSpecification',fieldLabel:'型号规格'
-						           						},{
-									               			 name:'A_TwoLayerSwitch.portNumber',fieldLabel:'端口号'
-									               		},{
-									               			 name:'A_TwoLayerSwitch.ownedBusiness',fieldLabel:'所属业务'
-									               		},{
-									               			 name:'A_TwoLayerSwitch.vlanDescp',fieldLabel:'vlan备注'
-									              		 },{
-									               			 name:'A_TwoLayerSwitch.runTime',xtype:'datefield',fieldLabel:'投运时间',
-									               			 maxValue: new Date(),format:'Y-m-d',
-						                					 invalidText:"输入的日期格式不正确，请参考格式‘2014-01-01’格式"
-									         	}] 
+								            		},{
+						                					name:'A_Carrier.debugging',fieldLabel:'调试情况'
+						           					},{
+						                					name:'A_Carrier.manufacturersId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属厂家',
+											                emptyText:'请选择所属厂家',allowBlank:false,blankText:'所属厂家不能为空',
+											                mode:'local',store:manufacturersDataStore,hiddenName:'A_Carrier.manufacturersId',
+											                displayField:'manufacturersName',valueField:'manufacturersId',
+											                typeAhead:true,triggerAction:'all',forceSelection:true
+						           					},{
+											                name:'A_Carrier.constructionUnitId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>施工单位',
+											                emptyText:"请输入施工单位",allowBlank:false,blankText:"施工单位不能为空", 
+											                mode:'local',store:constructionUnitDataStore,hiddenName:'A_Carrier.constructionUnitId',
+											                displayField:'constructionUnitName',valueField:'constructionUnitId',
+											                typeAhead:true,triggerAction:'all',forceSelection:true
+									            	},{
+						                					name:'A_Carrier.installationLocation',fieldLabel:'主载波安装地址'
+						           					},{
+											            	name:'A_Carrier.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
+											                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
+											                mode:'local',store:delFlgStore,
+											                typeAhead:true,triggerAction:'all',forceSelection:true
+								             	}] 
 						            	}]
 						            },{
 						        		items:[{
 						        				layout:'form',columnWidth:1,defaultType:'textfield', 
 						            	 		defaults:{labelStyle:"text-align:right;",anchor:'95%'},
 						        				items:[{	
-						        					name:'A_TwoLayerSwitch.descp',fieldLabel:'备注',xtype:'textarea'
+						        					name:'A_Carrier.descp',fieldLabel:'备注',xtype:'textarea'
     											}]
 						        		}]
 						           }
@@ -252,18 +231,18 @@ Ext.onReady(function(){
 						    
 		/** 更新FormPanel */
     	var formPanel_update = new Ext.FormPanel({
-						        title: '二层交换机-更新',labelWidth:100,frame:true, 
-						        url:'A_TwoLayerSwitchServiceImpl!update.zdy',
+						        title: '载波-更新',labelWidth:100,frame:true, 
+						        url:'A_CarrierServiceImpl!update.zdy',
 						        defaults:{xtype: 'panel',layout: 'column',anchor:'100%'},
 						       	items:[{
 						        		items:[{
 						        				layout:'form',columnWidth:1,defaultType:'textfield', 
 						            	 		defaults:{labelStyle:"text-align:right;",anchor:'95%'},
 						        				items:[{
-						        						id:'updateTwoLayerSwitchId',name:'A_TwoLayerSwitch.twoLayerSwitchId',hidden:true
+						        						id:'updateCarrierId',name:'A_Carrier.carrierId',hidden:true
 						        				},{	
-						        						id:'updateTwoLayerSwitchName',name:'A_TwoLayerSwitch.twoLayerSwitchName',fieldLabel:'<font color="red">(*)</font>设备名称',
-    													emptyText:"请输入设备名称",allowBlank:false,blankText:"设备名称不能为空" 
+						        						id:'updateCarrierName',name:'A_Carrier.carrierName',fieldLabel:'<font color="red">(*)</font>载波名称',
+    													emptyText:"请输入载波名称",allowBlank:false,blankText:"载波名称不能为空" 
     											}]
 						        		}]
 						            },{
@@ -271,71 +250,60 @@ Ext.onReady(function(){
 						            	 		layout:'form',columnWidth:.5,defaultType:'textfield', 
 						            	 		defaults:{labelStyle:"text-align:right;",anchor:'90%'},
 								            	items:[{
-										            	id:'updateSiteId',name:'A_TwoLayerSwitch.siteId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属站点',
-										               	emptyText:'请选择所属站点',allowBlank:false,blankText:'所属站点不能为空',
-										                mode:'local',store:siteDataStore,hiddenName:'A_TwoLayerSwitch.siteId',
+										            	id:'updateSiteId',name:'A_Carrier.siteId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属站点',
+										                emptyText:'请选择所属站点',allowBlank:false,blankText:'所属站点不能为空',
+										                mode:'local',store:siteDataStore,hiddenName:'A_Carrier.siteId',
 										               	displayField:'siteName',valueField:'siteId',
-										               	 typeAhead:true,triggerAction:'all',forceSelection:true
-								            	 	 },{
-						              				 	id:'updateInstallationSite',name:'A_TwoLayerSwitch.installationSite',fieldLabel:'安装地址'
-						            				 },{
-									               		id:'updateDebugging',name:'A_TwoLayerSwitch.debugging',fieldLabel:'调试情况'
-									            	 },{
-									               		id:'updateManufacturersId',name:'A_TwoLayerSwitch.manufacturersId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属厂家',
-											            emptyText:'请选择所属厂家',allowBlank:false,blankText:'所属厂家不能为空',
-											            mode:'local',store:manufacturersDataStore,hiddenName:'A_TwoLayerSwitch.manufacturersId',
-											            displayField:'manufacturersName',valueField:'manufacturersId',
-											            typeAhead:true,triggerAction:'all',forceSelection:true
-									            	 },{
-									               		id:'updateVlanId',name:'A_TwoLayerSwitch.vlanId',fieldLabel:'vlanId'
-									            	 },{
-									               		id:'updateFlow',name:'A_TwoLayerSwitch.flow',fieldLabel:'流量'
-									            	 },{
-									               		id:'updateTerminalName',name:'A_TwoLayerSwitch.terminalName',fieldLabel:'终端名称'
-									            	 },{
-									               		id:'updateConstructionUnitId',name:'A_TwoLayerSwitch.constructionUnitId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>施工单位',
-											            emptyText:"请选择施工单位'",allowBlank:false,blankText:"施工单位'不能为空",
-											            mode:'local',store:constructionUnitDataStore,hiddenName:'A_TwoLayerSwitch.constructionUnitId',
-											            displayField:'constructionUnitName',valueField:'constructionUnitId',
-											            typeAhead:true,triggerAction:'all',forceSelection:true
-									            	 },{
-											            id:'updateDelFlg',name:'A_TwoLayerSwitch.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
-											            emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
-											            mode:'local',store:delFlgStore,value:'启用',
-											            typeAhead:true,triggerAction:'all',forceSelection:true
-								             	}]
+										               	typeAhead:true,triggerAction:'all',forceSelection:true
+								            	 	   },{
+						              				 	id:'updateInstallationSite',name:'A_Carrier.installationSite',fieldLabel:'安装地址'
+						            				   },{
+									               		id:'updateIp',name:'A_Carrier.ip',fieldLabel:'IP地址'
+									            	   },{
+									               		id:'updateTypeSpecification',name:'A_Carrier.typeSpecification',fieldLabel:'型号规格'
+									            	   },{
+									               		id:'updateRunTime',name:'A_Carrier.runTime',xtype:'datefield',fieldLabel:'投运时间',
+									               		maxValue: new Date(),format:'Y-m-d',
+						                				invalidText:"输入的日期格式不正确，请参考格式‘2014-01-01’格式"
+									            	   }]
 								            },{
 								            	layout:'form',columnWidth:.5,defaultType:'textfield',
 								            	defaults:{labelStyle:"text-align:right;",anchor:'90%'}, 
 								            	items:[{
-										            	id:'updateProjectId',name:'A_TwoLayerSwitch.projectId',xtype:'combo',fieldLabel:'所属项目',
-										               	mode:'local',store:projectDataStore,hiddenName:'A_TwoLayerSwitch.projectId',
+										            	id:'updateProjectId',name:'A_Carrier.projectId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属项目',
+										               	emptyText:'请选择所属项目',allowBlank:false,blankText:'所属项目不能为空',
+										               	mode:'local',store:projectDataStore,hiddenName:'A_Carrier.projectId',
 										                displayField:'projectName',valueField:'projectId',
 										                typeAhead:true,triggerAction:'all',forceSelection:true
 								            		},{
-						                				id:'updateSubNetwork',name:'A_TwoLayerSwitch.subNetwork',fieldLabel:'所属子网'
+						                				id:'updateDebugging',name:'A_Carrier.debugging',fieldLabel:'调试情况'
 						           					},{
-						                				id:'updateSwitchType',name:'A_TwoLayerSwitch.switchType',fieldLabel:'设备类型'
+						                				id:'updateManufacturersId',name:'A_Carrier.manufacturersId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属厂家',
+											            emptyText:'请选择所属厂家',allowBlank:false,blankText:'所属厂家不能为空',
+											            mode:'local',store:manufacturersDataStore,hiddenName:'A_Carrier.manufacturersId',
+											            displayField:'manufacturersName',valueField:'manufacturersId',
+											            typeAhead:true,triggerAction:'all',forceSelection:true
 						           					},{
-						                				id:'updateTypeSpecification',name:'A_TwoLayerSwitch.typeSpecification',fieldLabel:'型号规格'
+											            id:'updateConstructionUnitId',name:'A_Carrier.constructionUnitId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>施工单位',
+											            emptyText:'请选择施工单位',allowBlank:false,blankText:'施工单位不能为空',
+											            mode:'local',store:constructionUnitDataStore,hiddenName:'A_Carrier.constructionUnitId',
+											            displayField:'constructionUnitName',valueField:'constructionUnitId',
+											            ypeAhead:true,triggerAction:'all',forceSelection:true
+									            	},{
+						                				id:'updateInstallationLocation',name:'A_Carrier.installationLocation',fieldLabel:'主载波安装地址'
 						           					},{
-									               		id:'updatePortNumber',name:'A_TwoLayerSwitch.portNumber',fieldLabel:'端口号'
-									               	},{
-									               		id:'updateOwnedBusiness',name:'A_TwoLayerSwitch.ownedBusiness',fieldLabel:'所属业务'
-									               	},{
-									               		id:'updateVlanDescp',name:'A_TwoLayerSwitch.vlanDescp',fieldLabel:'vlan备注'
-									              	},{
-									               		id:'updateRunTime',name:'A_TwoLayerSwitch.runTime',xtype:'datefield',fieldLabel:'投运时间',
-									               		maxValue: new Date(),format:'Y-m-d',
-						                				invalidText:"输入的日期格式不正确，请参考格式‘2014-01-01’格式"
-									         	}] 
+											           id:'updateDelFlg',name:'A_Carrier.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
+											           emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
+											           mode:'local',store:delFlgStore,
+											           typeAhead:true,triggerAction:'all',forceSelection:true
+								             	}] 
 						            	}]
 						            },{
 						        		items:[{
 						        				layout:'form',columnWidth:1,defaultType:'textfield', 
 						            	 		defaults:{labelStyle:"text-align:right;",anchor:'95%'},
 						        				items:[{	
-						        					id:'updateDescp',name:'A_TwoLayerSwitch.descp',fieldLabel:'备注',xtype:'textarea'
+						        					id:'updateDescp',name:'A_Carrier.descp',fieldLabel:'备注',xtype:'textarea'
     											}]
 						        		}]
 						           }
@@ -345,9 +313,9 @@ Ext.onReady(function(){
 						    
 		/** 上传FormPanel */	
 		var formPanel_import = new Ext.FormPanel({
-						        title: '二层交换机-上传',labelWidth:100,
+						        title: '载波-上传',labelWidth:100,
 						        frame:true,fileUpload :true,
-						        url:'A_TwoLayerSwitchServiceImpl!importExcel.zdy',
+						        url:'A_CarrierServiceImpl!importExcel.zdy',
 						        defaultType:'textfield',
 						        items: [{
 					                    id:'fileName',inputType:'file',
@@ -359,7 +327,7 @@ Ext.onReady(function(){
 						            text: '下载excel模板',
 						            handler:function(){
 									   Ext.Ajax.request({
-											url: 'A_TwoLayerSwitchServiceImpl!downloadExcel.zdy',
+											url: 'A_CarrierServiceImpl!downloadExcel.zdy',
 											success: function(response){
 												ajaxExcelSuccess(response);
 											},
@@ -374,14 +342,14 @@ Ext.onReady(function(){
 		/** 查看窗口 */
     	var window_view = new Ext.Window({
 	         					title: '查看窗口',closable:true,closeAction:"hide",
-	            				width:600,height:450,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_view,
+	            				width:600,height:400,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_view,
 	            				buttonAlign:'center',
 						        buttons: [{text: '关闭',handler:function(){window_view.hide();}}]
 	       					});				        				    
     	/** 新增窗口 */
     	var window_add = new Ext.Window({
 	         					title: '新增窗口',closable:true,closeAction:"hide",
-	            				width:600,height:450,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_add,
+	            				width:600,height:400,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_add,
 	            				buttonAlign:'center',
 						        buttons: 
 						        [{
@@ -404,7 +372,7 @@ Ext.onReady(function(){
 	       					
     	/** 更新窗口 */
     	var window_update = new Ext.Window({
-	         					title: '更新窗口',closable:true,closeAction:"hide",width:600,height:450,iconCls:'bgi_update',
+	         					title: '更新窗口',closable:true,closeAction:"hide",width:600,height:400,iconCls:'bgi_update',
 	            				plain:true,layout:'fit',items: formPanel_update,
 	            				buttonAlign:'center',
 						        buttons: 
@@ -419,6 +387,8 @@ Ext.onReady(function(){
 								                });
 							            }
 						            }
+						        },{
+						            text: '重置',handler:function(){formPanel_update.getForm().reset();}
 						        },{
 						            text: '取消',handler:function(){window_update.hide();}
 						        }]
@@ -483,7 +453,7 @@ Ext.onReady(function(){
     
     /** GridPanel */ 
    var functionGridPanel =  new Ext.grid.GridPanel({
-        renderTo:"grid-size",title:'基础列表>>二层交换机', width:Ext.get("grid-size").getWidth(),height:Ext.get("grid-size").getHeight(),
+        renderTo:"grid-size",title:'基础列表>>载波', width:Ext.get("grid-size").getWidth(),height:Ext.get("grid-size").getHeight(),
         frame:true,iconCls:'bgi_grid',
         store:gridPanelDataStore,
         cm: new Ext.grid.ColumnModel([sm,
@@ -492,23 +462,17 @@ Ext.onReady(function(){
 			　　　		return　record_start　+　1　+　rowIndex;
 			　　	}
 			}),
-            {header:"设备名称", width: 140, sortable:true,dataIndex:'twoLayerSwitchName'},
+            {header:"载波名称", width: 140, sortable:true,dataIndex:'carrierName'},
             {header:"所属站点", width: 140, sortable:true,dataIndex:'siteName'},
             {header:"所属项目", width: 140, sortable:true,dataIndex:'projectName'},
             {header:"安装地址", width: 140, sortable:true,dataIndex:'installationSite'},
-            {header:"所属子网", width: 140, sortable:true,dataIndex:'subNetwork'},
             {header:"调试情况", width: 120, sortable:true,dataIndex:'debugging'},
-            {header:"设备类型", width: 120, sortable:true,dataIndex:'switchType'},
+            {header:"IP地址", width: 120, sortable:true,dataIndex:'ip'},
             {header:"所属厂家", width: 120, sortable:true,dataIndex:'manufacturersName'},
             {header:"型号规格", width: 120, sortable:true,dataIndex:'typeSpecification'},
-            {header:"vlanId",  width: 120, sortable:true,dataIndex:'vlanId'},
-            {header:"端口号",   width: 120, sortable:true,dataIndex:'portNumber'},
-            {header:"流量",    width: 120, sortable:true,dataIndex:'flow'},
-            {header:"所属业务", width: 120, sortable:true,dataIndex:'ownedBusiness'},
-            {header:"终端名称", width: 120, sortable:true,dataIndex:'terminalName'},
-            {header:"vlan备注", width: 120, sortable:true,dataIndex:'vlanDescp'},
             {header:"施工单位", width: 120, sortable:true,dataIndex:'constructionUnitName'},
-            {header:"投运时间",  width: 120, sortable:true,dataIndex:'runTime'},
+            {header:"投运时间", width: 120, sortable:true,dataIndex:'runTime'},
+            {header:"主载波安装地址 ", width: 120, sortable:true,dataIndex:'installationLocation'},
             {header:"是否启用", width: 120, sortable:true,dataIndex:'delFlg'},
             {header:"备注",    width: 120, sortable:true,dataIndex:'descp'}
         ]),
@@ -533,10 +497,10 @@ Ext.onReady(function(){
             	 	var flag = 0;
             	  	/** 查询要导出的相应记录 */
 						Ext.Ajax.request({
-							 url: 'A_TwoLayerSwitchServiceImpl!exportExcel.zdy',
+							 url: 'A_CarrierServiceImpl!exportExcel.zdy',
 							 params: {
 							 	"ConditionDto.conditionFiled":Ext.getCmp("conditionFiled").getValue(),
-   								"ConditionDto.conditionConditions":Ext.getCmp("conditionConditions").getValue(),
+   								"ConditionDto.conditionConditions":"like",
 								"ConditionDto.conditionValue":Ext.getCmp("conditionValue").getValue()
 							 },
 						     success: function(response){
@@ -559,24 +523,18 @@ Ext.onReady(function(){
             	 	var _record = functionGridPanel.getSelectionModel().getSelected();
            		 	if (_record){ 
            		 		var _jsonData = functionGridPanel.getSelectionModel().getSelections()[0];
-			 				Ext.getCmp("updateTwoLayerSwitchId").setValue(_jsonData.get("twoLayerSwitchId"));
-							Ext.getCmp("updateTwoLayerSwitchName").setValue(_jsonData.get("twoLayerSwitchName"));
+			 				Ext.getCmp("updateCarrierId").setValue(_jsonData.get("carrierId"));
+							Ext.getCmp("updateCarrierName").setValue(_jsonData.get("carrierName"));
 							Ext.getCmp("updateSiteId").setValue(_jsonData.get("siteId"));
 							Ext.getCmp("updateProjectId").setValue(_jsonData.get("projectId"));
 							Ext.getCmp("updateInstallationSite").setValue(_jsonData.get("installationSite"));
-							Ext.getCmp("updateSubNetwork").setValue(_jsonData.get("subNetwork"));
 							Ext.getCmp("updateDebugging").setValue(_jsonData.get("debugging"));
-							Ext.getCmp("updateSwitchType").setValue(_jsonData.get("switchType"));
+							Ext.getCmp("updateIp").setValue(_jsonData.get("ip"));
 							Ext.getCmp("updateManufacturersId").setValue(_jsonData.get("manufacturersId"));
 							Ext.getCmp("updateTypeSpecification").setValue(_jsonData.get("typeSpecification"));
-							Ext.getCmp("updateVlanId").setValue(_jsonData.get("vlanId"));
-							Ext.getCmp("updatePortNumber").setValue(_jsonData.get("portNumber"));
-							Ext.getCmp("updateFlow").setValue(_jsonData.get("flow"));
-							Ext.getCmp("updateOwnedBusiness").setValue(_jsonData.get("ownedBusiness"));
-							Ext.getCmp("updateTerminalName").setValue(_jsonData.get("terminalName"));
-							Ext.getCmp("updateVlanDescp").setValue(_jsonData.get("vlanDescp"));
 							Ext.getCmp("updateConstructionUnitId").setValue(_jsonData.get("constructionUnitId"));
 							Ext.getCmp("updateRunTime").setValue(_jsonData.get("runTime"));
+							Ext.getCmp("updateInstallationLocation").setValue(_jsonData.get("installationLocation"));
 							Ext.getCmp("updateDelFlg").setValue(_jsonData.get("delFlg"));
 							Ext.getCmp("updateDescp").setValue(_jsonData.get("descp"));
 							window_update.show();
@@ -596,14 +554,14 @@ Ext.onReady(function(){
 								var _jsonData = "";
 								for (var i = 0;i <len; i++){
 									if (i == 0) {
-										_jsonData = _jsonData +  m[i].get("twoLayerSwitchId");
+										_jsonData = _jsonData +  m[i].get("carrierId");
 									} else {
-										_jsonData = _jsonData + "," +  m[i].get("twoLayerSwitchId");
+										_jsonData = _jsonData + "," +  m[i].get("carrierId");
 									}
 								}
 								/** 更新相应记录 */
 								Ext.Ajax.request({
-									   url: 'A_TwoLayerSwitchServiceImpl!effective.zdy',
+									   url: 'A_CarrierServiceImpl!effective.zdy',
 									   params: {"ids":_jsonData},
 									   success: function(response,options){
 									  	   ajaxSuccess(response,options);
@@ -631,14 +589,14 @@ Ext.onReady(function(){
 								var _jsonData = "";
 								for (var i = 0;i <len; i++){
 									if (i == 0) {
-										_jsonData = _jsonData +  m[i].get("twoLayerSwitchId");
+										_jsonData = _jsonData +  m[i].get("carrierId");
 									} else {
-										_jsonData = _jsonData + "," +  m[i].get("twoLayerSwitchId");
+										_jsonData = _jsonData + "," +  m[i].get("carrierId");
 									}
 								}
 								/** 更新相应记录 */
 								Ext.Ajax.request({
-									   url: 'A_TwoLayerSwitchServiceImpl!invalid.zdy',
+									   url: 'A_CarrierServiceImpl!invalid.zdy',
 									   params: {"ids":_jsonData},
 									   success: function(response,options){
 									   		 ajaxSuccess(response,options);
@@ -666,14 +624,14 @@ Ext.onReady(function(){
 								var _jsonData = "";
 								for (var i = 0;i <len; i++){
 									if (i == 0) {
-										_jsonData = _jsonData +  m[i].get("twoLayerSwitchId");
+										_jsonData = _jsonData +  m[i].get("carrierId");
 									} else {
-										_jsonData = _jsonData + "," +  m[i].get("twoLayerSwitchId");
+										_jsonData = _jsonData + "," +  m[i].get("carrierId");
 									}
 								}
 								/** 更新相应记录 */
 								Ext.Ajax.request({
-									   url: 'A_TwoLayerSwitchServiceImpl!delete.zdy',
+									   url: 'A_CarrierServiceImpl!delete.zdy',
 									   params: {"ids":_jsonData},
 									   success: function(response,options){
 									   		ajaxSuccess(response,options);
@@ -689,7 +647,7 @@ Ext.onReady(function(){
 						Ext.MessageBox.alert(tipsInfo,'请选择要删除的数据项！');
 					} 
            		 }
-        	  },{id:"conditionConditions",xtype:'textfield',hidden:true,value:"like"},{xtype:"tbfill"},'查询字段：',
+        	  },{xtype:"tbfill"},'查询字段：',
         	 {
 				id:"conditionFiled",xtype:'combo',fieldLabel:'查询字段',mode:'local',
 				blankText:"查询字段不能为空",store:conditionFiledStore,  
@@ -705,7 +663,7 @@ Ext.onReady(function(){
 							callback: function(records, operation, success) {
 								if(!success){
 											  Ext.Ajax.request({
-													url: 'A_TwoLayerSwitchServiceImpl!query.zdy',
+													url: 'A_CarrierServiceImpl!query.zdy',
 													success: function(response){ajaxQuerySuccess(response);},
 													failure: function(response,options){ajaxFailure(response,options);}
 											  });
@@ -722,7 +680,7 @@ Ext.onReady(function(){
      gridPanelDataStore.on('beforeload',function(){
      	refreshMsgTip = Ext.MessageBox.wait('页面数据刷新中,请稍等',tipsInfo,{text:"正在获取数据..."});
      	gridPanelDataStore.baseParams["ConditionDto.conditionFiled"] = Ext.getCmp("conditionFiled").getValue();
-     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = Ext.getCmp("conditionConditions").getValue();
+     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = "like";
      	gridPanelDataStore.baseParams["ConditionDto.conditionValue"] = Ext.getCmp("conditionValue").getValue();
 	 });
 	 gridPanelDataStore.on('load',function(){refreshMsgTip.hide();});
@@ -738,7 +696,7 @@ Ext.onReady(function(){
 		  		callback: function(records, operation, success) {
 			  		if(!success){
 			  			Ext.Ajax.request({
-							url: 'A_TwoLayerSwitchServiceImpl!query.zdy',
+							url: 'A_CarrierServiceImpl!query.zdy',
 							success: function(response){
 								ajaxQuerySuccess(response);
 							},
@@ -757,23 +715,17 @@ Ext.onReady(function(){
          var _record = functionGridPanel.getSelectionModel().getSelected();
          if (_record){
            	var _jsonData = functionGridPanel.getSelectionModel().getSelections()[0];
-			Ext.getCmp("viewTwoLayerSwitchName").setValue(_jsonData.get("twoLayerSwitchName"));
+			Ext.getCmp("viewCarrierName").setValue(_jsonData.get("carrierName"));
 			Ext.getCmp("viewSiteName").setValue(_jsonData.get("siteName"));
 			Ext.getCmp("viewProjectName").setValue(_jsonData.get("projectName"));
 			Ext.getCmp("viewInstallationSite").setValue(_jsonData.get("installationSite"));
-			Ext.getCmp("viewSubNetwork").setValue(_jsonData.get("subNetwork"));
 			Ext.getCmp("viewDebugging").setValue(_jsonData.get("debugging"));
-			Ext.getCmp("viewSwitchType").setValue(_jsonData.get("switchType"));
+			Ext.getCmp("viewIp").setValue(_jsonData.get("ip"));
 			Ext.getCmp("viewManufacturersName").setValue(_jsonData.get("manufacturersName"));
 			Ext.getCmp("viewTypeSpecification").setValue(_jsonData.get("typeSpecification"));
-			Ext.getCmp("viewVlanId").setValue(_jsonData.get("vlanId"));
-			Ext.getCmp("viewPortNumber").setValue(_jsonData.get("portNumber"));
-			Ext.getCmp("viewFlow").setValue(_jsonData.get("flow"));
-			Ext.getCmp("viewOwnedBusiness").setValue(_jsonData.get("ownedBusiness"));
-			Ext.getCmp("viewTerminalName").setValue(_jsonData.get("terminalName"));
-			Ext.getCmp("viewVlanDescp").setValue(_jsonData.get("vlanDescp"));
 			Ext.getCmp("viewConstructionUnitName").setValue(_jsonData.get("constructionUnitName"));
 			Ext.getCmp("viewRunTime").setValue(_jsonData.get("runTime"));
+			Ext.getCmp("viewInstallationLocation").setValue(_jsonData.get("installationLocation"));
 			Ext.getCmp("viewDelFlg").setValue(_jsonData.get("delFlg"));
 			Ext.getCmp("viewDescp").setValue(_jsonData.get("descp"));
 			window_view.show();
@@ -844,46 +796,41 @@ Ext.onReady(function(){
 	/** 查询下拉框事件 */
 	function conditionFiledSelect(){
 		Ext.getCmp('conditionFiledPanel').remove("conditionValue");
-		Ext.getCmp('conditionConditions').setValue("like");
-		if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.delFlg'){
+		if(Ext.getCmp('conditionFiled').getValue()=='carrier.delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:delFlgStore,value:'启用',
+				mode:'local',store:delFlgStore,
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
-		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.siteId'){
-			Ext.getCmp('conditionConditions').setValue("=");
+		}else if(Ext.getCmp('conditionFiled').getValue()=='carrier.siteId'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
 				mode:'local',store:siteDataStore,
 				displayField:'siteName',valueField:'siteId'
 			}));
-		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.projectId'){
-			Ext.getCmp('conditionConditions').setValue("=");
+		}else if(Ext.getCmp('conditionFiled').getValue()=='carrier.projectId'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
 				mode:'local',store:projectDataStore,
 				displayField:'projectName',valueField:'projectId'
 			}));
-		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.constructionUnitId'){
-			Ext.getCmp('conditionConditions').setValue("=");
+		}else if(Ext.getCmp('conditionFiled').getValue()=='carrier.constructionUnitId'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
 				mode:'local',store:constructionUnitDataStore,
 				displayField:'constructionUnitName',valueField:'constructionUnitId'
 			}));
-		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.manufacturersId'){
-			Ext.getCmp('conditionConditions').setValue("=");
+		}else if(Ext.getCmp('conditionFiled').getValue()=='carrier.manufacturersId'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
 				mode:'local',store:manufacturersDataStore,
-				 displayField:'manufacturersName',valueField:'manufacturersId'
+				displayField:'manufacturersName',valueField:'manufacturersId'
 			}));
-		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.runTime'){
+		}else if(Ext.getCmp('conditionFiled').getValue()=='carrier.runTime'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.DateField({
 				id:"conditionValue",xtype:'datefield',fieldLabel:'查询内容',
 				maxValue: new Date(),format:'Y-m-d',

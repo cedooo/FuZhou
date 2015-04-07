@@ -81,7 +81,12 @@ Ext.ux.TreeCombo = Ext.extend(Ext.form.ComboBox, {
 		/** 只接受叶节点数据 */
 			if(node.leaf==true){
 				var dispText = node.text; 
-				var code = "{'siteId':'"+this.zdyForSite+"','deviceId':'"+node.attributes.deviceId+"','deviceType':'"+node.attributes.deviceType+"','deviceName':'"+node.text+"'}"
+				var code = "{'siteId':'"+this.zdyForSite+"','deviceId':'"+node.attributes.deviceId+"','deviceType':'"+node.attributes.deviceType+"','deviceName':'"+node.text+"'}";
+				obj.setHiddenValue(code, dispText); 
+				obj.collapse(); 
+			}else{
+				var dispText = ""; 
+				var code = "{'siteId':'"+this.zdyForSite+"'}";
 				obj.setHiddenValue(code, dispText); 
 				obj.collapse(); 
 			}

@@ -56,7 +56,7 @@ Ext.onReady(function(){
 						            }, {
 						            	name:'B_Manufacturers.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
-						                mode:'local',store:delFlgStore,
+						                mode:'local',store:delFlgStore,value:'启用',
 						                typeAhead:true,triggerAction:'all',forceSelection:true
 						            },{
 						            	name:'B_Manufacturers.descp',fieldLabel:'备注',xtype:'textarea'
@@ -86,7 +86,7 @@ Ext.onReady(function(){
 						            },{
 						            	id:"updateDelFlg",name:'B_Manufacturers.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",  
-						                mode:'local',store:delFlgStore,
+						                mode:'local',store:delFlgStore,value:'启用',
 						                typeAhead: true,triggerAction: 'all',forceSelection:true
 						            },{
 						            	id:"updateDescp",name:'B_Manufacturers.descp',
@@ -171,8 +171,6 @@ Ext.onReady(function(){
 								                });
 							            }
 						            }
-						        },{
-						            text: '重置',handler:function(){formPanel_update.getForm().reset();}
 						        },{
 						            text: '取消',handler:function(){window_update.hide();}
 						        }]
@@ -569,7 +567,7 @@ Ext.onReady(function(){
 		if(Ext.getCmp('conditionFiled').getValue()=='delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:delFlgStore,
+				mode:'local',store:delFlgStore,value:'启用',
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
 		}else{

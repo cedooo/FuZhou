@@ -464,10 +464,6 @@ public class A_OnuServiceImpl extends Forward {
                      			printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属起点为空'"));
                      			return;
 	                    	}
-	                    	if(st.getCell(2,i).getContents()==null||"".equals(st.getCell(2,i).getContents())){
-                     			printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属项目为空'"));
-                     			return;
-	                    	}
 	                    	if(st.getCell(4,i).getContents()==null||"".equals(st.getCell(4,i).getContents())){
                      			printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属厂家为空'"));
                      			return;
@@ -502,16 +498,18 @@ public class A_OnuServiceImpl extends Forward {
 	                     	}
 	                     	onu.setSiteId(siteList.get(0).getSiteId());
 	                     	 /** 获取所属项目 */
-	                     	conditionDtoForCombo.setConditionFiled("projectName");
-	                     	conditionDtoForCombo.setConditionValue(st.getCell(2,i).getContents());
-	                     	conditionDtoForCombo.setOrderFiled("projectName");
-	                     	mapForCombo =templateDaoForCombo.query(conditionDtoForCombo, Constant.B_PROJECT);
-	                     	List<B_Project> projectList =(List<B_Project>)mapForCombo.get(Constant.BEENLIST);
-	                     	if(projectList.size()<1){
-	                     		printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属项目错误'"));
-                     			return;
+	                     	if(!"".equals(st.getCell(2,i).getContents().trim())){
+			                     	conditionDtoForCombo.setConditionFiled("projectName");
+			                     	conditionDtoForCombo.setConditionValue(st.getCell(2,i).getContents());
+			                     	conditionDtoForCombo.setOrderFiled("projectName");
+			                     	mapForCombo =templateDaoForCombo.query(conditionDtoForCombo, Constant.B_PROJECT);
+			                     	List<B_Project> projectList =(List<B_Project>)mapForCombo.get(Constant.BEENLIST);
+			                     	if(projectList.size()<1){
+			                     		printWriter.append(Method.getJsonFormat(Message.ERRORMESSAGE_IMPORT+"+'第"+exceptionIndex+"行的所属项目错误'"));
+		                     			return;
+			                     	}
+			                     	onu.setProjectId(projectList.get(0).getProjectId());
 	                     	}
-	                     	onu.setProjectId(projectList.get(0).getProjectId());
 	                     	onu.setInstallationSite(st.getCell(3,i).getContents());
 	                     	/** 获取所属厂家 */
 	                    	conditionDtoForCombo.setConditionFiled("manufacturersName");
@@ -611,7 +609,7 @@ public class A_OnuServiceImpl extends Forward {
 			headLabel1.setCellFeatures(siteWritableCellFeatures);
 			onuSheet.addCell(headLabel1);
 			onuSheet.setColumnView(1, 30);
-			Label headLabel2 = new Label(2, 0, "所属项目(必填)", requiredFormat);
+			Label headLabel2 = new Label(2, 0, "所属项目", normalFormat);
 			WritableCellFeatures projectWritableCellFeatures = new WritableCellFeatures();
 			projectWritableCellFeatures.setComment("输入值,请查看sheet-项目集合");
 			headLabel2.setCellFeatures(projectWritableCellFeatures);

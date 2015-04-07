@@ -8,7 +8,7 @@ Ext.onReady(function(){
 	/** 表格序号 */
    var record_start = 0;
     /** combo下拉框-字段local初始化 */
-    var conditionFiledStore = [['threeLayerSwitch.threeLayerSwitchName','设备名称'],['threeLayerSwitch.siteId','所属站点'],['threeLayerSwitch.projectId','所属项目'],
+    var conditionFiledStore = [['threeLayerSwitch.threeLayerSwitchName','设备名称'],['threeLayerSwitch.siteId','所属站点'],
    							   ['threeLayerSwitch.installationSite','安装地址'],['threeLayerSwitch.manufacturersId','所属厂家'],['threeLayerSwitch.typeSpecification','型号规格'],
     						   ['threeLayerSwitch.constructionUnitId','施工单位'],['threeLayerSwitch.runTime','投运时间'],['threeLayerSwitch.portNumber','端口号'],
     						   ['threeLayerSwitch.flow','流量'],['threeLayerSwitch.vlanId','vlanId'],['threeLayerSwitch.ip','IP地址'],
@@ -136,7 +136,7 @@ Ext.onReady(function(){
 									            	},{
 									            	layout:'form',columnWidth:.5,defaultType:'textfield',
 									            	defaults:{labelStyle:"text-align:right;",anchor:'90%',readOnly:true}, 
-									            	items:[{id:"viewProjectName",fieldLabel:'<font color="red">(*)</font>所属项目'},
+									            	items:[{id:"viewProjectName",fieldLabel:'所属项目'},
 									            		   {id:"viewManufacturersName",fieldLabel:'<font color="red">(*)</font>所属厂家'},
 									            		   {id:"viewConstructionUnitName",fieldLabel:'<font color="red">(*)</font>施工单位'},
 									            		   {id:"viewPortNumber",fieldLabel:'端口号'},
@@ -192,15 +192,14 @@ Ext.onReady(function(){
 									            	   },{
 											            	name:'A_ThreeLayerSwitch.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 											                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
-											                mode:'local',store:delFlgStore,
+											                mode:'local',store:delFlgStore,value:'启用',
 											                typeAhead:true,triggerAction:'all',forceSelection:true
 								             	}]
 								            },{
 								            	layout:'form',columnWidth:.5,defaultType:'textfield',
 								            	defaults:{labelStyle:"text-align:right;",anchor:'90%'}, 
 								            	items:[{
-										            		name:'A_ThreeLayerSwitch.projectId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属项目',
-										               	 	emptyText:'请选择所属项目',allowBlank:false,blankText:'所属项目不能为空',
+										            		name:'A_ThreeLayerSwitch.projectId',xtype:'combo',fieldLabel:'所属项目',
 										               	 	mode:'local',store:projectDataStore,hiddenName:'A_ThreeLayerSwitch.projectId',
 										                	displayField:'projectName',valueField:'projectId',
 										                	typeAhead:true,triggerAction:'all',forceSelection:true
@@ -277,15 +276,14 @@ Ext.onReady(function(){
 									            	},{
 											            id:'updateDelFlg',name:'A_ThreeLayerSwitch.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 											            emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
-											            mode:'local',store:delFlgStore,
+											            mode:'local',store:delFlgStore,value:'启用',
 											            typeAhead:true,triggerAction:'all',forceSelection:true
 								             	}]
 								            },{
 								            	layout:'form',columnWidth:.5,defaultType:'textfield',
 								            	defaults:{labelStyle:"text-align:right;",anchor:'90%'}, 
 								            	items:[{
-										            	id:'updateProjectId',name:'A_ThreeLayerSwitch.projectId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属项目',
-										               	emptyText:'请选择所属项目',allowBlank:false,blankText:'所属项目不能为空',
+										            	id:'updateProjectId',name:'A_ThreeLayerSwitch.projectId',xtype:'combo',fieldLabel:'所属项目',
 										               	mode:'local',store:projectDataStore,hiddenName:'A_ThreeLayerSwitch.projectId',
 										                displayField:'projectName',valueField:'projectId',
 										                typeAhead:true,triggerAction:'all',forceSelection:true
@@ -398,8 +396,6 @@ Ext.onReady(function(){
 								                });
 							            }
 						            }
-						        },{
-						            text: '重置',handler:function(){formPanel_update.getForm().reset();}
 						        },{
 						            text: '取消',handler:function(){window_update.hide();}
 						        }]
@@ -514,7 +510,7 @@ Ext.onReady(function(){
 							 url: 'A_ThreeLayerSwitchServiceImpl!exportExcel.zdy',
 							 params: {
 							 	"ConditionDto.conditionFiled":Ext.getCmp("conditionFiled").getValue(),
-   								"ConditionDto.conditionConditions":"like",
+   								"ConditionDto.conditionConditions":Ext.getCmp("conditionConditions").getValue(),
 								"ConditionDto.conditionValue":Ext.getCmp("conditionValue").getValue()
 							 },
 						     success: function(response){
@@ -663,7 +659,7 @@ Ext.onReady(function(){
 						Ext.MessageBox.alert(tipsInfo,'请选择要删除的数据项！');
 					} 
            		 }
-        	  },{xtype:"tbfill"},'查询字段：',
+        	  },{id:"conditionConditions",xtype:'textfield',hidden:true,value:"like"},{xtype:"tbfill"},'查询字段：',
         	 {
 				id:"conditionFiled",xtype:'combo',fieldLabel:'查询字段',mode:'local',
 				blankText:"查询字段不能为空",store:conditionFiledStore,  
@@ -696,7 +692,7 @@ Ext.onReady(function(){
      gridPanelDataStore.on('beforeload',function(){
      	refreshMsgTip = Ext.MessageBox.wait('页面数据刷新中,请稍等',tipsInfo,{text:"正在获取数据..."});
      	gridPanelDataStore.baseParams["ConditionDto.conditionFiled"] = Ext.getCmp("conditionFiled").getValue();
-     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = "like";
+     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = Ext.getCmp("conditionConditions").getValue();
      	gridPanelDataStore.baseParams["ConditionDto.conditionValue"] = Ext.getCmp("conditionValue").getValue();
 	 });
 	 gridPanelDataStore.on('load',function(){refreshMsgTip.hide();});
@@ -814,13 +810,15 @@ Ext.onReady(function(){
 	/** 查询下拉框事件 */
 	function conditionFiledSelect(){
 		Ext.getCmp('conditionFiledPanel').remove("conditionValue");
+		Ext.getCmp('conditionConditions').setValue("like");
 		if(Ext.getCmp('conditionFiled').getValue()=='threeLayerSwitch.delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:delFlgStore,
+				mode:'local',store:delFlgStore,value:'启用',
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='threeLayerSwitch.siteId'){
+			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
@@ -828,6 +826,7 @@ Ext.onReady(function(){
 				displayField:'siteName',valueField:'siteId'
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='threeLayerSwitch.projectId'){
+			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
@@ -835,6 +834,7 @@ Ext.onReady(function(){
 				displayField:'projectName',valueField:'projectId'
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='threeLayerSwitch.constructionUnitId'){
+			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
@@ -842,6 +842,7 @@ Ext.onReady(function(){
 				displayField:'constructionUnitName',valueField:'constructionUnitId'
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='threeLayerSwitch.manufacturersId'){
+			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,

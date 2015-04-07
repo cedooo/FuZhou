@@ -8,9 +8,9 @@ Ext.onReady(function(){
 	/** 表格序号 */
    var record_start = 0;
     /** combo下拉框-字段local初始化 */
-    var conditionFiledStore = [['fiberCoreNumber.fiberCoreNumberName','纤芯名称'],['fiberCoreNumber.cableId','所属光缆'],['fiberCoreNumber.isUsed','是否使用'],
+    var conditionFiledStore = [['fiberCoreNumber.cableId','所属光缆'],['fiberCoreNumber.isUsed','是否使用'],
     						   ['fiberCoreNumber.isJump','是否跳转'],['fiberCoreNumber.bizType','业务类型'],
-    						   ['fiberCoreNumber.delFlg','是否启用'],['fiberCoreNumber.descp','备注']];
+    						   ['fiberCoreNumber.delFlg','是否启用']];
 	var delFlgStore =[['启用','启用'],['停用','停用']]; 
 	var isStore =[['是','是'],['否','否']]; 
 	var bizTypeStore =[['用电','用电'],['配电','配电']]; 
@@ -112,7 +112,7 @@ Ext.onReady(function(){
 						            },{
 						            	id:"updateDelFlg",xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",  
-						                mode:'local',store:delFlgStore,
+						                mode:'local',store:delFlgStore,value:'启用',
 						                typeAhead:true,triggerAction: 'all',forceSelection:true
 						            },{
 						            	id:"updateDescp",fieldLabel:'备注',xtype:'textarea'
@@ -190,8 +190,6 @@ Ext.onReady(function(){
 												});
 							            }
 						            }
-						        },{
-						            text: '重置',handler:function(){formPanel_update.getForm().reset();}
 						        },{
 						            text: '取消',handler:function(){window_update.hide();}
 						        }]
@@ -305,7 +303,7 @@ Ext.onReady(function(){
 							 url: 'A_FiberCoreNumberServiceImpl!exportExcel.zdy',
 							 params: {
 							 	"ConditionDto.conditionFiled":Ext.getCmp("conditionFiled").getValue(),
-   								"ConditionDto.conditionConditions":"like",
+   								"ConditionDto.conditionConditions":Ext.getCmp("conditionConditions").getValue(),
 								"ConditionDto.conditionValue":Ext.getCmp("conditionValue").getValue()
 							 },
 						     success: function(response){
@@ -485,7 +483,7 @@ Ext.onReady(function(){
 						Ext.MessageBox.alert(tipsInfo,'请选择要删除的数据项！');
 					} 
            		 }
-        	  },{xtype:"tbfill"},'查询字段：',
+        	  },{id:"conditionConditions",xtype:'textfield',hidden:true,value:"like"},{xtype:"tbfill"},'查询字段：',
         	 {
 				id:"conditionFiled",xtype:'combo',fieldLabel:'查询字段',mode:'local',
 				blankText:"查询字段不能为空",store:conditionFiledStore,  
@@ -518,7 +516,7 @@ Ext.onReady(function(){
      gridPanelDataStore.on('beforeload',function(){
      	refreshMsgTip = Ext.MessageBox.wait('页面数据刷新中,请稍等',tipsInfo,{text:"正在获取数据..."});
      	gridPanelDataStore.baseParams["ConditionDto.conditionFiled"] = Ext.getCmp("conditionFiled").getValue();
-     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = "like";
+     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = Ext.getCmp("conditionConditions").getValue();
      	gridPanelDataStore.baseParams["ConditionDto.conditionValue"] = Ext.getCmp("conditionValue").getValue();
 	 });
 	 gridPanelDataStore.on('load',function(){refreshMsgTip.hide();});
@@ -634,13 +632,15 @@ Ext.onReady(function(){
 	/** 查询下拉框事件 */
 	function conditionFiledSelect(){
 		Ext.getCmp('conditionFiledPanel').remove("conditionValue");
+		Ext.getCmp('conditionConditions').setValue("like");
 		if(Ext.getCmp('conditionFiled').getValue()=='fiberCoreNumber.delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:delFlgStore,
+				mode:'local',store:delFlgStore,value:'启用',
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='fiberCoreNumber.cableId'){
+			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				mode:'local',store:cableNameStore,width:300,

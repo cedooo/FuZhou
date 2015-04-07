@@ -17,7 +17,6 @@ import java.sql.Statement;
 public class DBManager {
 	/** 数据库的连接URL */
 //	private String url = "jdbc:mysql://192.168.3.11:3306/fuzhoudianyeju";
-//	 private String url = "jdbc:mysql://192.168.1.222:3306/fuzhoudianyeju";
 	private String url = "jdbc:mysql://localhost:3306/fuzhoudianyeju";
 	/** 数据库用户名 */
 //	 private String userName = "itims";

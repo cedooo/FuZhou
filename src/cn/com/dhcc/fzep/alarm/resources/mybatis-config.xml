@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 引入属性文件 -->
+	<properties resource="cn/com/dhcc/fzep/alarm/resources/jdbc.properties"/>
+	
+	<!-- 配置类别名 -->
+	<typeAliases>
+	<!-- 
+		<typeAlias alias="Emp" type="com.tenghu.mybatis.model.Emp"/>
+	 -->
+	</typeAliases>
+	
+	<environments default="kyland">
+		<!-- 东土MySq -->
+		<environment id="kyland">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${kyland.driver}"/>
+				<property name="url" value="${kyland.url}"/>
+				<property name="username" value="${kyland.username}"/>
+				<property name="password" value="${kyland.password}"/>
+			</dataSource>
+		</environment>
+		
+		<!-- 科大 Sqlserver数据库 -->
+		<environment id="h3c">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${h3c.driver}"/>
+				<property name="url" value="${h3c.url}"/>
+				<property name="username" value="${h3c.username}"/>
+				<property name="password" value="${h3c.password}"/>
+			</dataSource>
+		</environment>
+		
+	</environments>
+	
+	<!-- 配置映射文件 -->
+	<mappers>
+		<!-- 东土 -->
+		<mapper resource="cn/com/dhcc/fzep/alarm/data/kyland/AlarmmgrrmMapper.xml" />
+		
+		<!-- 科大 -->
+		
+		
+	</mappers>
+</configuration>

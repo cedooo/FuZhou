@@ -57,6 +57,11 @@
     </destination>
     
     
+	<destination id="Alarm">
+        <properties>
+            <source>cn.com.dhcc.fzep.alarm.service.kyland.impl.KylandAlarmServiceImpl</source>
+        </properties>
+    </destination>
     
 	<destination id="TESTHW">
         <properties>

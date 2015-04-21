@@ -31,4 +31,26 @@
 	<select id="getAlarm" resultMap="AlarmmgrrmResultMap">
 		select * from alarmmgrrm limit 10
 	</select>
+	
+	<select id="queryAlarm" resultMap="AlarmmgrrmResultMap" parameterType="cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition">
+		select *
+		from alarmmgrrm
+		<where>
+			<if test="alarmClazz != null">
+			state = #{alarmClazz}
+			</if>
+			<if test="alarmType != null">
+			AND AlarmType = #{alarmType}
+			</if>
+			<if test="alarmLevel != null">
+			AND AlarmLevel = #{alarmLevel}
+			</if>
+			<if test="confirmState != null">
+			AND AffirmState = #{confirmState}
+			</if>
+		</where>
+		order by alarmId
+		limit ${(page.curPage-1)*page.numPerPage}, #{page.numPerPage}
+	</select>
+	
 </mapper>

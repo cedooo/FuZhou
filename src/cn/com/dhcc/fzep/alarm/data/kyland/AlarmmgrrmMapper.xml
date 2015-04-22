@@ -27,30 +27,82 @@
 		<result column="ReasonForClear" property="ReasonForClear" />
 		<result column="userIdClear" property="userIdClear" />
 	</resultMap>
-	
+
 	<select id="getAlarm" resultMap="AlarmmgrrmResultMap">
-		select * from alarmmgrrm limit 10
+		select * from alarmmgrrm limit
+		10
 	</select>
-	
-	<select id="queryAlarm" resultMap="AlarmmgrrmResultMap" parameterType="cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition">
-		select *
+
+	<select id="queryAlarm" resultMap="AlarmmgrrmResultMap"
+		parameterType="cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition">
+		select
+			al.alarmId,
+			al.NodeType,
+			olte.Name as OltId,
+			al.SlotId,
+			al.PONIfId,
+			al.ONUId,
+			al.RMid,
+			al.PortType,
+			al.MonitorEntityId,
+			al.VCI,
+			al.VPI,
+			al.AlarmType,
+			al.AlarmLevel,
+			al.AlarmKind,
+			FROM_UNIXTIME(GenTime,'%Y-%m-%d %h:%i:%s') as GenTime,
+			FROM_UNIXTIME(ClearTime,'%Y-%m-%d %h:%i:%s') as ClearTime,
+			FROM_UNIXTIME(AffirmTime,'%Y-%m-%d %h:%i:%s') as AffirmTime,
+			al.AffirmState,
+			urc.userName as UserIdAffirmer,
+			al.ReasonForClear,
+			al.userIdClear
+		from alarmmgrrm al
+			left join oltequiprm olte on CONCAT('CF::FSAP::OLTEquipRM:',al.OltId)=olte.dn
+			left join useraccountmgr urc on al.UserIdAffirmer =  urc.userId
+		<where>
+			<if test="alarmClazz != null">
+				state = #{alarmClazz}
+			</if>
+			<if test="alarmType != null">
+				AND AlarmType = #{alarmType}
+			</if>
+			<if test="alarmLevel != null">
+				AND AlarmLevel = #{alarmLevel}
+			</if>
+			<if test="confirmState != null">
+				AND AffirmState = #{confirmState}
+			</if>
+			AND alarmId != 0
+		</where>
+		order by GenTime DESC
+		limit ${(page.curPage-1)*page.numPerPage}, #{page.numPerPage}
+	</select>
+	<!-- 根据条件得到分页信息 -->
+	<select id="selectTotalRecords" parameterType="cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition" resultType="int">
+		select count(*) 
 		from alarmmgrrm
 		<where>
 			<if test="alarmClazz != null">
-			state = #{alarmClazz}
+				state = #{alarmClazz}
 			</if>
 			<if test="alarmType != null">
-			AND AlarmType = #{alarmType}
+				AND AlarmType = #{alarmType}
 			</if>
 			<if test="alarmLevel != null">
-			AND AlarmLevel = #{alarmLevel}
+				AND AlarmLevel = #{alarmLevel}
 			</if>
 			<if test="confirmState != null">
-			AND AffirmState = #{confirmState}
+				AND AffirmState = #{confirmState}
 			</if>
+			AND alarmId != 0
 		</where>
-		order by alarmId
-		limit ${(page.curPage-1)*page.numPerPage}, #{page.numPerPage}
 	</select>
 	
+	<!-- 统计各类告警的数量 -->
+	<select id="countTotal" parameterType="String" resultType="int">
+		select count(*) 
+		from alarmmgrrm
+		where AlarmLevel = #{level}
+	</select>
 </mapper>

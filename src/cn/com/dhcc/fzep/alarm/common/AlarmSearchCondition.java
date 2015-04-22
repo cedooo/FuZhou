@@ -5,7 +5,7 @@ import cn.com.dhcc.fzep.topo.common.search.Page;
 public class AlarmSearchCondition {
 	private Page page;
 
-	private String alarmClazz = null;    //告警分类
+	private String alarmClazz = null;    //告警分类:活动告警/历史告警
 	private String alarmType = null;    //告警名称
 	private String alarmLevel = null;    //告警级别
 	private String confirmState = null;    //确认状态

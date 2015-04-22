@@ -41,6 +41,10 @@ public class Page {
 	public void setNumPerPage(int numPerPage) {
 		this.numPerPage = numPerPage;
 	}
+	public boolean updateTotalPage(){
+		this.totalPage = (int) Math.ceil(1.0*this.totalRecords/this.numPerPage);
+		return true;
+	}
 	@Override
 	public String toString() {
 		return "Page [curPage=" + curPage + ", totalPage=" + totalPage

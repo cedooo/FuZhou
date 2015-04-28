@@ -26,13 +26,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		</environment>
 		
 		<!-- 科大 Sqlserver数据库 -->
-		<environment id="h3c">
+		<environment id="ustc">
 			<transactionManager type="JDBC"/>
 			<dataSource type="POOLED">
-				<property name="driver" value="${h3c.driver}"/>
-				<property name="url" value="${h3c.url}"/>
-				<property name="username" value="${h3c.username}"/>
-				<property name="password" value="${h3c.password}"/>
+				<property name="driver" value="${ustc.driver}"/>
+				<property name="url" value="${ustc.url}"/>
+				<property name="username" value="${ustc.username}"/>
+				<property name="password" value="${ustc.password}"/>
 			</dataSource>
 		</environment>
 		

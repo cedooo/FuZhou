@@ -11,7 +11,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'index.jsp' starting page</title>
+<title>福州电业局-GIS</title>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
@@ -53,7 +53,6 @@
 </head>
 
 <body>
-
 	<applet id="gisapplet" code="net.propero.rdp.applet.RdpApplet.class"
 		codebase="applet"
 		archive="log4j-java1.1.jar,java-getopt-1.0.14.jar,properJavaRDP-1.1.jar,properJavaRDP14-1.1.jar"
@@ -65,7 +64,7 @@
 		<param name="width" value="1300" />
 		<param name="height" value="555" />
 		<param name="geometry" value="1300x555" />
-		<param name="windowTitle" value="GIS" />
+		<param name="title" value="GIS" />
 		<param name="name" value="GIS" />
 		<param name="bpp" value="24">
 		<param name="align" value="top">

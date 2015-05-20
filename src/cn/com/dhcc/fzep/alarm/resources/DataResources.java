@@ -11,7 +11,7 @@ public class DataResources {
 	private static SqlSessionFactory h3cSessionFactory = null;
 	private static SqlSessionFactory ustcSessionFactory = null;
 	static{
-		String resource = "cn/com/dhcc/fzep/alarm/resources/mybatis-config.xml";
+		final String resource = "cn/com/dhcc/fzep/alarm/resources/mybatis-config.xml";
 		try {
 			kylandSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource), "kyland");
 			h3cSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource), "h3c");

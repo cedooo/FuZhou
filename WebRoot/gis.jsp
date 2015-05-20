@@ -64,8 +64,6 @@
 		<param name="width" value="1300" />
 		<param name="height" value="555" />
 		<param name="geometry" value="1300x555" />
-		<param name="title" value="GIS" />
-		<param name="name" value="GIS" />
 		<param name="bpp" value="24">
 		<param name="align" value="top">
 		<param name="cabbase" value="" />

@@ -14,8 +14,8 @@ public class DataResources {
 		final String resource = "cn/com/dhcc/fzep/alarm/resources/mybatis-config.xml";
 		try {
 			kylandSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource), "kyland");
-			h3cSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource), "h3c");
-			//ustcSessionFactory = new SqlSessionFactoryBuilder().build(inputStream, "ustc");
+			//h3cSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource), "h3c");
+			ustcSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource), "ustc");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

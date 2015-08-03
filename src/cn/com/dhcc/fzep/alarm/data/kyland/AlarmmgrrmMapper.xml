@@ -29,8 +29,7 @@
 	</resultMap>
 
 	<select id="getAlarm" resultMap="AlarmmgrrmResultMap">
-		select * from alarmmgrrm limit
-		10
+		select * from alarmmgrrm limit 10
 	</select>
 
 	<select id="queryAlarm" resultMap="AlarmmgrrmResultMap"

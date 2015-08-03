@@ -1,3 +1,2 @@
 # FuZhou
-DHCC-ims
-IMS
+DHC-FZEP-IMS

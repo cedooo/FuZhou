@@ -3,7 +3,6 @@ package cn.com.dhcc.fzep.alarm.service.kyland;
 import java.util.List;
 
 import cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition;
-import cn.com.dhcc.fzep.alarm.common.AlarmStatistics;
 import cn.com.dhcc.fzep.alarm.data.kyland.Alarmmgrrm;
 import cn.com.dhcc.fzep.topo.common.search.Page;
 

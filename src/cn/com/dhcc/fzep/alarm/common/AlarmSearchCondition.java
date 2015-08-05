@@ -1,7 +1,11 @@
 package cn.com.dhcc.fzep.alarm.common;
 
 import cn.com.dhcc.fzep.topo.common.search.Page;
-
+/**
+ * 告警搜索/过滤 条件
+ * @author cedo
+ *
+ */
 public class AlarmSearchCondition {
 	private Page page;
 

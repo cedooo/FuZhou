@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition;
-import cn.com.dhcc.fzep.alarm.common.AlarmStatistics;
 import cn.com.dhcc.fzep.alarm.data.kyland.Alarmmgrrm;
 import cn.com.dhcc.fzep.alarm.resources.DataResources;
+import cn.com.dhcc.fzep.alarm.service.kyland.AlarmStatistics;
 import cn.com.dhcc.fzep.alarm.service.kyland.KylandAlarmService;
 import cn.com.dhcc.fzep.topo.common.search.Page;
 

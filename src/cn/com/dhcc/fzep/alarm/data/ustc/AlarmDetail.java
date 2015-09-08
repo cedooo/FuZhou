@@ -52,6 +52,13 @@ public class AlarmDetail {
 	public void setState(String state) {
 		this.state = state;
 	}
+	@Override
+	public String toString() {
+		return "AlarmDetail [alarmId=" + alarmId + ", devId=" + devId
+				+ ", alarmLevel=" + alarmLevel + ", alarmContent="
+				+ alarmContent + ", alarmLocation=" + alarmLocation
+				+ ", alarmTime=" + alarmTime + ", state=" + state + "]";
+	}
 	
 
 }

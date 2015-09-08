@@ -1,0 +1,21 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.dhcc.fzep.alarm.data.ustc">
+	<resultMap type="cn.com.dhcc.fzep.alarm.data.ustc.AlarmDetail"
+		id="AlarmDetailMap">
+		<result property="alarmId" column="AlarmId" />
+		<result property="devId" column="DevId" />
+		<result property="alarmLevel" column="AlarmLevel" />
+		<result property="alarmContent" column="AlarmLevel" />
+		<result property="alarmLocation" column="AlarmLocation" />
+		<result property="alarmTime" column="AlarmTime" />
+		<result property="state" column="state" />
+	</resultMap>
+
+	<select id="getAlarm" resultMap="AlarmDetailMap">
+		select * from tb_alarm_detail limit 1000
+	</select>
+	
+</mapper>

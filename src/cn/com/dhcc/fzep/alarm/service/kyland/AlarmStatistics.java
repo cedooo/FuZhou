@@ -2,7 +2,7 @@ package cn.com.dhcc.fzep.alarm.service.kyland;
 
 import java.util.Arrays;
 /**
- * 科大告警4种类型对应的数量
+ * 东土告警4种类型对应的数量
  * @author cedo
  *
  */

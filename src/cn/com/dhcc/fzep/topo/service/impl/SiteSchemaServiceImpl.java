@@ -28,9 +28,9 @@ public class SiteSchemaServiceImpl implements SiteSchemaService {
 
 	@Override
 	public List<Site> getListByArea(String areaId) {
-		if(areaId!=null && !"".equals(areaId)){
+		/*if(areaId!=null && !"".equals(areaId)){
 			return new SiteDao().getSiteByAreaID(areaId);
-		}
+		}*/
 		return null;
 	}
 
@@ -93,8 +93,9 @@ public class SiteSchemaServiceImpl implements SiteSchemaService {
 	 * <br />会在数据中加入是否启用的标志: delFlg
 	 * @param schemaData 视图数据
 	 * @return 新的实时视图数据
+	 * @deprecated 原本为获取视图附加信息的方法，因改变策略（改为获取视图信息）而弃用。
 	 */
-	private String getAddInfo(String schemaData) {
+	protected String getAddInfo(String schemaData) {
 		try {
 			JSONArray jsonArray = new JSONArray(schemaData);
 			CableDao cableDao = new CableDao();

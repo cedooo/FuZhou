@@ -1,0 +1,36 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.dhcc.fzep.alarm.data.ustc">
+	<resultMap type="cn.com.dhcc.fzep.alarm.data.ustc.USTCAlarm"
+		id="USTCAlarmMap">
+		<result property="id" column="AlarmId" />
+		<result property="occourTime" column="occourTime" />
+		<result property="alarmContent" column="alarmContent" />
+		<result property="level" column="level" />
+		<result property="equipName" column="equipName" />
+		<result property="currentUser" column="currentUser" />
+		<result property="dealTime" column="dealTime" />
+		<result property="delUser" column="delUser" />
+		<result property="note" column="note" />
+	</resultMap>
+
+	<select id="getUSTCAlarm" resultMap="USTCAlarmMap" 
+		parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition">
+		select  AlarmId as id, DevId as equipName, AlarmLevel as level, AlarmContent as alarmContent,
+			AlarmTime as occourTime
+		from tb_alarm_detail 
+		<where>
+			<if test="alarmLevel != null">
+				AND AlarmLevel = #{alarmLevel}
+			</if>
+			<if test="confirmState != null">
+				AND state = #{confirmState}
+			</if>
+		</where>
+		order by AlarmTime DESC
+		limit ${(page.curPage-1)*page.numPerPage}, #{page.numPerPage}
+	</select>
+
+</mapper>

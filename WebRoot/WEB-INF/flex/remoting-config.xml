@@ -56,10 +56,16 @@
         </properties>
     </destination>
     
-    
+    <!-- 东土告警 -->
 	<destination id="Alarm">
         <properties>
             <source>cn.com.dhcc.fzep.alarm.service.kyland.impl.KylandAlarmServiceImpl</source>
+        </properties>
+    </destination>
+    <!-- 科大告警 -->
+	<destination id="USTCAlarm">
+        <properties>
+            <source>cn.com.dhcc.fzep.alarm.service.ustc.impl.USTCAlarmServiceImpl</source>
         </properties>
     </destination>
     

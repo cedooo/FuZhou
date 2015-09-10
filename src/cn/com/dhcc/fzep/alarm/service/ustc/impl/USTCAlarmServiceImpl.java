@@ -29,6 +29,7 @@ public class USTCAlarmServiceImpl implements USTCAlarmService{
 		try{
 			List<USTCAlarm> listAlarm = 
 					sqlSession.selectList("cn.com.dhcc.fzep.alarm.data.ustc.getUSTCAlarm", searchCondition);
+System.out.println(listAlarm);
 			return listAlarm;
 		}finally{
 			sqlSession.close();

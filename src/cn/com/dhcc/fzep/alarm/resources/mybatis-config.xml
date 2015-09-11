@@ -44,8 +44,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="cn/com/dhcc/fzep/alarm/data/kyland/AlarmmgrrmMapper.xml" />
 		
 		<!-- 科大 -->
-		<mapper resource="cn/com/dhcc/fzep/alarm/data/ustc/AlarmDetailMapper.xml" />
+		<!-- 
 		<mapper resource="cn/com/dhcc/fzep/alarm/data/ustc/USTCAlarmMapper.xml" />
+		 -->
+		<mapper resource="cn/com/dhcc/fzep/alarm/data/ustc/USTCAlarmMapper-sqlserver.xml" />
+		
 		
 		
 	</mappers>

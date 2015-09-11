@@ -16,11 +16,11 @@
 		<result property="note" column="note" />
 		<result property="state" column="state" />
 	</resultMap>
-
+	<!-- 科大告警信息 -->
 	<select id="getUSTCAlarm" resultMap="USTCAlarmMap" 
 		parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition">
 		select  AlarmId as id, DevId as equipName, AlarmLevel as level, AlarmContent as alarmContent,
-			AlarmTime as occourTime, state
+			DATE_FORMAT(AlarmTime,'%Y-%m-%d %h:%i:%s') as occourTime, state
 		from tb_alarm_detail 
 		<where>
 			<if test="alarmLevel != null">
@@ -34,4 +34,17 @@
 		limit ${(page.curPage-1)*page.numPerPage}, #{page.numPerPage}
 	</select>
 
+	<!-- 根据条件得到分页信息 -->
+	<select id="selectTotalRecords" parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition" resultType="int">
+		select count(*) 
+		from tb_alarm_detail
+		<where>
+			<if test="alarmLevel != null">
+				AND AlarmLevel = #{alarmLevel}
+			</if>
+			<if test="confirmState != null">
+				AND state = #{confirmState}
+			</if>
+		</where>
+	</select>
 </mapper>

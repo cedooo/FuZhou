@@ -13,7 +13,7 @@ public class SqlServerTest {
 	 */
 	public static void main(String[] args) {
 		String sql = "select * from tb_alarm_detail limit 1000";
-		String url2005 = "jdbc:sqlserver://127.0.0.1:1443;database=company";
+		//String url2005 = "jdbc:sqlserver://127.0.0.1:1443;database=company";
 		String url2000 = "jdbc:microsoft:sqlserver://127.0.0.1:1443;database=company";
 		try {
 			Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver");

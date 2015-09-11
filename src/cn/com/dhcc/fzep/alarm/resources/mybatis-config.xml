@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</typeAliases>
 	
 	<environments default="kyland">
-		<!-- 东土MySq -->
+		<!-- 东土MySql -->
 		<environment id="kyland">
 			<transactionManager type="JDBC"/>
 			<dataSource type="POOLED">

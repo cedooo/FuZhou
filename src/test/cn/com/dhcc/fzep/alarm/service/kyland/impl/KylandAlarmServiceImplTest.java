@@ -17,7 +17,7 @@ public class KylandAlarmServiceImplTest {
 	
 	private KylandAlarmService kylandAlarmServiceImpl = new KylandAlarmServiceImpl();
 
-	@Test
+	//@Test
 	public void testListAlarm() {
 		Page page = new Page();
 		page.setCurPage(1);
@@ -37,7 +37,7 @@ public class KylandAlarmServiceImplTest {
 		assertEquals(list!=null&&list.size()>0, true);
 	}
 	
-	@Test
+	//@Test
 	public void testPageInfo(){
 		Page page = new Page();
 		page.setCurPage(1);
@@ -58,5 +58,36 @@ public class KylandAlarmServiceImplTest {
 	public void testGetAlarmStatisticsInfo(){
 		AlarmStatistics statistics = kylandAlarmServiceImpl.getAlarmStatisticsInfo(null);
 		System.out.println(statistics);
+	}
+	
+
+	@Test
+	public void testListAlarmDateRange() {
+		Page page = new Page();
+		page.setCurPage(1);
+		page.setNumPerPage(30);
+		AlarmSearchCondition condition = new AlarmSearchCondition();
+		condition.setPage(page);
+		
+		
+		String alarmLevel = "1";
+		condition.setAlarmLevel(alarmLevel);
+		String alarmType = "100";
+		condition.setAlarmType(alarmType);
+		//String confirmState = "0";
+		//condition.setConfirmState(confirmState);
+
+		condition.setStartTime("2015-04-20");
+		//condition.setEndTime("");
+		
+		
+		List<Alarmmgrrm> list = kylandAlarmServiceImpl.listAlarm(condition);
+		if(list!=null) System.out.println(list.size());
+		System.out.println(list);
+		
+		Page pageR = kylandAlarmServiceImpl.pageInfo(condition);
+		System.out.println("总页数：" + pageR.getTotalPage() + ",记录总数：" +  pageR.getTotalRecords());
+		
+		assertEquals(list!=null&&list.size()>0, true);
 	}
 }

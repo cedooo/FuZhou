@@ -72,6 +72,12 @@
 			<if test="confirmState != null">
 				AND AffirmState = #{confirmState}
 			</if>
+			<if test="startTime != null">
+				AND FROM_UNIXTIME(GenTime,'%Y-%m-%d %h:%i:%s') > #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND  DATE_ADD(#{endTime}, INTERVAL 1 DAY) > FROM_UNIXTIME(GenTime,'%Y-%m-%d %h:%i:%s')
+ 			</if>
 			AND alarmId != 0
 		</where>
 		order by GenTime DESC
@@ -94,6 +100,12 @@
 			<if test="confirmState != null">
 				AND AffirmState = #{confirmState}
 			</if>
+			<if test="startTime != null">
+				AND FROM_UNIXTIME(GenTime,'%Y-%m-%d %h:%i:%s') > #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND  DATE_ADD(#{endTime}, INTERVAL 1 DAY) > FROM_UNIXTIME(GenTime,'%Y-%m-%d %h:%i:%s')
+ 			</if>
 			AND alarmId != 0
 		</where>
 	</select>

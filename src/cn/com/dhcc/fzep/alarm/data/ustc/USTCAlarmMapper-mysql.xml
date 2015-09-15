@@ -29,6 +29,12 @@
 			<if test="confirmState != null">
 				AND state = #{confirmState}
 			</if>
+			<if test="startTime != null">
+				AND AlarmTime > #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND  DATE_ADD(#{endTime}, INTERVAL 1 DAY) > AlarmTime
+ 			</if>
 		</where>
 		order by AlarmTime DESC
 		limit ${(page.curPage-1)*page.numPerPage}, #{page.numPerPage}
@@ -45,6 +51,12 @@
 			<if test="confirmState != null">
 				AND state = #{confirmState}
 			</if>
+			<if test="startTime != null">
+				AND AlarmTime > #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND  DATE_ADD(#{endTime}, INTERVAL 1 DAY) > AlarmTime
+ 			</if>
 		</where>
 	</select>
 </mapper>

@@ -57,7 +57,7 @@
     </destination>
     
     <!-- 东土告警 -->
-	<destination id="Alarm">
+	<destination id="kylandAlarm">
         <properties>
             <source>cn.com.dhcc.fzep.alarm.service.kyland.impl.KylandAlarmServiceImpl</source>
         </properties>

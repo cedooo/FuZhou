@@ -29,10 +29,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<environment id="ustc">
 			<transactionManager type="JDBC"/>
 			<dataSource type="POOLED">
-				<property name="driver" value="${ustc.driver}"/>
-				<property name="url" value="${ustc.url}"/>
-				<property name="username" value="${ustc.username}"/>
-				<property name="password" value="${ustc.password}"/>
+				<property name="driver" value="${ustc.mysql.driver}"/>
+				<property name="url" value="${ustc.mysql.url}"/>
+				<property name="username" value="${ustc.mysql.username}"/>
+				<property name="password" value="${ustc.mysql.password}"/>
 			</dataSource>
 		</environment>
 		

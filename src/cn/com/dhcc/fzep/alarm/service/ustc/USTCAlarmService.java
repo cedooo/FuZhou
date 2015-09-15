@@ -15,10 +15,13 @@ public interface USTCAlarmService {
 	/**
 	 * 得到科大告警
 	 * @return USTCAlarm告警对象
+	 * @param  searchCondition 科大告警搜索条件
 	 */
 	public List<USTCAlarm> getUSTCAlarm(USTCAlarmSearchCondition searchCondition);
 	/**
-	 * 分页信息
+	 * 得到科大告警分页信息
+	 * @return Page对象
+	 * @param searchCondition 科大告警搜索条件
 	 */
 	public Page ustcPageInfo(USTCAlarmSearchCondition searchCondition);
 }

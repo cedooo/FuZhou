@@ -1,7 +1,11 @@
 package cn.com.dhcc.fzep.alarm.common.ustc;
 
 import cn.com.dhcc.fzep.topo.common.search.Page;
-
+/**
+ * 科大告警搜索条件
+ * @author cedo
+ *
+ */
 public class USTCAlarmSearchCondition {
 	private Page page;
 

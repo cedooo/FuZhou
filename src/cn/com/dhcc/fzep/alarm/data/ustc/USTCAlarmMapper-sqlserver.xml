@@ -35,6 +35,12 @@
 					<if test="confirmState != null">
 						AND state = #{confirmState}
 					</if>
+					<if test="startTime != null">
+						AND AlarmTime > #{startTime}
+					</if>
+					<if test="endTime != null">
+						AND  DATEADD(day, 1, #{endTime}) > AlarmTime
+		 			</if>
 				</where>
 				ORDER BY AlarmTime ASC
 		    ) ab2 
@@ -54,6 +60,12 @@
 			<if test="confirmState != null">
 				AND state = #{confirmState}
 			</if>
+			<if test="startTime != null">
+				AND AlarmTime > #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND  DATEADD(day, 1, #{endTime}) > AlarmTime
+ 			</if>
 		</where>
 	</select>
 </mapper>

@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
-validator.Checked=WebRoot/topo/js,WebRoot/zdy/css,WebRoot/zdy/css/a_carrier.js,WebRoot/zdy/js
+validator.Checked=WebRoot/topo/js,WebRoot/zdy/css,src/cn/com/dhcc/fzep/topo/service/impl/EquipmentSchemaServiceImpl.java,WebRoot/zdy/css/a_carrier.js,WebRoot/zdy/js
 validator.Unchecked=

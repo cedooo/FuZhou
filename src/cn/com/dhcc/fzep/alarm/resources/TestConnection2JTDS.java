@@ -6,7 +6,7 @@ public class TestConnection2JTDS {
 	public static void main(String[] args) throws SQLException {
 		String sql = " select top 5 * from  tb_cfg_device  ";
 		//String url = "jdbc:jtds:sqlserver://192.168.0.102/otdr-server-db";
-		String url = "jdbc:jtds:sqlserver://192.168.1.17/otdr-server-db";
+		String url = "jdbc:jtds:sqlserver://192.168.1.17/otdr_server_db";
 		try {
 			Class.forName("net.sourceforge.jtds.jdbc.Driver");
 		} catch (ClassNotFoundException e) {

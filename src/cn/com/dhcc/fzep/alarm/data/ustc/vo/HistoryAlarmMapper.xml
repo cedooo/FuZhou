@@ -1,0 +1,71 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.dhcc.fzep.alarm.data.ustc.vo">
+	<resultMap type="cn.com.dhcc.fzep.alarm.data.ustc.vo.HistoryAlarm"
+		id="USTCHistoryAlarmMap">
+		<result property="id" column="AlarmId" />
+		<result property="occurTime" column="occurTime" />
+		<result property="alarmContent" column="alarmContent" />
+		<result property="level" column="level" />
+		<result property="equipName" column="equipName" />
+		<result property="currentUser" column="currentUser" />
+		<result property="dealTime" column="dealTime" />
+		<result property="dealUser" column="dealUser" />
+		<result property="note" column="note" />
+	</resultMap>
+	<!-- 科大告警信息 -->
+	<select id="getUSTCHistoryAlarm" resultMap="USTCHistoryAlarmMap" 
+		parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition">
+		select his.id as AlarmId ,alarmtime as occurTime,alarmcont as alarmContent,ia.AlarmLevelName as level,
+			dev.devname as equipName, username as currentUser, processtime as dealTime,prooprater as dealUser,remark as note
+		FROM TB_device_hist_alarm  his LEFT JOIN TB_cfg_device dev on his.deviceid = dev.deviceid 
+			LEFT JOIN TB_Info_AlarmLevel ia ON his.alarmlevel = ia.AlarmLevel
+		WHERE his.id in 
+		(
+		    SELECT top ${page.numPerPage} id 
+		    FROM (
+		        SELECT top ${(page.curPage)*page.numPerPage} *
+				from TB_device_hist_alarm  his 
+				<where>
+					<if test="alarmLevel != null">
+						AND alarmLevel = #{alarmLevel}
+					</if>
+					<if test="dealUser != null">
+						AND  prooprater = #{dealUser}
+		 			</if>
+		 			<if test="startTime != null">
+						AND AlarmTime > #{startTime}
+					</if>
+					<if test="endTime != null">
+						AND  #{endTime} > AlarmTime
+		 			</if>
+				</where>
+				ORDER BY processtime ASC
+		    ) ab2 
+		    ORDER BY ab2.processtime DESC
+		) 
+		ORDER BY processtime DESC
+	</select>
+
+	<!-- 根据条件得到记录总数 -->
+	<select id="selectTotalHistoryRecords" parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition" resultType="int">
+		select count(*) 
+		from TB_device_hist_alarm
+		<where>
+			<if test="alarmLevel != null">
+				AND alarmLevel = #{alarmLevel}
+			</if>
+			<if test="dealUser != null">
+				AND  prooprater = #{dealUser}
+ 			</if>
+ 			<if test="startTime != null">
+				AND AlarmTime > #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND  #{endTime} > AlarmTime
+ 			</if>
+		</where>
+	</select>
+</mapper>

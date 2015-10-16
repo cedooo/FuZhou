@@ -2,9 +2,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.com.dhcc.fzep.alarm.data.ustc">
-	<resultMap type="cn.com.dhcc.fzep.alarm.data.ustc.USTCAlarm"
-		id="USTCAlarmMap">
+<mapper namespace="cn.com.dhcc.fzep.alarm.data.ustc.vo">
+	<resultMap type="cn.com.dhcc.fzep.alarm.data.ustc.vo.CurrentAlarm"
+		id="USTCCurrentAlarmMap">
 		<result property="id" column="AlarmId" />
 		<result property="occourTime" column="occourTime" />
 		<result property="alarmContent" column="alarmContent" />
@@ -17,7 +17,7 @@
 		<result property="state" column="state" />
 	</resultMap>
 	<!-- 科大告警信息 -->
-	<select id="getUSTCAlarm" resultMap="USTCAlarmMap" 
+	<select id="getUSTCCurrentAlarmMap" resultMap="USTCCurrentAlarmMap" 
 		parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition">
 		SELECT AlarmId as id, DevId as equipName, AlarmLevel as level, AlarmContent as alarmContent,
 			CONVERT(varchar, AlarmTime, 120 ) as occourTime, state

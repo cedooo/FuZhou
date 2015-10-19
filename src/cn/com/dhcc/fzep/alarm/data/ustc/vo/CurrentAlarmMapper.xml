@@ -6,7 +6,7 @@
 	<resultMap type="cn.com.dhcc.fzep.alarm.data.ustc.vo.CurrentAlarm"
 		id="USTCCurrentAlarmMap">
 		<result property="id" column="AlarmId" />
-		<result property="occourTime" column="occourTime" />
+		<result property="occurTime" column="occurTime" />
 		<result property="alarmContent" column="alarmContent" />
 		<result property="level" column="level" />
 		<result property="equipName" column="equipName" />
@@ -14,57 +14,51 @@
 		<result property="dealTime" column="dealTime" />
 		<result property="delUser" column="delUser" />
 		<result property="note" column="note" />
-		<result property="state" column="state" />
 	</resultMap>
-	<!-- 科大告警信息 -->
-	<select id="getUSTCCurrentAlarmMap" resultMap="USTCCurrentAlarmMap" 
+	<!-- 科大设备告警信息 -->
+	<select id="getUSTCCurrentAlarm" resultMap="USTCCurrentAlarmMap" 
 		parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition">
-		SELECT AlarmId as id, DevId as equipName, AlarmLevel as level, AlarmContent as alarmContent,
-			CONVERT(varchar, AlarmTime, 120 ) as occourTime, state
-		FROM tb_alarm_detail ab1 
-		WHERE AlarmId in 
+		select top 50 cl.id as AlarmId,cl.alarmtime as occurTime,cl.alarmcont as alarmContent, dev.devname as equipName, 
+			cl.username as currentUser,al.AlarmLevelName as level
+		from TB_device_curr_alarm cl left join TB_Info_AlarmLevel al on cl.alarmlevel=al.AlarmLevel  
+			LEFT JOIN TB_cfg_device dev ON cl.deviceid = dev.deviceid
+		WHERE cl.id in 
 		(
-		    SELECT top #{page.numPerPage} AlarmId 
+		    SELECT top ${page.numPerPage} id 
 		    FROM (
 		        SELECT top ${(page.curPage)*page.numPerPage} *
-				from tb_alarm_detail 
+				from TB_device_curr_alarm 
 				<where>
 					<if test="alarmLevel != null">
 						AND AlarmLevel = #{alarmLevel}
-					</if>
-					<if test="confirmState != null">
-						AND state = #{confirmState}
 					</if>
 					<if test="startTime != null">
 						AND AlarmTime > #{startTime}
 					</if>
 					<if test="endTime != null">
-						AND  DATEADD(day, 1, #{endTime}) > AlarmTime
+						AND  #{endTime} > AlarmTime
 		 			</if>
 				</where>
 				ORDER BY AlarmTime ASC
 		    ) ab2 
 		    ORDER BY ab2.AlarmTime DESC
 		) 
-		ORDER BY ab1.AlarmTime DESC
+		ORDER BY AlarmTime DESC
 	</select>
 
 	<!-- 根据条件得到分页信息 -->
-	<select id="selectTotalRecords" parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition" resultType="int">
+	<select id="selectTotalCurrentRecords" parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition" resultType="int">
 		select count(*) 
-		from tb_alarm_detail
+		from TB_device_curr_alarm 
 		<where>
 			<if test="alarmLevel != null">
 				AND AlarmLevel = #{alarmLevel}
-			</if>
-			<if test="confirmState != null">
-				AND state = #{confirmState}
 			</if>
 			<if test="startTime != null">
 				AND AlarmTime > #{startTime}
 			</if>
 			<if test="endTime != null">
-				AND  DATEADD(day, 1, #{endTime}) > AlarmTime
+				AND  #{endTime} > AlarmTime
  			</if>
 		</where>
 	</select>

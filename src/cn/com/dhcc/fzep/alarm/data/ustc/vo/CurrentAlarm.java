@@ -2,6 +2,7 @@ package cn.com.dhcc.fzep.alarm.data.ustc.vo;
 
 public class CurrentAlarm {
 
+	private String id ;
 	private String occurTime;
 	private String alarmContent;
 	private String level;
@@ -11,6 +12,12 @@ public class CurrentAlarm {
 	private String dealUser;
 	private String note;
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getOccurTime() {
 		return occurTime;
 	}
@@ -59,8 +66,13 @@ public class CurrentAlarm {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	@Override
+	public String toString() {
+		return "CurrentAlarm [id=" + id + ", occurTime=" + occurTime
+				+ ", alarmContent=" + alarmContent + ", level=" + level
+				+ ", equipName=" + equipName + ", currentUser=" + currentUser
+				+ ", dealTime=" + dealTime + ", dealUser=" + dealUser
+				+ ", note=" + note + "]";
+	}
 	
-	
-	
-
 }

@@ -26,8 +26,8 @@ public class USTCAlarmServiceImplTest {
 		page.setCurPage(1);
 		page.setNumPerPage(14);
 		searchCondition.setPage(page);
-		searchCondition.setStartTime("1387775417");
-		searchCondition.setEndTime("1388455164");
+		searchCondition.setStartTime("2011-10-19 18:03:31");
+		searchCondition.setEndTime("2015-10-19 18:03:31");
 		
 		searchCondition.setDealUser("zmm");
 		Page pager = srvImpl.ustcHistoryAlarmPageInfo(searchCondition);
@@ -53,8 +53,8 @@ public class USTCAlarmServiceImplTest {
 		page.setCurPage(1);
 		page.setNumPerPage(14);
 		searchCondition.setPage(page);
-		//searchCondition.setStartTime("1387775417");
-		//searchCondition.setEndTime("1388455164");
+		searchCondition.setStartTime("2011-10-19 18:03:31");
+		searchCondition.setEndTime("2015-10-19 18:03:31");
 		
 		//searchCondition.setDealUser("zmm");
 		Page pager = srvImpl.ustcCurrentAlarmPageInfo(searchCondition);

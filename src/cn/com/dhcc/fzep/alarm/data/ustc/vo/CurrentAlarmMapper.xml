@@ -18,7 +18,9 @@
 	<!-- 科大设备告警信息 -->
 	<select id="getUSTCCurrentAlarm" resultMap="USTCCurrentAlarmMap" 
 		parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition">
-		select top 50 cl.id as AlarmId,cl.alarmtime as occurTime,cl.alarmcont as alarmContent, dev.devname as equipName, 
+		select top 50 cl.id as AlarmId,
+			CONVERT(VARCHAR(100), DATEADD(s, cl.alarmtime, '1970-01-01 00:00:00') , 120) as occurTime,
+			cl.alarmcont as alarmContent, dev.devname as equipName, 
 			cl.username as currentUser,al.AlarmLevelName as level
 		from TB_device_curr_alarm cl left join TB_Info_AlarmLevel al on cl.alarmlevel=al.AlarmLevel  
 			LEFT JOIN TB_cfg_device dev ON cl.deviceid = dev.deviceid
@@ -32,11 +34,11 @@
 					<if test="alarmLevel != null">
 						AND AlarmLevel = #{alarmLevel}
 					</if>
-					<if test="startTime != null">
-						AND AlarmTime > #{startTime}
+		 			<if test="startTime != null">
+						AND AlarmTime > DATEDIFF(s, '1970-01-01 00:00:00', #{startTime})
 					</if>
 					<if test="endTime != null">
-						AND  #{endTime} > AlarmTime
+						AND DATEDIFF(s, '1970-01-01 00:00:00', #{endTime})  > AlarmTime
 		 			</if>
 				</where>
 				ORDER BY AlarmTime ASC
@@ -54,11 +56,11 @@
 			<if test="alarmLevel != null">
 				AND AlarmLevel = #{alarmLevel}
 			</if>
-			<if test="startTime != null">
-				AND AlarmTime > #{startTime}
+ 			<if test="startTime != null">
+				AND AlarmTime > DATEDIFF(s, '1970-01-01 00:00:00', #{startTime})
 			</if>
 			<if test="endTime != null">
-				AND  #{endTime} > AlarmTime
+				AND DATEDIFF(s, '1970-01-01 00:00:00', #{endTime})  > AlarmTime
  			</if>
 		</where>
 	</select>

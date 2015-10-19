@@ -13,8 +13,14 @@ public class USTCAlarmSearchCondition {
 
 	private String alarmLevel = null; // 告警级别
 	private String confirmState = null; // 确认状态
-	private String startTime = null; // 开始时间
-	private String endTime = null; // 截止时间
+	/**
+	 * UNIX time stamp
+	 */
+	private String startTime = null; // 开始时间 --UNIX time stamp
+	/**
+	 * UNIX time stamp
+	 */
+	private String endTime = null; // 截止时间--UNIX time stamp
 	private String dealUser = null; // 处理用户
 
 	private String device = null; // 设备

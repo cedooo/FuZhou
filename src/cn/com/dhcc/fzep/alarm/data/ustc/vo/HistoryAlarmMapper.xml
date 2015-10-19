@@ -18,8 +18,12 @@
 	<!-- 科大告警信息 -->
 	<select id="getUSTCHistoryAlarm" resultMap="USTCHistoryAlarmMap" 
 		parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition">
-		select his.id as AlarmId ,alarmtime as occurTime,alarmcont as alarmContent,ia.AlarmLevelName as level,
-			dev.devname as equipName, username as currentUser, processtime as dealTime,prooprater as dealUser,remark as note
+		select his.id as AlarmId ,
+			CONVERT(VARCHAR(100), DATEADD(s, alarmtime, '1970-01-01 00:00:00') , 120)   as occurTime,
+			alarmcont as alarmContent,ia.AlarmLevelName as level,
+			dev.devname as equipName, username as currentUser, 
+			CONVERT(VARCHAR(100), DATEADD(s, processtime, '1970-01-01 00:00:00') , 120) as dealTime,
+			prooprater as dealUser,remark as note
 		FROM TB_device_hist_alarm  his LEFT JOIN TB_cfg_device dev on his.deviceid = dev.deviceid 
 			LEFT JOIN TB_Info_AlarmLevel ia ON his.alarmlevel = ia.AlarmLevel
 		WHERE his.id in 
@@ -36,10 +40,10 @@
 						AND  prooprater = #{dealUser}
 		 			</if>
 		 			<if test="startTime != null">
-						AND AlarmTime > #{startTime}
+						AND AlarmTime > DATEDIFF(s, '1970-01-01 00:00:00', #{startTime})
 					</if>
 					<if test="endTime != null">
-						AND  #{endTime} > AlarmTime
+						AND DATEDIFF(s, '1970-01-01 00:00:00', #{endTime})  > AlarmTime
 		 			</if>
 				</where>
 				ORDER BY processtime ASC
@@ -61,10 +65,10 @@
 				AND  prooprater = #{dealUser}
  			</if>
  			<if test="startTime != null">
-				AND AlarmTime > #{startTime}
+				AND AlarmTime > DATEDIFF(s, '1970-01-01 00:00:00', #{startTime})
 			</if>
 			<if test="endTime != null">
-				AND  #{endTime} > AlarmTime
+				AND DATEDIFF(s, '1970-01-01 00:00:00', #{endTime})  > AlarmTime
  			</if>
 		</where>
 	</select>

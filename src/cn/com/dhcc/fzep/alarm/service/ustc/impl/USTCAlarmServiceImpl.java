@@ -34,7 +34,7 @@ public class USTCAlarmServiceImpl implements USTCAlarmService{
 		SqlSession sqlSession = DataResources.getUstcSessionFactory().openSession();
 		try{
 			List<HistoryAlarm> listAlarm = 
-					sqlSession.selectList("cn.com.dhcc.fzep.alarm.data.ustc.vo.getUsers", searchCondition);
+					sqlSession.selectList("cn.com.dhcc.fzep.alarm.data.ustc.vo.getUSTCHistoryAlarm", searchCondition);
 			return listAlarm;
 		}finally{
 			sqlSession.close();

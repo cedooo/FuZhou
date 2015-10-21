@@ -33,6 +33,7 @@
 		        SELECT top ${(page.curPage)*page.numPerPage} *
 				from TB_device_hist_alarm  his 
 				<where>
+					id IS NOT NULL
 					<if test="alarmLevel != null">
 						AND alarmLevel = #{alarmLevel}
 					</if>
@@ -46,18 +47,19 @@
 						AND DATEDIFF(s, '1970-01-01 00:00:00', #{endTime})  > AlarmTime
 		 			</if>
 				</where>
-				ORDER BY processtime ASC
+				ORDER BY AlarmTime DESC
 		    ) ab2 
-		    ORDER BY ab2.processtime DESC
-		) 
-		ORDER BY processtime DESC
+		    ORDER BY ab2.AlarmTime ASC
+		)  AND dev.devname is not NULL
+		ORDER BY AlarmTime DESC
 	</select>
 
 	<!-- 根据条件得到记录总数 -->
 	<select id="selectTotalHistoryRecords" parameterType="cn.com.dhcc.fzep.alarm.common.ustc.USTCAlarmSearchCondition" resultType="int">
 		select count(*) 
-		from TB_device_hist_alarm
+		from TB_device_hist_alarm cl LEFT JOIN TB_cfg_device dev ON cl.deviceid = dev.deviceid
 		<where>
+			dev.devname is not null 
 			<if test="alarmLevel != null">
 				AND alarmLevel = #{alarmLevel}
 			</if>

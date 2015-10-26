@@ -66,10 +66,10 @@
     <PARAM NAME = NAME VALUE = "gis" >
     <param name = "type" value = "application/x-java-applet;version=1.6">
     <param name = "scriptable" value = "false">
-    <PARAM NAME = "server" VALUE="192.168.1.222" />
+    <PARAM NAME = "server" VALUE="192.168.0.102" />
     <PARAM NAME = "port" VALUE="3389" />
-    <PARAM NAME = "username" VALUE="Administrator" />
-    <PARAM NAME = "password" VALUE="123" />
+    <PARAM NAME = "username" VALUE="rm" />
+    <PARAM NAME = "password" VALUE="rm" />
     <PARAM NAME = "width" VALUE="1300" />
     <PARAM NAME = "height" VALUE="555" />
     <PARAM NAME = "geometry" VALUE="1300x555" />
@@ -89,10 +89,10 @@
             WIDTH = "1000" \
             HEIGHT = "400" \
             ALIGN = "bottom" \
-            server ="192.168.1.222" / \
+            server ="192.168.0.102" / \
             port ="3389" / \
-            username ="Administrator" / \
-            password ="123" / \
+            username ="rm" / \
+            password ="rm" / \
             width ="1300" / \
             height ="555" / \
             geometry ="1300x555" / \

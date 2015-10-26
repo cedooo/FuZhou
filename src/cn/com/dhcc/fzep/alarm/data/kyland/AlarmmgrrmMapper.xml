@@ -34,31 +34,32 @@
 
 	<select id="queryAlarm" resultMap="AlarmmgrrmResultMap"
 		parameterType="cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition">
-		select
-			al.alarmId,
-			al.NodeType,
+		SELECT 
+			abt1.alarmId,
+			abt1.NodeType,
 			olte.Name as OltId,
-			al.SlotId,
-			al.PONIfId,
-			al.ONUId,
-			al.RMid,
-			al.PortType,
-			al.MonitorEntityId,
-			al.VCI,
-			al.VPI,
-			al.AlarmType,
-			al.AlarmLevel,
-			al.AlarmKind,
-			FROM_UNIXTIME(GenTime,'%Y-%m-%d %h:%i:%s') as GenTime,
-			FROM_UNIXTIME(ClearTime,'%Y-%m-%d %h:%i:%s') as ClearTime,
-			FROM_UNIXTIME(AffirmTime,'%Y-%m-%d %h:%i:%s') as AffirmTime,
-			al.AffirmState,
+			abt1.SlotId,
+			abt1.PONIfId,
+			abt1.ONUId,
+			abt1.RMid,
+			abt1.PortType,
+			abt1.MonitorEntityId,
+			abt1.VCI,
+			abt1.VPI,
+			abt1.AlarmType,
+			abt1.AlarmLevel,
+			abt1.AlarmKind,
+			FROM_UNIXTIME(abt1.GenTime,'%Y-%m-%d %h:%i:%s') as GenTime,
+			FROM_UNIXTIME(abt1.ClearTime,'%Y-%m-%d %h:%i:%s') as ClearTime,
+			FROM_UNIXTIME(abt1.AffirmTime,'%Y-%m-%d %h:%i:%s') as AffirmTime,
+			abt1.AffirmState,
 			urc.userName as UserIdAffirmer,
-			al.ReasonForClear,
-			al.userIdClear
+			abt1.ReasonForClear,
+			abt1.userIdClear
+		from 
+		(
+		select * 
 		from alarmmgrrm al
-			left join oltequiprm olte on CONCAT('CF::FSAP::OLTEquipRM:',al.OltId)=olte.dn
-			left join useraccountmgr urc on al.UserIdAffirmer =  urc.userId
 		<where>
 			<if test="alarmClazz != null">
 				state = #{alarmClazz}
@@ -82,6 +83,8 @@
 		</where>
 		order by GenTime DESC
 		limit ${(page.curPage-1)*page.numPerPage}, #{page.numPerPage}
+	) abt1 LEFT JOIN useraccountmgr urc on abt1.UserIdAffirmer =  urc.userId
+	left join oltequiprm olte on CONCAT('CF::FSAP::OLTEquipRM:',abt1.OltId)=olte.dn
 	</select>
 	<!-- 根据条件得到分页信息 -->
 	<select id="selectTotalRecords" parameterType="cn.com.dhcc.fzep.alarm.common.AlarmSearchCondition" resultType="int">

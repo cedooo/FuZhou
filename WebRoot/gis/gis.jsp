@@ -25,10 +25,10 @@
 		codebase="applet"
 		archive="log4j-java1.1.jar,java-getopt-1.0.14.jar,properJavaRDP-1.1.jar,properJavaRDP14-1.1.jar"
 		width="1000" height="400" align="bottom" name="gis">
-		<param name="server" value="192.168.1.222" />
+		<param name="server" value="192.168.0.102" />
 		<param name="port" value="3389" />
-		<param name="username" value="Administrator" />
-		<param name="password" value="123" />
+		<param name="username" value="rm" />
+		<param name="password" value="rm" />
 		<param name="width" value="1300" />
 		<param name="height" value="555" />
 		<param name="geometry" value="1300x555" />

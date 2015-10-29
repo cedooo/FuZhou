@@ -10,8 +10,6 @@
     <script type="text/javascript" src="<%=basePath%>/extjs2/ext-lang-zh_CN.js"></script>
 	<script type="text/javascript" src="<%=basePath%>/comboboxTree/ComboboxTree.js"></script>
     <script type="text/javascript" src="<%=basePath%>/comboPagesize/comboPagesize.js"></script>
-    <!-- 脚本的位置需要注意！！ -->
- 	<script type="text/javascript" src="<%=basePath%>/extjs2/adapter/ext/ext-basex.js"></script>
 	<script type="text/javascript" src="<%=basePath%>/js/a_cable.js"></script>
 </head>
 <body>

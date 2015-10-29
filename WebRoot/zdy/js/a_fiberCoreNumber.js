@@ -8,13 +8,14 @@ Ext.onReady(function(){
 	/** 表格序号 */
    var record_start = 0;
     /** combo下拉框-字段local初始化 */
-    var conditionFiledStore = [['fiberCoreNumber.cableId','所属光缆'],['fiberCoreNumber.isUsed','是否使用'],
+    var conditionFiledStore = [['fiberCoreNumber.fiberCoreNumberName','纤芯名称'],['fiberCoreNumber.cableId','所属光缆'],['fiberCoreNumber.isUsed','是否使用'],
     						   ['fiberCoreNumber.isJump','是否跳转'],['fiberCoreNumber.bizType','业务类型'],
-    						   ['fiberCoreNumber.delFlg','是否启用']];
+    						   ['fiberCoreNumber.delFlg','是否启用'],['fiberCoreNumber.descp','备注']];
 	var delFlgStore =[['启用','启用'],['停用','停用']]; 
 	var isStore =[['是','是'],['否','否']]; 
 	var bizTypeStore =[['用电','用电'],['配电','配电']]; 
-	
+	/** combo下拉框-字段remote初始化 */
+	var zdyForConnectionStore=[{text:'gprs','children':[{'text':'仓山一期-GPRS','leaf':true,'deviceType':'gprs','deviceId':'1'},{'text':'仓山二期-GPRS','leaf':true,'deviceType':'gprs','deviceId':'2'},{'text':'台江一期-GPRS','leaf':true,'deviceType':'gprs','deviceId':'3'},{'text':'台江二期-GPRS','leaf':true,'deviceType':'gprs','deviceId':'4'}]},{'text':'olt','children':[{'text':'仓上-olt','leaf':true,'deviceType':'olt','deviceId':'1'},{'text':'晋安-olt','leaf':true,'deviceType':'olt','deviceId':'3'},{'text':'鼓楼-olt','leaf':true,'deviceType':'olt','deviceId':'4'}]},{'text':'onu','children':[{'text':'仓山-onu','leaf':true,'deviceType':'onu','deviceId':'1'},{'text':'晋安-onu','leaf':true,'deviceType':'onu','deviceId':'2'},{'text':'台江-onu','leaf':true,'deviceType':'onu','deviceId':'3'},{'text':'鼓楼-onu','leaf':true,'deviceType':'onu','deviceId':'4'}]},{'text':'载波','children':[{'text':'仓山-载波','leaf':true,'deviceType':'载波','deviceId':'1'},{'text':'台江-载波','leaf':true,'deviceType':'载波','deviceId':'2'},{'text':'晋安-载波','leaf':true,'deviceType':'载波','deviceId':'3'},{'text':'鼓楼-载波','leaf':true,'deviceType':'载波','deviceId':'4'}]},{'text':'二层交换机','children':[{'text':'仓山-二层交换机','leaf':true,'deviceType':'二层交换机','deviceId':'2'},{'text':'台江-二层交换机','leaf':true,'deviceType':'二层交换机','deviceId':'3'},{'text':'晋安-二层交换机','leaf':true,'deviceType':'二层交换机','deviceId':'4'},{'text':'鼓楼-二层交换机','leaf':true,'deviceType':'二层交换机','deviceId':'5'}]},{'text':'三层交换机','children':[{'text':'仓山-三层交换机','leaf':true,'deviceType':'三层交换机','deviceId':'2'},{'text':'台江-三层交换机','leaf':true,'deviceType':'三层交换机','deviceId':'3'},{'text':'晋安-三层交换机','leaf':true,'deviceType':'三层交换机','deviceId':'4'},{'text':'鼓楼-三层交换机','leaf':true,'deviceType':'三层交换机','deviceId':'5'}]}];
 	  /** 查询要导出的相应记录 */
 	var cableNameStore = new Ext.data.JsonStore({
     		url: 'ComboForService!comboForCable.zdy',
@@ -37,17 +38,13 @@ Ext.onReady(function(){
 			  		}
 				}
 	});	
-	
 	 /** gridPanel表格数据remote初始化 */
 	var gridPanelDataStore = new Ext.data.JsonStore({
     		url: 'A_FiberCoreNumberServiceImpl!query.zdy',
     		baseParams:{start:0,limit:50},
     		root:'beenList',
     		totalProperty:'totalCount',
-    		fields:['fiberCoreNumberId','fiberCoreNumberName','cableId','cableName','isUsed','isJump','bizType',
-    		'startConnections','startConnections.siteId','startConnections.deviceId','startConnections.deviceType','startConnections.deviceName',
-    		'endConnections','endConnections.siteId','endConnections.deviceId','endConnections.deviceType','endConnections.deviceName',
-    		'transceiver','delFlg','descp']
+    		fields:['fiberCoreNumberId','fiberCoreNumberName','cableId','cableName','isUsed','isJump','bizType','connections.deviceId','connections.deviceType','connections.deviceName','transceiver','delFlg','descp']
 		});
  /********************************** Form集合 ***********************************************************/
      	 /** form的提示信息位置 */
@@ -63,11 +60,52 @@ Ext.onReady(function(){
 						        		{id:"viewIsUsed",fieldLabel:'是否使用'},
 						        		{id:"viewIsJump",fieldLabel:'是否跳转' }, 
 						        		{id:"viewBizType",fieldLabel:'业务类型'},
-						        		{id:"viewStartConnections",fieldLabel:'起始端'},
-						        		{id:"viewEndConnections",fieldLabel:'目的端'},
+						        		{id:"viewConnections",fieldLabel:'连接情况'},
 						        		{id:"viewTransceiver",fieldLabel:'收发情况'},
 						        		{id:"viewDelFlg",fieldLabel:'<font color="red">(*)</font>是否启用'},
 						        		{id:"viewDescp",xtype:'textarea',fieldLabel:'备注'}
+						        ]
+						    });
+						    
+    	/** 新增-FormPanel */
+    	var formPanel_add = new Ext.FormPanel({
+						        title: '纤芯列表-新增',labelWidth:100,frame:true,defaultType:'textfield',
+						        defaults:{labelStyle:"text-align:right;",anchor:'95%'},
+						        items: [
+						        	{
+						        		id:'addFiberCoreNumberName',fieldLabel:'<font color="red">(*)</font>纤芯名称',
+    									emptyText:"请输入纤芯名称",allowBlank:false,blankText:"纤芯名称不能为空" 
+						            },{
+						        		id:'addCableId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属光缆',
+						                emptyText:"请选择所属光缆",allowBlank:false,blankText:"所属光缆不能为空",
+						                mode:'local',store:cableNameStore,hiddenName:'A_FiberCoreNumber.cableId',
+						                displayField:'cableName',valueField:'cableId',
+						                typeAhead:true,triggerAction:'all',forceSelection:true
+						            },{
+						                id:'addIsUsed',xtype:'combo',fieldLabel:'是否使用',
+						                mode:'local',store:isStore,
+						                typeAhead:true,triggerAction:'all',forceSelection:true
+						            },{
+						                id:'addIsJump',xtype:'combo',fieldLabel:'是否跳转',
+						                mode:'local',store:isStore,
+						                typeAhead:true,triggerAction:'all',forceSelection:true
+						            }, {
+						            	id:'addBizType',xtype:'combo',fieldLabel:'业务类型',
+						                mode:'local',store:bizTypeStore,
+						                typeAhead:true,triggerAction:'all',forceSelection:true
+						            }, {
+						            	id:'addConnections',xtype:'treecombo',fieldLabel:'连接情况',
+						            	zdyForConnection:zdyForConnectionStore
+						            },{
+						            	id:'addTransceiver',fieldLabel:'收发情况'
+						            }, {
+						            	id:'addDelFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
+						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
+						                mode:'local',store:delFlgStore,
+						                typeAhead:true,triggerAction:'all',forceSelection:true
+						            },{
+						            	id:'addDescp',fieldLabel:'备注',xtype:'textarea'
+							        }
 						        ]
 						    });
 						    
@@ -100,19 +138,14 @@ Ext.onReady(function(){
 						                mode:'local',store:bizTypeStore,
 						                typeAhead:true,triggerAction:'all',forceSelection:true
 						            },{
-						            	id:'updateStartConnectionsPanel',xtype:'panel',layout:'form',labelWidth:100,anchor:'100%',
-						            	defaults:{labelStyle :"text-align:right;",anchor:'95%'},
-										items:[]
-						            },{
-						            	id:'updateEndConnectionsPanel',xtype:'panel',layout:'form',labelWidth:100,anchor:'100%',
-						            	defaults:{labelStyle :"text-align:right;",anchor:'95%'},
-										items:[]
+						            	id:"updateConnections",xtype:'treecombo',fieldLabel:'连接情况',
+						            	zdyForConnection:zdyForConnectionStore
 						            },{
 						            	id:"updateTransceiver",fieldLabel:'收发情况'
 						            },{
 						            	id:"updateDelFlg",xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",  
-						                mode:'local',store:delFlgStore,value:'启用',
+						                mode:'local',store:delFlgStore,
 						                typeAhead:true,triggerAction: 'all',forceSelection:true
 						            },{
 						            	id:"updateDescp",fieldLabel:'备注',xtype:'textarea'
@@ -151,10 +184,48 @@ Ext.onReady(function(){
 		/** 查看窗口 */
     	var window_view = new Ext.Window({
 	         					title: '查看窗口',closable:true,closeAction:"hide",
-	            				width:400,height:400,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_view,
+	            				width:400,height:350,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_view,
 	            				buttonAlign:'center',
 						        buttons: [{text: '关闭',handler:function(){window_view.hide();}}]
 	       					});				        				    
+    	/** 新增窗口 */
+    	var window_add = new Ext.Window({
+	         					title: '新增窗口',closable:true,closeAction:"hide",
+	            				width:400,height:350,iconCls:'bgi_add',plain:true,layout:'fit',items:formPanel_add,
+	            				buttonAlign:'center',
+						        buttons: 
+						        [{
+						            text: '保存',
+						            handler:function(){
+							            if (formPanel_add.form.isValid()) {
+							            		/** 更新相应记录 */
+												Ext.Ajax.request({
+													   url: 'A_FiberCoreNumberServiceImpl!add.zdy',
+													   params: {
+													   		"A_FiberCoreNumber.fiberCoreNumberName":Ext.getCmp('addFiberCoreNumberName').getValue(),
+													   		"A_FiberCoreNumber.cableId":Ext.getCmp('addCableId').getValue(),
+													   		"A_FiberCoreNumber.isUsed":Ext.getCmp('addIsUsed').getValue(),
+													   		"A_FiberCoreNumber.isJump":Ext.getCmp('addIsJump').getValue(),
+													   		"A_FiberCoreNumber.bizType":Ext.getCmp('addBizType').getValue(),
+													   		"A_FiberCoreNumber.connections":Ext.getCmp('addConnections').getValue(),
+													   		"A_FiberCoreNumber.delFlg":Ext.getCmp('addDelFlg').getValue(),
+													   		"A_FiberCoreNumber.descp":Ext.getCmp('addDescp').getValue()
+													   },
+													   success: function(response,options){
+													  	   ajaxSuccess(response,options);
+													   },
+													   failure: function(response,options){
+													   	   ajaxFailure(response,options);
+													   }
+												});
+							            }
+						            }
+						        },{
+						            text: '重置',handler:function(){formPanel_add.getForm().reset();}
+						        },{
+						            text: '取消', handler:function(){window_add.hide();}
+						        }]
+	       					});
 	       					
     	/** 更新窗口 */
     	var window_update = new Ext.Window({
@@ -175,8 +246,7 @@ Ext.onReady(function(){
 													   		"A_FiberCoreNumber.isUsed":Ext.getCmp('updateIsUsed').getValue(),
 													   		"A_FiberCoreNumber.isJump":Ext.getCmp('updateIsJump').getValue(),
 													   		"A_FiberCoreNumber.bizType":Ext.getCmp('updateBizType').getValue(),
-													   		"A_FiberCoreNumber.startConnections":Ext.getCmp('updateStartConnections').getValue(),
-													   		"A_FiberCoreNumber.endConnections":Ext.getCmp('updateEndConnections').getValue(),
+													   		"A_FiberCoreNumber.connections":Ext.getCmp('updateConnections').getValue(),
 													   		"A_FiberCoreNumber.transceiver":Ext.getCmp('updateTransceiver').getValue(),
 													   		"A_FiberCoreNumber.delFlg":Ext.getCmp('updateDelFlg').getValue(),
 													   		"A_FiberCoreNumber.descp":Ext.getCmp('updateDescp').getValue()
@@ -190,6 +260,8 @@ Ext.onReady(function(){
 												});
 							            }
 						            }
+						        },{
+						            text: '重置',handler:function(){formPanel_update.getForm().reset();}
 						        },{
 						            text: '取消',handler:function(){window_update.hide();}
 						        }]
@@ -273,14 +345,12 @@ Ext.onReady(function(){
             {header:"是否使用",width: 80, sortable:true,dataIndex:'isUsed'},
             {header:"是否跳转",width: 80, sortable:true,dataIndex:'isJump'},
             {header:"业务类型",width: 80, sortable:true,dataIndex:'bizType'},
-            {header:"起始端",width: 100, sortable:true,dataIndex:'startConnections.deviceName'},
-            {header:"目的端",width: 100, sortable:true,dataIndex:'endConnections.deviceName'},
+            {header:"连接情况",width: 100, sortable:true,dataIndex:'connections.deviceName'},
             {header:"收发情况",width: 100, sortable:true,dataIndex:'transceiver'},
             {header:"是否启用",width: 80, sortable:true,dataIndex:'delFlg'},
             {header:"备注",   width: 100, sortable:true,dataIndex:'descp'}
         ]),
         sm: sm,
-        stripeRows: true,
         /** 分页工具栏 */
          bbar: new Ext.PagingToolbar({
              pageSize:50,store: gridPanelDataStore,displayInfo: true,
@@ -303,7 +373,7 @@ Ext.onReady(function(){
 							 url: 'A_FiberCoreNumberServiceImpl!exportExcel.zdy',
 							 params: {
 							 	"ConditionDto.conditionFiled":Ext.getCmp("conditionFiled").getValue(),
-   								"ConditionDto.conditionConditions":Ext.getCmp("conditionConditions").getValue(),
+   								"ConditionDto.conditionConditions":"like",
 								"ConditionDto.conditionValue":Ext.getCmp("conditionValue").getValue()
 							 },
 						     success: function(response){
@@ -318,6 +388,8 @@ Ext.onReady(function(){
         }),
         /** 菜单工具栏 */
         tbar:[{
+           	   	 text:'新增',tooltip:'新增',iconCls:'bgi_add',hidden:true,handler:function(){window_add.show();}
+       		 }, '-', {
        		 	 id:"update",disabled:true,text:'修改',tooltip:'修改',iconCls:'bgi_update',
             	 handler:function(){
             	 	var _record = functionGridPanel.getSelectionModel().getSelected();
@@ -329,47 +401,7 @@ Ext.onReady(function(){
 						Ext.getCmp("updateIsUsed").setValue(jsonData.get("isUsed"));
 						Ext.getCmp("updateIsJump").setValue(jsonData.get("isJump"));
 						Ext.getCmp("updateBizType").setValue(jsonData.get("bizType")); 
-						
-						 /** 查询要导出的相应起始站点设备记录 */
-					    Ext.Ajax.request({
-								url: 'ComboForService!comboForConnections.zdy',
-								async: false,
-								params: {
-									"ConditionDto.conditionFiled":"siteId",
-									"ConditionDto.conditionConditions":"=",
-									"ConditionDto.conditionValue":jsonData.get("startConnections.siteId")
-								},
-								success: function(response){
-									var _responseJson = Ext.util.JSON.decode(response.responseText);
-									Ext.getCmp('updateStartConnectionsPanel').remove("updateStartConnections");
-									Ext.getCmp('updateStartConnectionsPanel').add({
-										id:"updateStartConnections",xtype:'treecombo',fieldLabel:'起始端',
-						            	zdyForConnection:_responseJson
-									});
-									Ext.getCmp("updateStartConnections").setZdyValue(jsonData.get("startConnections"));
-									Ext.getCmp('updateStartConnectionsPanel').doLayout();
-								}
-						});  
-						 /** 查询要导出的相应终点站点设备记录 */
-						Ext.Ajax.request({
-								url: 'ComboForService!comboForConnections.zdy',
-								async: false,
-								params: {
-										"ConditionDto.conditionFiled":"siteId",
-										"ConditionDto.conditionConditions":"=",
-										"ConditionDto.conditionValue":jsonData.get("endConnections.siteId")
-								},
-								success: function(response){
-									var _responseJson = Ext.util.JSON.decode(response.responseText);
-									Ext.getCmp('updateEndConnectionsPanel').remove("updateEndConnections");
-									Ext.getCmp('updateEndConnectionsPanel').add({
-										id:"updateEndConnections",xtype:'treecombo',fieldLabel:'目的端',
-						            	zdyForConnection:_responseJson
-									});
-									Ext.getCmp("updateEndConnections").setZdyValue(jsonData.get("endConnections"));
-									Ext.getCmp('updateEndConnectionsPanel').doLayout();
-								}
-						});
+						Ext.getCmp("updateConnections").setValue(jsonData.get("connections.deviceName"));
 						Ext.getCmp("updateTransceiver").setValue(jsonData.get("transceiver"));
 						Ext.getCmp("updateDelFlg").setValue(jsonData.get("delFlg"));
 						Ext.getCmp("updateDescp").setValue(jsonData.get("descp"));
@@ -483,7 +515,7 @@ Ext.onReady(function(){
 						Ext.MessageBox.alert(tipsInfo,'请选择要删除的数据项！');
 					} 
            		 }
-        	  },{id:"conditionConditions",xtype:'textfield',hidden:true,value:"like"},{xtype:"tbfill"},'查询字段：',
+        	  },{xtype:"tbfill"},'查询字段：',
         	 {
 				id:"conditionFiled",xtype:'combo',fieldLabel:'查询字段',mode:'local',
 				blankText:"查询字段不能为空",store:conditionFiledStore,  
@@ -516,7 +548,7 @@ Ext.onReady(function(){
      gridPanelDataStore.on('beforeload',function(){
      	refreshMsgTip = Ext.MessageBox.wait('页面数据刷新中,请稍等',tipsInfo,{text:"正在获取数据..."});
      	gridPanelDataStore.baseParams["ConditionDto.conditionFiled"] = Ext.getCmp("conditionFiled").getValue();
-     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = Ext.getCmp("conditionConditions").getValue();
+     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = "like";
      	gridPanelDataStore.baseParams["ConditionDto.conditionValue"] = Ext.getCmp("conditionValue").getValue();
 	 });
 	 gridPanelDataStore.on('load',function(){refreshMsgTip.hide();});
@@ -556,8 +588,7 @@ Ext.onReady(function(){
 			Ext.getCmp("viewIsUsed").setValue(jsonData.get("isUsed"));
 			Ext.getCmp("viewIsJump").setValue(jsonData.get("isJump"));
 			Ext.getCmp("viewBizType").setValue(jsonData.get("bizType"));
-			Ext.getCmp("viewStartConnections").setValue(jsonData.get("startConnections.deviceName")); 
-			Ext.getCmp("viewEndConnections").setValue(jsonData.get("endConnections.deviceName")); 
+			Ext.getCmp("viewConnections").setValue(jsonData.get("connections.deviceName")); 
 			Ext.getCmp("viewTransceiver").setValue(jsonData.get("transceiver"));
 			Ext.getCmp("viewDelFlg").setValue(jsonData.get("delFlg"));
 			Ext.getCmp("viewDescp").setValue(jsonData.get("descp"));
@@ -632,18 +663,16 @@ Ext.onReady(function(){
 	/** 查询下拉框事件 */
 	function conditionFiledSelect(){
 		Ext.getCmp('conditionFiledPanel').remove("conditionValue");
-		Ext.getCmp('conditionConditions').setValue("like");
 		if(Ext.getCmp('conditionFiled').getValue()=='fiberCoreNumber.delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:delFlgStore,value:'启用',
+				mode:'local',store:delFlgStore,
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='fiberCoreNumber.cableId'){
-			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:cableNameStore,width:300,
+				mode:'local',store:cableNameStore,
 				displayField:'cableName',valueField:'cableId',
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
@@ -665,6 +694,11 @@ Ext.onReady(function(){
 				mode:'local',store:bizTypeStore,
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
+		}else if(Ext.getCmp('conditionFiled').getValue()=='fiberCoreNumber.connections'){
+			Ext.getCmp('conditionFiledPanel').add({
+				id:"conditionValue",xtype:'treecombo',fieldLabel:'查询内容',
+				zdyForConnection:zdyForConnectionStore
+			});
 		}else{
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.TextField({
 				id:"conditionValue",fieldLabel:'查询内容'

@@ -83,7 +83,7 @@ Ext.onReady(function(){
 						            	name:'A_Site.connactNumber',xtype:'numberfield',fieldLabel:'负责人联系电话'
 						            },{
 						            	name:'A_Site.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
-						                mode:'local',store:delFlgStore,value:'启用',
+						                mode:'local',store:delFlgStore,
 						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
 						                typeAhead:true,triggerAction:'all',forceSelection:true
 						            },{
@@ -120,7 +120,7 @@ Ext.onReady(function(){
 						            	id:"updateDelFlg",name:'A_Site.delFlg',xtype:'combo',
 						            	fieldLabel:'<font color="red">(*)</font>是否启用',mode: 'local',
 						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",  
-						                store:delFlgStore,value:'启用',
+						                store:delFlgStore,
 						                typeAhead: true,triggerAction: 'all',forceSelection:true
 						            },{
 						            	id:"updateDescp",name:'A_Site.descp',
@@ -206,6 +206,8 @@ Ext.onReady(function(){
 							            }
 						            }
 						        },{
+						            text: '重置',handler:function(){formPanel_update.getForm().reset();}
+						        },{
 						            text: '取消',handler:function(){window_update.hide();}
 						        }]
 	       					});
@@ -287,7 +289,6 @@ Ext.onReady(function(){
             {header:"备注",         width: 120, sortable:true,dataIndex:'descp'}
         ]),
         sm: sm,
-        stripeRows: true,
         /** 分页工具栏 */
          bbar: new Ext.PagingToolbar({
             pageSize:50,store: gridPanelDataStore,displayInfo: true,
@@ -310,7 +311,7 @@ Ext.onReady(function(){
 							 url: 'A_SiteServiceImpl!exportExcel.zdy',
 							 params: {
 							 	"ConditionDto.conditionFiled":Ext.getCmp("conditionFiled").getValue(),
-   								"ConditionDto.conditionConditions":Ext.getCmp("conditionConditions").getValue(),
+   								"ConditionDto.conditionConditions":"like",
 								"ConditionDto.conditionValue":Ext.getCmp("conditionValue").getValue()
 							 },
 						     success: function(response){
@@ -451,7 +452,7 @@ Ext.onReady(function(){
 						Ext.MessageBox.alert(tipsInfo,'请选择要删除的数据项！');
 					} 
            		 }
-        	  },{id:"conditionConditions",xtype:'textfield',hidden:true,value:"like"},{xtype:"tbfill"},'查询字段：',
+        	  },{xtype:"tbfill"},'查询字段：',
         	 {
 				id:"conditionFiled",xtype:'combo',fieldLabel:'查询字段',mode:'local',
 				blankText:"查询字段不能为空",store:conditionFiledStore,  
@@ -484,7 +485,7 @@ Ext.onReady(function(){
      gridPanelDataStore.on('beforeload',function(){
      	refreshMsgTip = Ext.MessageBox.wait('页面数据刷新中,请稍等',tipsInfo,{text:"正在获取数据..."});
      	gridPanelDataStore.baseParams["ConditionDto.conditionFiled"] = Ext.getCmp("conditionFiled").getValue();
-     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = Ext.getCmp("conditionConditions").getValue();
+     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = "like";
      	gridPanelDataStore.baseParams["ConditionDto.conditionValue"] = Ext.getCmp("conditionValue").getValue();
 	 });
 	 gridPanelDataStore.on('load',function(){refreshMsgTip.hide();});
@@ -593,15 +594,13 @@ Ext.onReady(function(){
 	/** 查询下拉框事件 */
 	function conditionFiledSelect(){
 		Ext.getCmp('conditionFiledPanel').remove("conditionValue");
-		Ext.getCmp('conditionConditions').setValue("like");
 		if(Ext.getCmp('conditionFiled').getValue()=='site.delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:delFlgStore,value:'启用',
+				mode:'local',store:delFlgStore,
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='site.areaId'){
-			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,

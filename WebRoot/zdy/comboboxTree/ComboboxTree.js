@@ -28,15 +28,6 @@ Ext.ux.TreeCombo = Ext.extend(Ext.form.ComboBox, {
 	tree: null, 
 	// 隐藏值 
 	hiddenValue: null, 
-	zdyForSite:null,
-	setZdyValue:function(hiddenValue){
-		if(hiddenValue.deviceId=="undefined" ||hiddenValue.deviceType=="undefined" ||hiddenValue.deviceName=="undefined"){
-			this.setValue("");
-		}else{
-			this.setValue(hiddenValue.deviceName);
-			this.hiddenValue = "{'siteId':'"+this.zdyForSite+"','deviceId':'"+hiddenValue.deviceId+"','deviceType':'"+hiddenValue.deviceType+"','deviceName':'"+hiddenValue.deviceName+"'}";  
-		}
-	},
 	getHiddenValue: function () { 
 		return this.hiddenValue; 
 	}, 
@@ -81,12 +72,7 @@ Ext.ux.TreeCombo = Ext.extend(Ext.form.ComboBox, {
 		/** 只接受叶节点数据 */
 			if(node.leaf==true){
 				var dispText = node.text; 
-				var code = "{'siteId':'"+this.zdyForSite+"','deviceId':'"+node.attributes.deviceId+"','deviceType':'"+node.attributes.deviceType+"','deviceName':'"+node.text+"'}";
-				obj.setHiddenValue(code, dispText); 
-				obj.collapse(); 
-			}else{
-				var dispText = ""; 
-				var code = "{'siteId':'"+this.zdyForSite+"'}";
+				var code = "{'deviceId':'"+node.attributes.deviceId+"','deviceType':'"+node.attributes.deviceType+"','deviceName':'"+node.text+"'}"
 				obj.setHiddenValue(code, dispText); 
 				obj.collapse(); 
 			}

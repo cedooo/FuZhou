@@ -101,7 +101,7 @@ Ext.onReady(function(){
 						            }, {
 						            	name:'B_Fiber.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
-						                mode:'local',store:delFlgStore,value:'启用',
+						                mode:'local',store:delFlgStore,
 						                typeAhead:true,triggerAction:'all',forceSelection:true
 						            },{
 						            	name:'B_Fiber.descp',fieldLabel:'备注',xtype:'textarea'
@@ -143,7 +143,7 @@ Ext.onReady(function(){
 						            },{
 						            	id:"updateDelFlg",name:'B_Fiber.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 						                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",  
-						                mode:'local',store:delFlgStore,value:'启用',
+						                mode:'local',store:delFlgStore,
 						                typeAhead:true,triggerAction: 'all',forceSelection:true
 						            },{
 						            	id:"updateDescp",name:'B_Fiber.descp',
@@ -228,6 +228,8 @@ Ext.onReady(function(){
 								                });
 							            }
 						            }
+						        },{
+						            text: '重置',handler:function(){formPanel_update.getForm().reset();}
 						        },{
 						            text: '取消',handler:function(){window_update.hide();}
 						        }]
@@ -316,7 +318,6 @@ Ext.onReady(function(){
             {header:"备注",   width: 120, sortable:true,dataIndex:'descp'}
         ]),
         sm: sm,
-        stripeRows: true,
         /** 分页工具栏 */
          bbar: new Ext.PagingToolbar({
             pageSize:50,store: gridPanelDataStore,displayInfo: true,
@@ -628,7 +629,7 @@ Ext.onReady(function(){
 		if(Ext.getCmp('conditionFiled').getValue()=='delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:delFlgStore,value:'启用',
+				mode:'local',store:delFlgStore,
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='fiberCoreNumber'){

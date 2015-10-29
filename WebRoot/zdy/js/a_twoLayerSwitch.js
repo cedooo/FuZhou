@@ -8,7 +8,7 @@ Ext.onReady(function(){
 	/** 表格序号 */
    var record_start = 0;
     /** combo下拉框-字段local初始化 */
-    var conditionFiledStore = [['twoLayerSwitch.twoLayerSwitchName','设备名称'],['twoLayerSwitch.siteId','所属站点'],
+    var conditionFiledStore = [['twoLayerSwitch.twoLayerSwitchName','设备名称'],['twoLayerSwitch.siteId','所属站点'],['twoLayerSwitch.projectId','所属项目'],
     						   ['twoLayerSwitch.installationSite','安装地址'],['twoLayerSwitch.subNetwork','所属子网 '],['twoLayerSwitch.debugging','调试情况'],
     						   ['twoLayerSwitch.switchType','设备类型'],['twoLayerSwitch.manufacturersId','所属厂家'],['twoLayerSwitch.typeSpecification','型号规格'],
     						   ['twoLayerSwitch.vlanId','vlanId'],['twoLayerSwitch.portNumber','端口号'],['twoLayerSwitch.flow','流量'],
@@ -141,7 +141,7 @@ Ext.onReady(function(){
 									            	},{
 									            	layout:'form',columnWidth:.5,defaultType:'textfield',
 									            	defaults:{labelStyle:"text-align:right;",anchor:'90%',readOnly:true}, 
-									            	items:[{id:"viewProjectName",fieldLabel:'所属项目 '},
+									            	items:[{id:"viewProjectName",fieldLabel:'<font color="red">(*)</font>所属项目 '},
 									            		   {id:"viewSubNetwork",fieldLabel:'所属子网'},
 									            		   {id:"viewSwitchType",fieldLabel:'设备类型'},
 									            		   {id:"viewTypeSpecification",fieldLabel:'型号规格'},
@@ -209,14 +209,15 @@ Ext.onReady(function(){
 									            	   },{
 											            	name:'A_TwoLayerSwitch.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 											                emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
-											                mode:'local',store:delFlgStore,value:'启用',
+											                mode:'local',store:delFlgStore,
 											                typeAhead:true,triggerAction:'all',forceSelection:true
 								             	}]
 								            },{
 								            	layout:'form',columnWidth:.5,defaultType:'textfield',
 								            	defaults:{labelStyle:"text-align:right;",anchor:'90%'}, 
 								            	items:[{
-										            		name:'A_TwoLayerSwitch.projectId',xtype:'combo',fieldLabel:'所属项目',
+										            		name:'A_TwoLayerSwitch.projectId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属项目',
+										               	 	emptyText:'请选择所属项目',allowBlank:false,blankText:'所属项目不能为空',
 										               	 	mode:'local',store:projectDataStore,hiddenName:'A_TwoLayerSwitch.projectId',
 										                	displayField:'projectName',valueField:'projectId',
 										                	typeAhead:true,triggerAction:'all',forceSelection:true
@@ -301,14 +302,15 @@ Ext.onReady(function(){
 									            	 },{
 											            id:'updateDelFlg',name:'A_TwoLayerSwitch.delFlg',xtype:'combo',fieldLabel:'<font color="red">(*)</font>是否启用',
 											            emptyText:"请选择是否启用",allowBlank:false,blankText:"是否启用不能为空",
-											            mode:'local',store:delFlgStore,value:'启用',
+											            mode:'local',store:delFlgStore,
 											            typeAhead:true,triggerAction:'all',forceSelection:true
 								             	}]
 								            },{
 								            	layout:'form',columnWidth:.5,defaultType:'textfield',
 								            	defaults:{labelStyle:"text-align:right;",anchor:'90%'}, 
 								            	items:[{
-										            	id:'updateProjectId',name:'A_TwoLayerSwitch.projectId',xtype:'combo',fieldLabel:'所属项目',
+										            	id:'updateProjectId',name:'A_TwoLayerSwitch.projectId',xtype:'combo',fieldLabel:'<font color="red">(*)</font>所属项目',
+										               	emptyText:'请选择所属项目',allowBlank:false,blankText:'所属项目不能为空',
 										               	mode:'local',store:projectDataStore,hiddenName:'A_TwoLayerSwitch.projectId',
 										                displayField:'projectName',valueField:'projectId',
 										                typeAhead:true,triggerAction:'all',forceSelection:true
@@ -420,6 +422,8 @@ Ext.onReady(function(){
 							            }
 						            }
 						        },{
+						            text: '重置',handler:function(){formPanel_update.getForm().reset();}
+						        },{
 						            text: '取消',handler:function(){window_update.hide();}
 						        }]
 	       					});
@@ -513,7 +517,6 @@ Ext.onReady(function(){
             {header:"备注",    width: 120, sortable:true,dataIndex:'descp'}
         ]),
         sm: sm,
-        stripeRows: true,
         /** 分页工具栏 */
          bbar: new Ext.PagingToolbar({
              pageSize:50,store: gridPanelDataStore,displayInfo: true,
@@ -536,7 +539,7 @@ Ext.onReady(function(){
 							 url: 'A_TwoLayerSwitchServiceImpl!exportExcel.zdy',
 							 params: {
 							 	"ConditionDto.conditionFiled":Ext.getCmp("conditionFiled").getValue(),
-   								"ConditionDto.conditionConditions":Ext.getCmp("conditionConditions").getValue(),
+   								"ConditionDto.conditionConditions":"like",
 								"ConditionDto.conditionValue":Ext.getCmp("conditionValue").getValue()
 							 },
 						     success: function(response){
@@ -689,7 +692,7 @@ Ext.onReady(function(){
 						Ext.MessageBox.alert(tipsInfo,'请选择要删除的数据项！');
 					} 
            		 }
-        	  },{id:"conditionConditions",xtype:'textfield',hidden:true,value:"like"},{xtype:"tbfill"},'查询字段：',
+        	  },{xtype:"tbfill"},'查询字段：',
         	 {
 				id:"conditionFiled",xtype:'combo',fieldLabel:'查询字段',mode:'local',
 				blankText:"查询字段不能为空",store:conditionFiledStore,  
@@ -722,7 +725,7 @@ Ext.onReady(function(){
      gridPanelDataStore.on('beforeload',function(){
      	refreshMsgTip = Ext.MessageBox.wait('页面数据刷新中,请稍等',tipsInfo,{text:"正在获取数据..."});
      	gridPanelDataStore.baseParams["ConditionDto.conditionFiled"] = Ext.getCmp("conditionFiled").getValue();
-     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = Ext.getCmp("conditionConditions").getValue();
+     	gridPanelDataStore.baseParams["ConditionDto.conditionConditions"] = "like";
      	gridPanelDataStore.baseParams["ConditionDto.conditionValue"] = Ext.getCmp("conditionValue").getValue();
 	 });
 	 gridPanelDataStore.on('load',function(){refreshMsgTip.hide();});
@@ -844,15 +847,13 @@ Ext.onReady(function(){
 	/** 查询下拉框事件 */
 	function conditionFiledSelect(){
 		Ext.getCmp('conditionFiledPanel').remove("conditionValue");
-		Ext.getCmp('conditionConditions').setValue("like");
 		if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.delFlg'){
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
-				mode:'local',store:delFlgStore,value:'启用',
+				mode:'local',store:delFlgStore,
 				typeAhead:true,triggerAction:'all',forceSelection:true
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.siteId'){
-			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
@@ -860,7 +861,6 @@ Ext.onReady(function(){
 				displayField:'siteName',valueField:'siteId'
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.projectId'){
-			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
@@ -868,7 +868,6 @@ Ext.onReady(function(){
 				displayField:'projectName',valueField:'projectId'
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.constructionUnitId'){
-			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
@@ -876,7 +875,6 @@ Ext.onReady(function(){
 				displayField:'constructionUnitName',valueField:'constructionUnitId'
 			}));
 		}else if(Ext.getCmp('conditionFiled').getValue()=='twoLayerSwitch.manufacturersId'){
-			Ext.getCmp('conditionConditions').setValue("=");
 			Ext.getCmp('conditionFiledPanel').add(new Ext.form.ComboBox({
 				id:"conditionValue",xtype:'combo',fieldLabel:'查询内容',
 				typeAhead:true,triggerAction:'all',forceSelection:true,
